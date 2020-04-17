@@ -29,8 +29,8 @@
          
               {% if user.is_authenticated %}
               <button type="button" class="btn btn-primary"> Hello,{{request.user.username}}</button>
-              <a href="logout" class="btn btn-white" type="submit">Logout</a>
-              <!--<a href="add" class="btn btn-white" type="button">Add Classes</a>-->
+              <!--<a href="logout" class="btn btn-white" type="submit">Logout</a>
+              <a href="add" class="btn btn-white" type="button">Add Classes</a>-->
               {% else %}
               <a href="signup" class="btn btn-white mr-3" type="submit">SignUp</a>
               <a href="login" class="btn btn-white mr-3" type="submit">Login</a>

@@ -4,7 +4,7 @@
     
     {% block body%}
     <div class="container">
-    <form  action="{% url 'signup' %}" method='POST'>
+    <form  action="{% url 'login' %}" method='POST'>
       {% csrf_token %}
          <div class="form-group">
             <label for="email">Email</label>
@@ -13,6 +13,9 @@
           <div class="form-group">
             <label for="password">Password</label>
             <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" style="background:#EE4266">SUBMIT</button>
           </div>
     </form>
     </div>

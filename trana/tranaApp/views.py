@@ -3,7 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 import pyrebase
 
-const firebaseConfig = {
+config = {
   'apiKey': "AIzaSyDXMensLWaA5AvH2M7r6DhR6oCIu1kXG5U",
   'authDomain': "trana-cfbcf.firebaseapp.com",
   'databaseURL': "https://trana-cfbcf.firebaseio.com",
@@ -29,5 +29,6 @@ def post_login(request):
     try:
         user = auth.sign_in_with_email_and_password(email, password)
     except:
-        
+        messages.error("Invalid Credentials")
+        return render(request,'login.html')
     return render(request,'postlogin.html',{'e':email})
