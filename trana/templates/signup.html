@@ -6,17 +6,21 @@
     <div class="container">
     <form  action="{% url 'signup' %}" method='POST'>
       {% csrf_token %}
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" name="username" placeholder="Enter Name">
+      </div>
          <div class="form-group">
             <label for="email">Email</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
           </div>
           <div class="form-group">
-            <label for="password1">Password</label>
-            <input type="password" class="form-control" id="password1" name="password1" placeholder="Enter password">
+            <label for="position">Position</label>
+            <input type="text" class="form-control" id="position" name="position" placeholder="Enter Authority Position">
           </div>
           <div class="form-group">
-            <label for="password2">Password Again</label>
-            <input type="password" class="form-control" id="password2" name="password2" placeholder="Confirm password">
+            <label for="password1">Password</label>
+            <input type="password" class="form-control" id="password1" name="password1" placeholder="Enter password">
           </div>
           <div class="modal-footer">
             <button type="submit" class="btn btn-primary" style="background:#EE4266">SUBMIT</button>
