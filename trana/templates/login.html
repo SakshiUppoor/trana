@@ -4,7 +4,7 @@
     
     {% block body%}
     <div class="container">
-    <form  action="{% url 'login' %}" method='POST'>
+    <form  action="{% url 'postlogin' %}" method='POST'>
       {% csrf_token %}
          <div class="form-group">
             <label for="email">Email</label>
@@ -19,5 +19,6 @@
           </div>
     </form>
     </div>
+    {% endblock body %}
     
         
