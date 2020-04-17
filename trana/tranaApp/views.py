@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.contrib import auth
 from firebase import firebase
 # Create your views here.
-#import pyrebase
+import pyrebase
 import firebase_admin
 from firebase_admin import credentials,firestore,auth
 cred=credentials.Certificate('./ServiceAccountKey.json')
@@ -22,8 +22,8 @@ config = {
  
 }
 
-#firebase = pyrebase.initialize_app(config)
-#authe=firebase.auth()
+firebase = pyrebase.initialize_app(config)
+authe=firebase.auth()
 #db = firebase.database()
 #firebase = firebase.FirebaseApplication("https://trana-cfbcf.firebaseio.com", None)
 
@@ -61,5 +61,5 @@ def post_login(request):
     return render(request,'postlogin.html',{'e':email})
 
 def logout_view(request):
-    auth.logout(request)
+    firebase_admin.auth.logout(request)
     return render(request,'login.html')
