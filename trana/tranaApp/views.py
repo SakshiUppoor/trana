@@ -37,7 +37,7 @@ def signup(request):
     password=request.POST.get(u'password1')
 
     firebase_admin.auth.create_user(email=email,password=password)
-    
+    print(firebase_admin.auth.UserInfo)
     data={'name':name,'position':position}
     db.collection(u'authorities').document(u'details').set(data)
     
