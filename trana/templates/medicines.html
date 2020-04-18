@@ -158,26 +158,28 @@
                 <th onclick="sortTable(2)">Case</th>
                 <th onclick="sortTable(3)">Area</th>
                 <th>Contact</th>
+                <th>Send Email</th>
               </tr>
             </thead>
             <tbody id="myTable">
-              {% for report in reports %}
+              {% for medicine in medicines %}
               <tr>
-                <td onclick="showDetails({{report| get_item:'id'}})">
-                  {{report| get_item:'name'}}
+                <td onclick="showDetails({{medicine| get_item:'id'}})">
+                  {{medicine| get_item:'address'}}
                 </td>
-                <td onclick="showDetails({{report| get_item:'id'}})">
-                  {{report| get_item:'condition'}}
+                <td onclick="showDetails({{medicine| get_item:'id'}})">
+                  {{medicine| get_item:'condition'}}
                 </td>
-                <td onclick="showDetails({{report| get_item:'id'}})">
-                  {{report| get_item:'case'}}
+                <td onclick="showDetails({{medicine| get_item:'id'}})">
+                  {{medicine| get_item:'case'}}
                 </td>
-                <td onclick="showDetails({{report| get_item:'id'}})">
-                  {{report| get_item:'address'}}
+                <td onclick="showDetails({{medicine| get_item:'id'}})">
+                  {{medicine| get_item:'medicine'}}
                 </td>
-                <td onclick="showDetails({{report| get_item:'id'}})">
-                  {{report| get_item:'contact'}}
+                <td onclick="showDetails({{medicine| get_item:'id'}})">
+                  {{medicine| get_item:'contact'}}
                 </td>
+                <td><button type="submit" class="btn btn-success" >Send Email</button></td>
               </tr>
               {% endfor %}
             </tbody>
@@ -363,10 +365,10 @@
         modal.style.display = "block";
         var p = document.getElementById("modalContent");
         p.innerHTML = ""
-        {% for report in reports %}
-          if (parseInt("{{report | get_item:'id' }}") == id)
+        {% for medicine in medicines %}
+          if (parseInt("{{medicine | get_item:'id' }}") == id)
           {
-            {% for key, value in report.items %}
+            {% for key, value in medicine.items %}
             //console.log("{{key}},{{value}}");
             p.innerHTML += "{{key}},{{value}} <br>"
             {% endfor %}
