@@ -1,7 +1,8 @@
 from django.shortcuts import render
+
 import os
 import firebase_admin
-from firebase_admin import credentials, firestore
+from firebase_admin import credentials, firestore, auth
 
 from django.contrib import messages
 from django.contrib import auth
@@ -39,8 +40,13 @@ firebase = pyrebase.initialize_app(config)
 authe = firebase.auth()
 
 
-def home(request):
-    return render(request, "home.html")
+def goToDashboard(uid):
+    user_ref = db.collection(u"Users").document(u"1c1FsGUvCeTyqT5C5oxKbwVRpPl1")
+    user = user_ref.get()
+    if user.exists:
+        print(u"Document data: {}".format(user.to_dict()))
+    else:
+        print(u"No such document!")
 
 
 def get_components():
@@ -67,7 +73,7 @@ def reportsDashboard(request):
         "co_list": co_list,
         "reports": reports_list,
     }
-    return render(request, "dashboard.html", context)
+    return render(request, "reports.html", context)
 
 
 def signup(request):
@@ -85,21 +91,26 @@ def signup(request):
 
 
 def login_view(request):
+    if request.method == "POST":
+        email = request.POST["email"]
+        password = request.POST["password"]
+        try:
+            user = authe.sign_in_with_email_and_password(email, password)
+        except:
+            messages.error(request, "Invalid Credentials")
+            return render(request, "login.html")
+        uid = user["localId"]
+        print(uid)
+        session_id = user["idToken"]
+        request.session["uid"] = str(session_id)
+        goToDashboard(uid)
+        # return HttpResponseRedirect(reverse("home"))
     return render(request, "login.html")
 
 
 def post_login(request):
-    email = request.POST["email"]
-    password = request.POST["password"]
-    try:
-        user = authe.sign_in_with_email_and_password(email, password)
-    except:
-        messages.error(request, "Invalid Credentials")
-        return render(request, "login.html")
-    print(user)
-    session_id = user["idToken"]
-    request.session["uid"] = str(session_id)
-    return render(request, "postlogin.html", {"e": email})
+
+    return render(request, "postlogin.html")
 
 
 def logout_view(request):
