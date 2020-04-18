@@ -67,10 +67,11 @@ def get_components():
             [report.to_dict()["locationNew"][0], report.to_dict()["locationNew"][1]]
         )
         entry = {}
+        entry["id"] = len(reports_list)
+        entry["uid"] = report.id()
         for field in report.to_dict():
             if field != "locationNew":
                 entry[field] = report.to_dict()[field]
-        entry["id"] = len(reports_list)
         reports_list.append(entry)
     return co_list, reports_list
 
