@@ -362,6 +362,7 @@
         console.log("hi");
         modal.style.display = "block";
         var p = document.getElementById("modalContent");
+        p.innerHTML = ""
         {% for report in reports %}
           if (parseInt("{{report | get_item:'id' }}") == id)
           {
