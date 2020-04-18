@@ -69,14 +69,55 @@ def get_components():
         entry = {}
         entry["id"] = len(reports_list)
         for field in report.to_dict():
+<<<<<<< HEAD
             entry[field] = report.to_dict()[field]
+=======
+            if field != "location":
+                entry[field] = report.to_dict()[field]
+>>>>>>> 901bb5e05978758306396a04ed3be0120c05d160
         reports_list.append(entry)
     return co_list, reports_list
 
+def get_medicines():
+    med_ref = db.collection(u"Medicines")
+    medicines = med_ref.stream()
+    co_list = []
+    medicines_list = []
+    for medicine in medicines:
+        co_list.append(
+            [medicine.to_dict()["locationNew"][0], medicine.to_dict()["locationNew"][1]]
+        )
+        entry = {}
+        for field in medicine.to_dict():
+            if field != "locationNew":
+                entry[field] = medicine.to_dict()[field]
+        entry["id"] = len(medicines_list)
+        medicines_list.append(entry)
+    return co_list, medicines_list
 
+
+<<<<<<< HEAD
+def reportsDashboard(request):
+    co_list, reports_list = get_components()
+    context = {
+        "co_list": co_list,
+        "reports": reports_list,
+    }
+    return render(request, "reports.html", context)
+
+
+def medicinesDashboard(request):
+    co_list, medicines_list = get_medicines()
+    context = {
+        "co_list": co_list,
+        "medicines": medicines_list,
+    }
+    return render(request, "medicines.html", context)
+=======
 #############################################
 #       AUTHENTICATION & LOGIN STUFF        #
 #############################################
+>>>>>>> 5ea16668a08caaa785b3850364b653cddd4d91c4
 
 
 def signup(request):
@@ -121,6 +162,13 @@ def login_view(request):
     return render(request, "login.html")
 
 
+<<<<<<< HEAD
+def usersDashboard(request):
+    return render(request, "users.html")
+
+
+=======
+>>>>>>> 5ea16668a08caaa785b3850364b653cddd4d91c4
 def logout_view(request):
     auth.logout(request)
     return render(request, "login.html")
