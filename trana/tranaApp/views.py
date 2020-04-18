@@ -31,14 +31,16 @@ def home(request):
     return render(request,'home.html')
 
 def signup(request):
-    name=request.POST.get('username')
-    email=request.POST.get('email')
-    position=request.POST.get('position')
-    password=request.POST.get('password1')
+    name=request.POST.get(u'username')
+    email=request.POST.get(u'email')
+    position=request.POST.get(u'position')
+    password=request.POST.get(u'password1')
 
     firebase_admin.auth.create_user(email=email,password=password)
+    
     data={'name':name,'position':position}
     db.collection(u'authorities').document(u'details').set(data)
+    
     
    
    
@@ -61,5 +63,5 @@ def post_login(request):
     return render(request,'postlogin.html',{'e':email})
 
 def logout_view(request):
-    firebase_admin.auth.logout(request)
+    auth.logout(request)
     return render(request,'login.html')
