@@ -5,9 +5,12 @@ import firebase_admin
 from firebase_admin import credentials, firestore, auth
 
 from django.contrib import messages
+from django.contrib import auth
 
 from firebase import firebase
 import pyrebase
+
+from .utils import send_mail
 
 ###########################
 # FIRESTORE CONFIGURATION #
@@ -20,6 +23,8 @@ deafult_app = firebase_admin.initialize_app(cred)
 
 db = firestore.client()
 
+current_user = ""
+current_user_uid = ""
 
 ##########################
 # PYREBASE CONFIGURATION #
@@ -39,9 +44,13 @@ config = {
 firebase = pyrebase.initialize_app(config)
 authe = firebase.auth()
 
+#############
+#   UTILS   #
+#############
 
-def getPosition(uid):
-    user_ref = db.collection(u"Users").document(uid)
+
+def getPosition():
+    user_ref = db.collection(u"Users").document(current_user_uid)
     user = user_ref.get()
     if user.exists:
         return user.to_dict().get("position")
@@ -58,10 +67,11 @@ def get_components():
             [report.to_dict()["location"][0], report.to_dict()["location"][1]]
         )
         entry = {}
+        entry["id"] = len(reports_list)
+        entry["uid"] = report.id()
         for field in report.to_dict():
             if field != "location":
                 entry[field] = report.to_dict()[field]
-        entry["id"] = len(reports_list)
         reports_list.append(entry)
     return co_list, reports_list
 
@@ -83,6 +93,7 @@ def get_medicines():
     return co_list, medicines_list
 
 
+<<<<<<< HEAD
 def reportsDashboard(request):
     co_list, reports_list = get_components()
     context = {
@@ -99,6 +110,11 @@ def medicinesDashboard(request):
         "medicines": medicines_list,
     }
     return render(request, "medicines.html", context)
+=======
+#############################################
+#       AUTHENTICATION & LOGIN STUFF        #
+#############################################
+>>>>>>> 5ea16668a08caaa785b3850364b653cddd4d91c4
 
 
 def signup(request):
@@ -110,7 +126,6 @@ def signup(request):
 
         user = firebase_admin.auth.create_user(email=email, password=password)
         uid = user.uid
-        # print(firebase_admin.auth.UserInfo)
         data = {u"name": name, u"position": position}
         db.collection(u"Users").document(uid).set(data)
 
@@ -122,32 +137,63 @@ def login_view(request):
         email = request.POST["email"]
         password = request.POST["password"]
         try:
-            user = authe.sign_in_with_email_and_password(email, password)
+            global current_user, current_user_uid
+            current_user = authe.sign_in_with_email_and_password(email, password)
+            current_user_uid = current_user["localId"]
+            session_id = current_user["idToken"]
+            request.session["uid"] = str(session_id)
+
+            position = getPosition()
+            print(position)
+            if position == "authority":
+                print("hello")
+                return HttpResponseRedirect(reverse("reports"))
+            elif position == "pharmacist":
+                return HttpResponseRedirect(reverse("medicines"))
+            else:
+                return HttpResponseRedirect(reverse("users"))
         except:
             messages.error(request, "Invalid Credentials")
             return render(request, "login.html")
-        uid = user["localId"]
-        print(uid)
-        session_id = user["idToken"]
-        request.session["uid"] = str(session_id)
-
-        position = getPosition(uid)
-        print(position)
-        if position == "authority":
-            print("hello")
-            return HttpResponseRedirect(reverse("reports"))
-        elif position == "pharmacist":
-            return HttpResponseRedirect(reverse("medicines"))
-        else:
-            return HttpResponseRedirect(reverse("users"))
 
     return render(request, "login.html")
 
 
+<<<<<<< HEAD
 def usersDashboard(request):
     return render(request, "users.html")
 
 
+=======
+>>>>>>> 5ea16668a08caaa785b3850364b653cddd4d91c4
 def logout_view(request):
     auth.logout(request)
     return render(request, "login.html")
+
+
+#############################################
+#                DASHBOARDS                 #
+#############################################
+
+
+def reportsDashboard(request):
+    co_list, reports_list = get_components()
+    context = {
+        "co_list": co_list,
+        "reports": reports_list,
+    }
+    return render(request, "reports.html", context)
+
+
+def medicinesDashboard(request):
+    co_list, reports_list = get_components()
+    context = {
+        "co_list": co_list,
+        "reports": reports_list,
+    }
+    return render(request, "medicines.html", context)
+
+
+def usersDashboard(request):
+
+    return render(request, "users.html")
