@@ -3,25 +3,26 @@ import os
 import firebase_admin
 from firebase_admin import credentials, firestore
 
+from django.contrib import messages
+from django.contrib import auth
+from firebase import firebase
+import pyrebase
+
+###########################
+# FIRESTORE CONFIGURATION #
+###########################
+
 cred = credentials.Certificate(
     os.path.join(os.path.dirname(__file__), "ServiceAccountKey.json")
 )
 deafult_app = firebase_admin.initialize_app(cred)
 
-
 db = firestore.client()
-from django.contrib import messages
-from django.contrib import auth
-from firebase import firebase
 
-# Create your views here.
-import pyrebase
-import firebase_admin
-from firebase_admin import credentials, firestore, auth
 
-cred = credentials.Certificate("./ServiceAccountKey.json")
-default_app = firebase_admin.initialize_app(cred)
-db = firestore.client()
+##########################
+# PYREBASE CONFIGURATION #
+##########################
 
 config = {
     "apiKey": "AIzaSyDXMensLWaA5AvH2M7r6DhR6oCIu1kXG5U",
@@ -36,8 +37,10 @@ config = {
 
 firebase = pyrebase.initialize_app(config)
 authe = firebase.auth()
-# db = firebase.database()
-# firebase = firebase.FirebaseApplication("https://trana-cfbcf.firebaseio.com", None)
+
+
+def home(request):
+    return render(request, "home.html")
 
 
 def get_components():
