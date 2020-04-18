@@ -1,11 +1,11 @@
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from .pwd import pwd
+from .email_credentials import email, pwd
 
 
 def send_mail(email_id):
-    me = "variegatedlark@gmail.com"
+    me = email
     my_password = pwd
     you = email_id
 
