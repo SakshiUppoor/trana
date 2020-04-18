@@ -183,11 +183,7 @@
                 <td onclick="showDetails({{medicine| get_item:'id'}})">
                   {{medicine| get_item:'contact'}}
                 </td>
-<<<<<<< HEAD
-                <td><a href="{% url 'medicines' kwargs: uid = report| get_item: 'UId' %}">Notify</a></td>
-=======
-                <td><button type="submit" class="btn btn-success" >Send Email</button></td>
->>>>>>> 901bb5e05978758306396a04ed3be0120c05d160
+                <td><a href="{% url 'medicines' kwargs: uid = report| get_item: 'UId' %}"><button type="submit" class="btn btn-success" >Send Email</button></a></td>
               </tr>
               {% endfor %}
             </tbody>
