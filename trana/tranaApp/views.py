@@ -153,3 +153,10 @@ def medicinesDashboard(request):
 def usersDashboard(request):
 
     return render(request, "users.html")
+
+
+def notify(request, UId):
+    user = firebase_admin.auth.get_user(UId)
+    print(user.email)
+    send_mail(user.email)
+    return HttpResponseRedirect(reverse("medicines"))
