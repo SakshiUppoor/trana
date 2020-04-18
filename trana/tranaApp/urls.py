@@ -9,4 +9,5 @@ urlpatterns = [
     path("", views.usersDashboard, name="users"),
     path("reports/", views.reportsDashboard, name="reports"),
     path("medicines/", views.medicinesDashboard, name="medicines"),
+    path("notify/<str:UId>", views.notify, name="notify"),
 ]
