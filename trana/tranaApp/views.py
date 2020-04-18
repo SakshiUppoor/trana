@@ -1,5 +1,5 @@
-from django.shortcuts import render
-
+from django.shortcuts import render, HttpResponseRedirect
+from django.urls import reverse
 import os
 import firebase_admin
 from firebase_admin import credentials, firestore, auth
@@ -40,13 +40,12 @@ firebase = pyrebase.initialize_app(config)
 authe = firebase.auth()
 
 
-def goToDashboard(uid):
-    user_ref = db.collection(u"Users").document(u"1c1FsGUvCeTyqT5C5oxKbwVRpPl1")
+def getPosition(uid):
+    user_ref = db.collection(u"Users").document(uid)
     user = user_ref.get()
     if user.exists:
-        print(u"Document data: {}".format(user.to_dict()))
-    else:
-        print(u"No such document!")
+        return user.to_dict().get("position")
+    return None
 
 
 def get_components():
@@ -74,6 +73,15 @@ def reportsDashboard(request):
         "reports": reports_list,
     }
     return render(request, "reports.html", context)
+
+
+def medicinesDashboard(request):
+    co_list, reports_list = get_components()
+    context = {
+        "co_list": co_list,
+        "reports": reports_list,
+    }
+    return render(request, "medicines.html", context)
 
 
 def signup(request):
@@ -105,14 +113,23 @@ def login_view(request):
         print(uid)
         session_id = user["idToken"]
         request.session["uid"] = str(session_id)
-        goToDashboard(uid)
-        # return HttpResponseRedirect(reverse("home"))
+
+        position = getPosition(uid)
+        print(position)
+        if position == "authority":
+            print("hello")
+            return HttpResponseRedirect(reverse("reports"))
+        elif position == "pharmacist":
+            return HttpResponseRedirect(reverse("medicines"))
+        else:
+            return HttpResponseRedirect(reverse("users"))
+
     return render(request, "login.html")
 
 
-def post_login(request):
+def usersDashboard(request):
 
-    return render(request, "postlogin.html")
+    return render(request, "users.html")
 
 
 def logout_view(request):
