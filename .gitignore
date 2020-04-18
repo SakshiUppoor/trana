@@ -1,3 +1,4 @@
 venv/
 **/ServiceAccountKey.json
 **/__pycache__/
+**/db.sqlite3

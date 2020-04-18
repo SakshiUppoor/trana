@@ -2,4 +2,10 @@
 
 {% block title%}PostLogin{% endblock title %}
 
-{% block body%}<h1>Welcome,{{e}}</h1>{% endblock body%}
+{% block body%}
+<h1>Welcome,{{e}}</h1>
+<div class="modal-footer">
+    <a href="logout" class="btn btn-white" type="submit">Logout</a>
+</div>
+
+{% endblock body%}
