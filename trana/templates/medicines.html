@@ -158,6 +158,7 @@
                 <th onclick="sortTable(2)">Case</th>
                 <th onclick="sortTable(3)">Area</th>
                 <th>Contact</th>
+                <th>Notify<th>
               </tr>
             </thead>
             <tbody id="myTable">
@@ -178,6 +179,7 @@
                 <td onclick="showDetails({{report| get_item:'id'}})">
                   {{report| get_item:'contact'}}
                 </td>
+                <td><a href="{% url 'medicines' kwargs: uid = report| get_item: 'UId' %}">Notify</a></td>
               </tr>
               {% endfor %}
             </tbody>

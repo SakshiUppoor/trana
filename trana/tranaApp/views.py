@@ -58,20 +58,18 @@ def getPosition():
 
 
 def get_components():
-    reports_ref = db.collection(u"Medicines")
+    reports_ref = db.collection(u"Reports")
     reports = reports_ref.stream()
     co_list = []
     reports_list = []
     for report in reports:
         co_list.append(
-            [report.to_dict()["locationNew"][0], report.to_dict()["locationNew"][1]]
+            [report.to_dict()["location"][0], report.to_dict()["location"][1]]
         )
         entry = {}
         entry["id"] = len(reports_list)
-        entry["uid"] = report.id()
         for field in report.to_dict():
-            if field != "locationNew":
-                entry[field] = report.to_dict()[field]
+            entry[field] = report.to_dict()[field]
         reports_list.append(entry)
     return co_list, reports_list
 
@@ -142,7 +140,11 @@ def reportsDashboard(request):
     return render(request, "reports.html", context)
 
 
-def medicinesDashboard(request):
+def medicinesDashboard(request, **kwargs):
+    if kwargs.get("uid"):
+
+        email_id = kwargs["email"]
+        send_mail(email_id)
     co_list, reports_list = get_components()
     context = {
         "co_list": co_list,
