@@ -93,7 +93,6 @@ def get_medicines():
     return co_list, medicines_list
 
 
-<<<<<<< HEAD
 def reportsDashboard(request):
     co_list, reports_list = get_components()
     context = {
@@ -110,11 +109,6 @@ def medicinesDashboard(request):
         "medicines": medicines_list,
     }
     return render(request, "medicines.html", context)
-=======
-#############################################
-#       AUTHENTICATION & LOGIN STUFF        #
-#############################################
->>>>>>> 5ea16668a08caaa785b3850364b653cddd4d91c4
 
 
 def signup(request):
@@ -159,13 +153,10 @@ def login_view(request):
     return render(request, "login.html")
 
 
-<<<<<<< HEAD
 def usersDashboard(request):
     return render(request, "users.html")
 
 
-=======
->>>>>>> 5ea16668a08caaa785b3850364b653cddd4d91c4
 def logout_view(request):
     auth.logout(request)
     return render(request, "login.html")
