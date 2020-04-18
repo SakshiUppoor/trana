@@ -1,10 +1,10 @@
 from django.shortcuts import render
 import os
 import firebase_admin
-from firebase_admin import credentials, firestore
+from firebase_admin import credentials, firestore,auth
 
 from django.contrib import messages
-from django.contrib import auth
+
 from firebase import firebase
 import pyrebase
 
@@ -71,15 +71,17 @@ def reportsDashboard(request):
 
 
 def signup(request):
-    name=request.POST.get(u'username')
-    email=request.POST.get(u'email')
-    position=request.POST.get(u'position')
-    password=request.POST.get(u'password1')
+    if request.method=='POST':
+        name=request.POST.get(u'username')
+        email=request.POST.get(u'email')
+        position=request.POST.get(u'position')
+        password=request.POST.get(u'password1')
 
-    firebase_admin.auth.create_user(email=email,password=password)
-    print(firebase_admin.auth.UserInfo)
-    data={'name':name,'position':position}
-    db.collection(u'authorities').document(u'details').set(data)
+        user=firebase_admin.auth.create_user(email=email,password=password)
+        uid=user.uid
+        #print(firebase_admin.auth.UserInfo)
+        data={u'name':name,u'position':position}
+        db.collection(u'Users').document(uid).set(data)
     
     
    
