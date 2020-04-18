@@ -57,58 +57,27 @@ def getPosition():
     return None
 
 
-def get_components():
-    reports_ref = db.collection(u"Reports")
+def get_components(collection):
+    reports_ref = db.collection(collection)
     reports = reports_ref.stream()
     co_list = []
     reports_list = []
     for report in reports:
-        co_list.append(
-            [report.to_dict()["location"][0], report.to_dict()["location"][1]]
-        )
+        if report.to_dict().get("location"):
+            co_list.append(
+                [report.to_dict()["location"][0], report.to_dict()["location"][1]]
+            )
         entry = {}
         entry["id"] = len(reports_list)
-        entry["uid"] = report.id()
         for field in report.to_dict():
-            if field != "location":
-                entry[field] = report.to_dict()[field]
+            entry[field] = report.to_dict()[field]
         reports_list.append(entry)
     return co_list, reports_list
 
-def get_medicines():
-    med_ref = db.collection(u"Medicines")
-    medicines = med_ref.stream()
-    co_list = []
-    medicines_list = []
-    for medicine in medicines:
-        co_list.append(
-            [medicine.to_dict()["locationNew"][0], medicine.to_dict()["locationNew"][1]]
-        )
-        entry = {}
-        for field in medicine.to_dict():
-            if field != "locationNew":
-                entry[field] = medicine.to_dict()[field]
-        entry["id"] = len(medicines_list)
-        medicines_list.append(entry)
-    return co_list, medicines_list
 
-
-def reportsDashboard(request):
-    co_list, reports_list = get_components()
-    context = {
-        "co_list": co_list,
-        "reports": reports_list,
-    }
-    return render(request, "reports.html", context)
-
-
-def medicinesDashboard(request):
-    co_list, medicines_list = get_medicines()
-    context = {
-        "co_list": co_list,
-        "medicines": medicines_list,
-    }
-    return render(request, "medicines.html", context)
+#############################################
+#       AUTHENTICATION & LOGIN STUFF        #
+#############################################
 
 
 def signup(request):
@@ -153,10 +122,6 @@ def login_view(request):
     return render(request, "login.html")
 
 
-def usersDashboard(request):
-    return render(request, "users.html")
-
-
 def logout_view(request):
     auth.logout(request)
     return render(request, "login.html")
@@ -168,7 +133,7 @@ def logout_view(request):
 
 
 def reportsDashboard(request):
-    co_list, reports_list = get_components()
+    co_list, reports_list = get_components("Reports")
     context = {
         "co_list": co_list,
         "reports": reports_list,
@@ -177,10 +142,10 @@ def reportsDashboard(request):
 
 
 def medicinesDashboard(request):
-    co_list, reports_list = get_components()
+    co_list, medicines_list = get_components("Medicines")
     context = {
         "co_list": co_list,
-        "reports": reports_list,
+        "medicines": medicines_list,
     }
     return render(request, "medicines.html", context)
 
