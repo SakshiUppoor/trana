@@ -2,11 +2,7 @@ from django.shortcuts import render
 
 import os
 import firebase_admin
-<<<<<<< HEAD
 from firebase_admin import credentials, firestore, auth
-=======
-from firebase_admin import credentials, firestore,auth
->>>>>>> a58b632dc6ee6c618574569c139b3f524c15bffc
 
 from django.contrib import messages
 
@@ -81,22 +77,20 @@ def reportsDashboard(request):
 
 
 def signup(request):
-    if request.method=='POST':
-        name=request.POST.get(u'username')
-        email=request.POST.get(u'email')
-        position=request.POST.get(u'position')
-        password=request.POST.get(u'password1')
+    if request.method == "POST":
+        name = request.POST.get(u"username")
+        email = request.POST.get(u"email")
+        position = request.POST.get(u"position")
+        password = request.POST.get(u"password1")
 
-        user=firebase_admin.auth.create_user(email=email,password=password)
-        uid=user.uid
-        #print(firebase_admin.auth.UserInfo)
-        data={u'name':name,u'position':position}
-        db.collection(u'Users').document(uid).set(data)
-    
-    
-   
-   
-    return render(request,'signup.html')
+        user = firebase_admin.auth.create_user(email=email, password=password)
+        uid = user.uid
+        # print(firebase_admin.auth.UserInfo)
+        data = {u"name": name, u"position": position}
+        db.collection(u"Users").document(uid).set(data)
+
+    return render(request, "signup.html")
+
 
 def login_view(request):
     if request.method == "POST":
