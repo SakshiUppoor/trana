@@ -10,22 +10,12 @@
         margin: 0;
         padding: 0;
       }
+
       .form-wrap{
-        margin-top:20px;
-        width:340px;
-        height:480px;
+        margin:auto 20em;
         padding:40px 20px;
-        box-sizing: border-box;
-        position: fixed;
-        left:50%;
-        top:50%;
-        transform: translate(-50%,-50%);
         font-size:20px;
-        font-family: Circular Std;
-        font-style: normal;
-        font-weight: bold;    
         color:#4B7FFB;
-        border:2px solid  #FFB167;;
       }
 
       input[type="text"],input[type="email"],input[type="password"],input[type="button"]{
@@ -48,8 +38,6 @@
         outline:none;
         margin-left: 10px;
         margin-top:10px;
-        
-       
       }
       
       
@@ -59,7 +47,6 @@
         cursor: pointer;
         background: #EF716B;
         border-radius: 35px;
-        position: absolute;
         width: 145px;
         height: 40px;
         left: 80px;
@@ -68,6 +55,16 @@
       input[type="submit"]:hover{
        transition: .6s;
       }
+      .pharmacist-details {
+        display: none;
+  transition: 0.5s;
+  transition-timing-function: ease-in-out;
+      }
+  #pharmacist:checked ~ .pharmacist-details{
+ display: block;
+  max-height: auto;
+  overflow: visible;
+}
 
     </style>
 
@@ -75,25 +72,33 @@
     <div class="form-wrap">
     <form  action="{% url 'signup' %}" method='POST'>
       {% csrf_token %}
-      <div class="form-group">
+      <div required class="form-group">
         <label for="name">Name</label>
-        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name">
-      </div>
-      <div class="form-group">
+        <input required type="text" class="form-control" id="name" name="name" placeholder="Enter Name">
+        
         <label for="email">Email</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
-      </div>
-      <div class="form-group">
+        <input required type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+
         <label for="password1">Password</label>
-        <input type="password" class="form-control" id="password1" name="password1" placeholder="Enter password">
-      </div>
-      <div class="form-group ">
+        <input required type="password" class="form-control" id="password1" name="password1" placeholder="Enter password">
+
+        <input type="radio" class="form-control" id="user" name="position" value="user" required/>
+        <label for="user">User</label>
         <input type="radio" class="form-control" id="authority" name="position" value="authority" />
         <label for="authority" >Authority</label>
         <input type="radio" class="form-control" id="pharmacist" name="position" value="pharmacist" />
         <label for="pharmacist">Pharmacist</label>
+        
+
+        <div class="pharmacist-details">
+          <label for="pharmacy">Name of Pharmacy</label>
+          <input class="form-control"  type="text" id="pharmacy-name" name="pharmacy-name" placeholder="Enter Name of Pharmacy">
+          <label for="name">Address of Pharmacy</label>
+          <input  class="form-control" type="text" id="address" name="address" placeholder="Enter address of Pharmacy">
+        </div>
+        <br>
+        <input type="submit" value="Register" />
       </div>
-        <input type="submit" value="Login" />
          
     </form>
     </div>

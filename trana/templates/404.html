@@ -1,0 +1,21 @@
+{% extends 'base.html' %} {% load static %} {% block body %}
+<style>
+  .main {
+    text-align: center;
+  }
+  img {
+    height: 45vh;
+    margin: 2em;
+    max-width: 80vw;
+  }
+  h1 {
+    font-size: 200px;
+    font-weight: 600;
+  }
+</style>
+<div class="main">
+  <img src="{% static 'images/404.svg'%}" />
+  <h1>404</h1>
+  <h2>Page not found</h2>
+</div>
+{% endblock body %}

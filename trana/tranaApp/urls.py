@@ -10,4 +10,5 @@ urlpatterns = [
     path("reports/", views.reportsDashboard, name="reports"),
     path("medicines/", views.medicinesDashboard, name="medicines"),
     path("notify/<str:UId>", views.notify, name="notify"),
+    path("404/", views.page404, name="404"),
 ]

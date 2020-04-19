@@ -50,10 +50,11 @@ authe = firebase.auth()
 
 
 def getPosition():
-    user_ref = db.collection(u"Users").document(current_user_uid)
-    user = user_ref.get()
-    if user.exists:
-        return user.to_dict().get("position")
+    if current_user_uid:
+        user_ref = db.collection(u"Users").document(current_user_uid)
+        user = user_ref.get()
+        if user.exists:
+            return user.to_dict().get("position")
     return None
 
 
@@ -68,7 +69,7 @@ def get_components(collection):
                 [report.to_dict()["location"][0], report.to_dict()["location"][1]]
             )
         entry = {}
-        entry["id"] = len(reports_list)
+        entry["id"] = report.id
         for field in report.to_dict():
             entry[field] = report.to_dict()[field]
         reports_list.append(entry)
@@ -82,7 +83,7 @@ def get_components(collection):
 
 def signup(request):
     if request.method == "POST":
-        name = request.POST.get(u"username")
+        name = request.POST.get(u"name")
         email = request.POST.get(u"email")
         position = request.POST.get(u"position")
         password = request.POST.get(u"password1")
@@ -90,6 +91,12 @@ def signup(request):
         user = firebase_admin.auth.create_user(email=email, password=password)
         uid = user.uid
         data = {u"name": name, u"position": position}
+
+        if position == "pharmacist":
+            pharmacy_name = request.POST.get(u"pharmacy-name")
+            address = request.POST.get(u"address")
+            data[u"pharmacy-name"] = pharmacy_name
+            data[u"address"] = address
         db.collection(u"Users").document(uid).set(data)
 
     return render(request, "signup.html")
@@ -133,21 +140,31 @@ def logout_view(request):
 
 
 def reportsDashboard(request):
-    co_list, reports_list = get_components("Reports")
-    context = {
-        "co_list": co_list,
-        "reports": reports_list,
-    }
-    return render(request, "reports.html", context)
+    if getPosition() != None:
+        if getPosition() == "authority":
+            co_list, reports_list = get_components("Reports")
+            context = {
+                "co_list": co_list,
+                "reports": reports_list,
+            }
+            return render(request, "reports.html", context)
+        else:
+            return HttpResponseRedirect(reverse("404"))
+    return HttpResponseRedirect(reverse("login"))
 
 
 def medicinesDashboard(request):
-    co_list, medicines_list = get_components("Medicines")
-    context = {
-        "co_list": co_list,
-        "medicines": medicines_list,
-    }
-    return render(request, "medicines.html", context)
+    if getPosition() != None:
+        if getPosition() == "pharmacist":
+            co_list, medicines_list = get_components("Medicines")
+            context = {
+                "co_list": co_list,
+                "medicines": medicines_list,
+            }
+            return render(request, "medicines.html", context)
+        else:
+            return HttpResponseRedirect(reverse("404"))
+    return HttpResponseRedirect(reverse("login"))
 
 
 def usersDashboard(request):
@@ -160,3 +177,8 @@ def notify(request, UId):
     print(user.email)
     send_mail(user.email)
     return HttpResponseRedirect(reverse("medicines"))
+
+
+def page404(request):
+
+    return render(request, "404.html")
