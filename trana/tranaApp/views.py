@@ -113,6 +113,8 @@ def login_view(request):
                 return HttpResponseRedirect(reverse("reports"))
             elif position == "pharmacist":
                 return HttpResponseRedirect(reverse("medicines"))
+            elif position == "user":
+                return HttpResponseRedirect(reverse("appuser"))
             else:
                 return HttpResponseRedirect(reverse("users"))
         except:
@@ -149,9 +151,11 @@ def medicinesDashboard(request):
     }
     return render(request, "medicines.html", context)
 
+def appuser(request):
+    return render(request,"appuser.html")
+
 
 def usersDashboard(request):
-
     return render(request, "users.html")
 
 
@@ -160,3 +164,27 @@ def notify(request, UId):
     print(user.email)
     send_mail(user.email)
     return HttpResponseRedirect(reverse("medicines"))
+
+def reportCondition(request):
+    if request.method == "POST":
+        address = request.POST.get(u"address")
+        contact = request.POST.get(u"contact")
+        age = request.POST.get(u"age")
+        gender = request.POST.get(u"gender")
+        case = request.POST.get(u"case")
+        condition = request.POST.get(u"condition")
+        treatment=request.POST.get(u"treatment")
+        uid=current_user_uid
+        abc=db.collection(u"Reports").get()
+        list_items=[]
+        for i in abc:
+            list_items.append(i)
+        count=len(list_items)+1
+        data = {u"address": address, u"contact": contact, u"age":age, u"gender": gender, u"case": case, u"condition": condition, u"treatment": treatment,u"uId":uid}
+        db.collection(u"Reports").document(str(count)).set(data)
+    return render(request,'condition.html')
+
+def orderMedicine(request):
+    return render(request,'ordermeds.html')
+
+
