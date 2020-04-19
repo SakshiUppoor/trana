@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title%}OrderMeds{% endblock title %}
+    
+{% block body%}
+<div class="form-wrap">
+    <form  action="" method='POST'>
+      {% csrf_token %}
+      <div class="form-group">
+            <label for="email" >Email</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+      </div>
+      <div class="form-group">
+          <label for="password" >Password</label>
+          <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+      </div>
+          <input type="submit" value="Order Medicines">
+      </form>
+    </div>
+{% endblock body %}

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title%}Report Condition{% endblock title %}
+    
+{% block body%}
+<div class="form-wrap">
+    <form  action="" method='POST'>
+      {% csrf_token %}
+      <div class="form-group">
+            <label for="address" >Address</label>
+            <input type="text" class="form-control" id="address" name="address" placeholder="Enter address">
+      </div>
+      <div class="form-group">
+          <label for="contact" >Contact</label>
+          <input type="text" class="form-control" id="contact" name="contact" placeholder="Contact Details">
+      </div>
+      <div class="form-group">
+        <label for="age" >Age</label>
+        <input type="text" class="form-control" id="age" name="age" placeholder="Age">
+    </div>
+      <div class="form-group ">
+        <input type="radio" class="form-control" id="male" name="gender" value="male" />
+        <label for="male" >Male</label>
+        <input type="radio" class="form-control" id="female" name="gender" value="female" />
+        <label for="female" >Female</label>
+      </div> 
+      <div class="form-group">
+        <label for="case" >Case</label>
+        <select name="case" id="case">
+            <option value="pregnancy">Pregnancy</option>
+            <option value="terminal illness">Terminal Illness</option>
+            <option value="post operation">Post Opertion</option>
+            <option value="accident recovery">Accident Recovery</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="condition" >Condition</label>
+        <select name="condition" id="condition">
+            <option value="critical">Critical</option>
+            <option value="urgent">Urgent</option>
+            <option value="informing">Informing</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="doctor" >Doctor</label>
+        <input type="text" class="form-control" id="doctor" name="doctor" placeholder="Doctor Name">
+    </div>
+    <div class="form-group">
+    <label for="hospital" >Hospital</label>
+    <input type="text" class="form-control" id="hospital" name="hospital" placeholder="Hospital Name">
+    </div>
+    <div class="form-group">
+    <label for="medicine" >Medicine</label>
+    <input type="text" class="form-control" id="medicine" name="medicine" placeholder="Medicine">
+    </div>
+      <div class="form-group">
+        <label for="treatment">Treatment</label>
+        <input type="text" class="form-control" id="treatment" name="treatment" placeholder="Any kind of Special Treatment">
+      </div>   
+        <input type="submit" value="Report Condition">
+      </form>
+    </div>
+{% endblock body %}

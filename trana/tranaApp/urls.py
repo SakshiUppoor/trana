@@ -9,6 +9,9 @@ urlpatterns = [
     path("", views.usersDashboard, name="users"),
     path("reports/", views.reportsDashboard, name="reports"),
     path("medicines/", views.medicinesDashboard, name="medicines"),
+    path("appuser/", views.appuser, name="appuser"),
+    path("appuser/condition/", views.reportCondition, name="condition"),
+    path("appuser/medicine/", views.orderMedicine, name="medicine"),
     path("notify/<str:UId>", views.notify, name="notify"),
     path("404/", views.page404, name="404"),
 ]
