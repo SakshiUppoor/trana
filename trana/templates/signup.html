@@ -11,27 +11,47 @@
         padding: 0;
       }
       .form-wrap{
-        width:320px;
+        margin-top:20px;
+        width:340px;
+        height:480px;
         padding:40px 20px;
         box-sizing: border-box;
         position: fixed;
         left:50%;
         top:50%;
         transform: translate(-50%,-50%);
+        font-size:20px;
+        font-family: Circular Std;
+        font-style: normal;
+        font-weight: bold;    
+        color:#4B7FFB;
+        border:2px solid  #FFB167;;
       }
 
-      input[type="text"],input[type="email"],input[type="password"]input[type="button"]{
+      input[type="text"],input[type="email"],input[type="password"],input[type="button"]{
         width:100%;
         background: none;
         border-radius: 3px;
         padding: 6px 15px;
         box-sizing: border-box;
         margin-bottom: 20px;
-        font-size:16px;
+       
       }
       input[type="radio"]{
+        -webkit-appearance: none;
+        position: relative;
+        cursor: pointer;
+        display: inline-block;
+        border-radius:60%;
+        height:20px;
+        width:20px;
+        outline:none;
+        margin-left: 10px;
+        margin-top:10px;
         
+       
       }
+      
       
 
       input[type="submit"]{
@@ -43,7 +63,7 @@
         width: 145px;
         height: 40px;
         left: 80px;
-        top: 350px;
+        top: 400px;
       }
       input[type="submit"]:hover{
        transition: .6s;
@@ -51,33 +71,31 @@
 
     </style>
 
-    <div class="container">
+   
     <div class="form-wrap">
     <form  action="{% url 'signup' %}" method='POST'>
       {% csrf_token %}
       <div class="form-group">
         <label for="name">Name</label>
-      </div>
-      <div class="form-group">
-        <input type="text" class="form-control" id="name" name="username" placeholder="Enter Name">
+        <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name">
       </div>
       <div class="form-group">
         <label for="email">Email</label>
         <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
       </div>
       <div class="form-group">
+        <label for="password1">Password</label>
+        <input type="password" class="form-control" id="password1" name="password1" placeholder="Enter password">
+      </div>
+      <div class="form-group ">
         <input type="radio" class="form-control" id="authority" name="position" value="authority" />
         <label for="authority" >Authority</label>
         <input type="radio" class="form-control" id="pharmacist" name="position" value="pharmacist" />
         <label for="pharmacist">Pharmacist</label>
       </div>
-      <div class="form-group">
-        <label for="password1">Password</label>
-        <input type="password" class="form-control" id="password1" name="password1" placeholder="Enter password">
-      </div>
         <input type="submit" value="Login" />
          
     </form>
     </div>
-    </div>
+   
     {% endblock body%}
