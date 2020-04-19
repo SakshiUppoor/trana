@@ -20,7 +20,7 @@
         transform: translate(-50%,-50%);
       }
 
-      input{
+      input[type="text"],input[type="email"],input[type="password"]input[type="button"]{
         width:100%;
         background: none;
         border-radius: 3px;
@@ -29,10 +29,21 @@
         margin-bottom: 20px;
         font-size:16px;
       }
+      input[type="radio"]{
+        
+      }
+      
 
       input[type="submit"]{
         border:0;
         cursor: pointer;
+        background: #EF716B;
+        border-radius: 35px;
+        position: absolute;
+        width: 145px;
+        height: 40px;
+        left: 80px;
+        top: 350px;
       }
       input[type="submit"]:hover{
        transition: .6s;
@@ -56,15 +67,15 @@
       </div>
       <div class="form-group">
         <input type="radio" class="form-control" id="authority" name="position" value="authority" />
-        <label for="authority">Authority</label>
-        <input type="radio" class="form-control" name="position" value="pharmacist" />
-        <label for="authority">Pharmacist</label>
+        <label for="authority" >Authority</label>
+        <input type="radio" class="form-control" id="pharmacist" name="position" value="pharmacist" />
+        <label for="pharmacist">Pharmacist</label>
       </div>
       <div class="form-group">
         <label for="password1">Password</label>
         <input type="password" class="form-control" id="password1" name="password1" placeholder="Enter password">
       </div>
-        <input type="submit" class="btn btn-primary" style="background:#EE4266" value="Login" />
+        <input type="submit" value="Login" />
          
     </form>
     </div>

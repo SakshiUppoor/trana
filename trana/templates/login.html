@@ -10,6 +10,9 @@
         margin: 0;
         padding: 0;
       }
+      p{
+        color: #1E1C61;
+      }
       .form-wrap{
         width:320px;
         padding:40px 20px;
@@ -18,6 +21,7 @@
         left:50%;
         top:50%;
         transform: translate(-50%,-50%);
+        border-color:coral;
       }
 
       input{
@@ -28,36 +32,46 @@
         box-sizing: border-box;
         margin-bottom: 20px;
         font-size:16px;
+        
+      }
+      label[for="email"],label[for="password"]{
+        color: #1E1C61;  
       }
 
-      input[type="button"]{
+      input[type="submit"]{
         border:0;
         cursor: pointer;
+        background: #EF716B;
+        border-radius: 35px;
+        position: absolute;
+        width: 145px;
+        height: 40px;
+        left: 80px;
+        top: 230px;
+
       }
       input[type="button"]:hover{
        transition: .6s;
       }
 
     </style>
-   <div class="container">
-     <h1>Login</h1>
+  
+     <p>Login</p>
     <div class="form-wrap">
     <form  action="" method='POST'>
       {% csrf_token %}
       <div class="form-group">
-            <label for="email">Name</label>
+            <label for="email" >Email</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
       </div>
-          <div class="form-group">
-          <label for="password">Password</label>
+      <div class="form-group">
+          <label for="password" >Password</label>
           <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
-          </div>
-          
-            <input type="submit" class="btn btn-primary" style="background:#EE4266" value=SignIn>
-         
-    </form>
+      </div>
+          <input type="submit" value=SignIn>
+      </form>
     </div>
-  </div>
+  
     {% endblock body %}
     
         
