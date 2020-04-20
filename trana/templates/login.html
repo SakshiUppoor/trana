@@ -43,12 +43,10 @@
         cursor: pointer;
         background: #EF716B;
         border-radius: 35px;
-        position: absolute;
         width: 145px;
         height: 40px;
-        left: 80px;
-        top: 230px;
-
+        color: #fff;
+        margin: auto;
       }
       input[type="button"]:hover{
        transition: .6s;
@@ -56,8 +54,9 @@
 
     </style>
   
-     <p>Login</p>
     <div class="form-wrap">
+    
+    <h4>Login</h4>
     <form  action="" method='POST'>
       {% csrf_token %}
       <div class="form-group">
@@ -68,7 +67,7 @@
           <label for="password" >Password</label>
           <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
       </div>
-          <input type="submit" value=SignIn>
+          <input class="primary" type="submit" value="Login">
       </form>
     </div>
   

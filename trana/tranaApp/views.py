@@ -58,6 +58,14 @@ def getPosition():
     return None
 
 
+def getName(UId):
+    user_ref = db.collection(u"Users").document(UId)
+    user = user_ref.get()
+    if user.exists:
+        return user.to_dict().get("name")
+    return None
+
+
 def get_components(collection):
     reports_ref = db.collection(collection)
     reports = reports_ref.stream()
@@ -70,6 +78,9 @@ def get_components(collection):
             )
         entry = {}
         entry["id"] = report.id
+        if report.to_dict().get("uId"):
+            UId = report.to_dict().get("uId")
+            entry["name"] = getName(UId)
         for field in report.to_dict():
             entry[field] = report.to_dict()[field]
         reports_list.append(entry)
@@ -99,7 +110,7 @@ def signup(request):
             data[u"address"] = address
         db.collection(u"Users").document(uid).set(data)
 
-    return render(request, "signup.html")
+    return render(request, "signup.html", {"title": "signup"})
 
 
 def login_view(request):
@@ -128,12 +139,12 @@ def login_view(request):
             messages.error(request, "Invalid Credentials")
             return render(request, "login.html")
 
-    return render(request, "login.html")
+    return render(request, "login.html", {"title": "login"})
 
 
 def logout_view(request):
     auth.logout(request)
-    return render(request, "login.html")
+    return HttpResponseRedirect(reverse("login"))
 
 
 #############################################
@@ -168,12 +179,13 @@ def medicinesDashboard(request):
             return HttpResponseRedirect(reverse("404"))
     return HttpResponseRedirect(reverse("login"))
 
+
 def appuser(request):
-    return render(request,"appuser.html")
+    return render(request, "appuser.html")
 
 
 def usersDashboard(request):
-    return render(request, "users.html")
+    return render(request, "appuser.html")
 
 
 def notify(request, UId):
@@ -182,12 +194,12 @@ def notify(request, UId):
     send_mail(user.email)
     return HttpResponseRedirect(reverse("medicines"))
 
-<<<<<<< HEAD
 
 def page404(request):
 
     return render(request, "404.html")
-=======
+
+
 def reportCondition(request):
     if request.method == "POST":
         address = request.POST.get(u"address")
@@ -196,19 +208,26 @@ def reportCondition(request):
         gender = request.POST.get(u"gender")
         case = request.POST.get(u"case")
         condition = request.POST.get(u"condition")
-        treatment=request.POST.get(u"treatment")
-        uid=current_user_uid
-        abc=db.collection(u"Reports").get()
-        list_items=[]
+        treatment = request.POST.get(u"treatment")
+        uid = current_user_uid
+        abc = db.collection(u"Reports").get()
+        list_items = []
         for i in abc:
             list_items.append(i)
-        count=len(list_items)+1
-        data = {u"address": address, u"contact": contact, u"age":age, u"gender": gender, u"case": case, u"condition": condition, u"treatment": treatment,u"uId":uid}
+        count = len(list_items) + 1
+        data = {
+            u"address": address,
+            u"contact": contact,
+            u"age": age,
+            u"gender": gender,
+            u"case": case,
+            u"condition": condition,
+            u"treatment": treatment,
+            u"uId": uid,
+        }
         db.collection(u"Reports").document(str(count)).set(data)
-    return render(request,'condition.html')
+    return render(request, "condition.html")
+
 
 def orderMedicine(request):
-    return render(request,'ordermeds.html')
-
-
->>>>>>> 09bac61de914c8636165c18c247ebff264b58ac3
+    return render(request, "ordermeds.html")
