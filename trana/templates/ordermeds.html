@@ -3,40 +3,7 @@
 {% block title%}OrderMeds{% endblock title %}
     
 {% block body%}
-<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
-<script>
-    
-    config = {
-        "apiKey": "AIzaSyDXMensLWaA5AvH2M7r6DhR6oCIu1kXG5U",
-        "authDomain": "trana-cfbcf.firebaseapp.com",
-        "databaseURL": "https://trana-cfbcf.firebaseio.com",
-        "projectId": "trana-cfbcf",
-        "storageBucket": "trana-cfbcf.appspot.com",
-        "messagingSenderId": "105597355531",
-        "appId": "1:105597355531:web:b7d7645d90867fb34a690e",
-        "measurementId": "G-FQ9WQ7Z7VQ",
-    };
-    firebase = pyrebase.initialize_app(config)
 
-    function uploadimage(){
-        var storage = firebase.storage();
-        var file = document.getElementById("files").files[0];
-        var storageRef = storage.ref();
-        var thisref = storageRef.child(file.name).put(file);
-        thisref.on('state_changed',function(snapshot){
-        console.log("file uplaoded succesfully");
-        },
-        function(error) {
-        },
-        function() {
-        // Upload completed successfully, now we can get the download URL
-        var downloadURL = thisref.snapshot.downloadURL;
-        console.log("got url");
-        document.getElementById("url").value = downloadURL;
-        alert("file uploaded successfully");
-      });
-          }
-</script>
 <div class="form-wrap">
     <form  action="" method='POST'>
       {% csrf_token %}
@@ -49,12 +16,66 @@
         <input type="text" class="form-control" id="medicine" name="medicine" placeholder="Medicine">
       </div>
       <div class="form-group">
-        
         <input type="file" class="form-control" id="files" name="files[]" >
         <input type="hidden" name="url" id="url">
         <button type="button" onclick="uploadimage()">Upload</button>
       </div>
-          <input type="submit" value="Order Medicines">
+      <div class="form-group">
+      <p>Click the button to get your coordinates.</p>
+      <button onclick="getLocation()">Try It</button>
+      <p id="demo"></p>
+      </div>
+      <input type="submit" value="Order Medicines">
       </form>
     </div>
+    <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+    <script>
+        
+        config = {
+            "apiKey": "AIzaSyDXMensLWaA5AvH2M7r6DhR6oCIu1kXG5U",
+            "authDomain": "trana-cfbcf.firebaseapp.com",
+            "databaseURL": "https://trana-cfbcf.firebaseio.com",
+            "projectId": "trana-cfbcf",
+            "storageBucket": "trana-cfbcf.appspot.com",
+            "messagingSenderId": "105597355531",
+            "appId": "1:105597355531:web:b7d7645d90867fb34a690e",
+            "measurementId": "G-FQ9WQ7Z7VQ",
+        };
+        firebase = pyrebase.initialize_app(config);
+    
+        function uploadimage(){
+            var storage = firebase.storage();
+            var file = document.getElementById("files").files[0];
+            var storageRef = storage.ref();
+            var thisref = storageRef.child(file.name).put(file);
+            thisref.on('state_changed',function(snapshot){
+            console.log("file uplaoded succesfully");
+            },
+            function(error) {
+            },
+            function() {
+            // Upload completed successfully, now we can get the download URL
+            var downloadURL = thisref.snapshot.downloadURL;
+            console.log("got url");
+            document.getElementById("url").value = downloadURL;
+            alert("file uploaded successfully");
+          });
+              }
+    
+              var x = document.getElementById("demo");
+    
+              function getLocation() {
+                if (navigator.geolocation) {
+                  navigator.geolocation.getCurrentPosition(showPosition);
+                } else { 
+                  x.innerHTML = "Geolocation is not supported by this browser.";
+                }
+              }
+              
+              function showPosition(position) {
+                x.innerHTML = "Latitude: " + position.coords.latitude + 
+                "<br>Longitude: " + position.coords.longitude;
+              }
+              
+    </script>
 {% endblock body %}
