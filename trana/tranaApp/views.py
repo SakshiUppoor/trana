@@ -230,4 +230,18 @@ def reportCondition(request):
 
 
 def orderMedicine(request):
+    if request.method == "POST":
+        address = request.POST.get(u"address")
+        medicine = request.POST.get(u"medicine")
+        url = request.POST.get(u"url")
+        uid = current_user_uid
+        abc = db.collection(u"Medicines").get()
+        list_items = []
+        for i in abc:
+            list_items.append(i)
+        count = len(list_items) + 1
+        data = {u"address": address, u"medicine": medicine, "url": url, u"uId": uid}
+        db.collection(u"Medicines").document(str(count)).set(data)
+
     return render(request, "ordermeds.html")
+
