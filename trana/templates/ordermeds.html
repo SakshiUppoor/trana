@@ -3,21 +3,28 @@
 {% block title%}OrderMeds{% endblock title %}
     
 {% block body%}
-<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
-<script>
-    
-    config = {
-        "apiKey": "AIzaSyDXMensLWaA5AvH2M7r6DhR6oCIu1kXG5U",
-        "authDomain": "trana-cfbcf.firebaseapp.com",
-        "databaseURL": "https://trana-cfbcf.firebaseio.com",
-        "projectId": "trana-cfbcf",
-        "storageBucket": "trana-cfbcf.appspot.com",
-        "messagingSenderId": "105597355531",
-        "appId": "1:105597355531:web:b7d7645d90867fb34a690e",
-        "measurementId": "G-FQ9WQ7Z7VQ",
-    };
-    firebase = pyrebase.initialize_app(config)
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
 
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyDXMensLWaA5AvH2M7r6DhR6oCIu1kXG5U",
+    authDomain: "trana-cfbcf.firebaseapp.com",
+    databaseURL: "https://trana-cfbcf.firebaseio.com",
+    projectId: "trana-cfbcf",
+    storageBucket: "trana-cfbcf.appspot.com",
+    messagingSenderId: "105597355531",
+    appId: "1:105597355531:web:b7d7645d90867fb34a690e",
+    measurementId: "G-FQ9WQ7Z7VQ"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
     function uploadimage(){
         var storage = firebase.storage();
         var file = document.getElementById("files").files[0];
