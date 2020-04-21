@@ -103,7 +103,7 @@ def signup(request):
 
         user = firebase_admin.auth.create_user(email=email, password=password)
         uid = user.uid
-        data = {u"name": name, u"position": position}
+        data = {u"name": name, u"position": position,u"email":email}
 
         if position == "pharmacist":
             pharmacy_name = request.POST.get(u"pharmacy-name")
