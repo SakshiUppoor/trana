@@ -10,6 +10,74 @@
      https://firebase.google.com/docs/web/setup#available-libraries -->
 <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
 
+<div class="form-wrap">
+    <form  action="" method='POST'>
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="medicine" >Medicine</label>
+        <input required type="text" class="form-control" id="medicine" name="medicine" placeholder="Medicine">
+      </div>
+      
+      <div class="form-group">
+        <label for="doctor" >Doctor</label>
+        <input required type="text" class="form-control" id="doctor" name="doctor" placeholder="Name of Doctor">
+      </div>
+      
+      <div class="form-group">
+        <label for="hospital" >Name of hosptial/clinic</label>
+        <input required type="text" class="form-control" id="hospital" name="hospital" placeholder="Name of Hospital">
+      </div>
+      
+      <div class="form-group">
+            <label for="address" >Address</label>
+            <input required type="text" class="form-control" id="address" name="address" placeholder="Enter address">
+      </div>
+      
+      <div class="form-group">
+        <label for="area" >Area</label>
+        <input required type="text" class="form-control" id="area" name="area" placeholder="Area">
+      </div>
+      
+      <label for="user">Male</label>
+      <input required type="radio" class="form-control" id="user" name="gender" value="M" required/>
+      <label for="authority" >Female</label>
+      <input type="radio" class="form-control" id="authority" name="gender" value="F" />
+      
+      <div class="form-group">
+      <label for="prescription" >Upload prescription</label>
+        <input required type="file" class="form-control" id="files" name="files[]" >
+        <input type="hidden" name="url" id="url">
+        <button type="button" onclick="uploadimage()">Upload</button>
+      </div>
+      <div class="form-group">
+       <input type="hidden" id="lat" name="lat">
+        <input type="hidden" id="lon" name="lon">
+      </div>
+      <input type="submit" value="Order Medicines">
+      </form>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+    <script>
+       
+      var lat = document.getElementById("lat");
+      var lon = document.getElementById("lon");
+      getLocation()
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition);
+        } else { 
+          x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+      }
+      
+      function showPosition(position) {
+        lat.value = position.coords.latitude;
+        lon.value = position.coords.longitude;
+        console.log(position.coords.latitude, position.coords.longitude);
+      }
+              
+    </script>
+
 <script>
   // Your web app's Firebase configuration
   var firebaseConfig = {
@@ -25,15 +93,17 @@
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
+
     function uploadimage(){
         var storage = firebase.storage();
         var file = document.getElementById("files").files[0];
         var storageRef = storage.ref();
-        var thisref = storageRef.child(file.name).put(file);
+        var thisref = storageRef.child('presciptions/' + file.name).put(file);
         thisref.on('state_changed',function(snapshot){
         console.log("file uplaoded succesfully");
         },
         function(error) {
+          console.log(error);
         },
         function() {
         // Upload completed successfully, now we can get the download URL
@@ -44,24 +114,4 @@
       });
           }
 </script>
-<div class="form-wrap">
-    <form  action="" method='POST'>
-      {% csrf_token %}
-      <div class="form-group">
-            <label for="address" >Address</label>
-            <input type="text" class="form-control" id="address" name="address" placeholder="Enter address">
-      </div>
-      <div class="form-group">
-        <label for="medicine" >Medicine</label>
-        <input type="text" class="form-control" id="medicine" name="medicine" placeholder="Medicine">
-      </div>
-      <div class="form-group">
-        
-        <input type="file" class="form-control" id="files" name="files[]" >
-        <input type="hidden" name="url" id="url">
-        <button type="button" onclick="uploadimage()">Upload</button>
-      </div>
-          <input type="submit" value="Order Medicines">
-      </form>
-    </div>
 {% endblock body %}
