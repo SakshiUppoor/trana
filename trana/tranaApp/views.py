@@ -201,24 +201,22 @@ def medicinesDashboard(request):
     return HttpResponseRedirect(reverse("login"))
 
 
-def appuser(request):
-    return render(request, "appuser.html")
-
-
 def usersDashboard(request):
     return render(request, "appuser.html")
 
 
 def notify(request, id):
-    uId = ""
+    med_ref = db.collection(u"Medicines").document(id)
+    med_ref.set({u"resolved": True}, merge=True)
+    uId = med_ref.to_dict().get("uId")
     user = firebase_admin.auth.get_user(uId)
     print(user.email)
     send_mail(user.email)
+
     return HttpResponseRedirect(reverse("medicines"))
 
 
 def page404(request):
-
     return render(request, "404.html")
 
 
