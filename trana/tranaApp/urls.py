@@ -12,5 +12,6 @@ urlpatterns = [
     path("condition/", views.reportCondition, name="condition"),
     path("medicine/", views.orderMedicine, name="medicine"),
     path("notify/<str:id>", views.notify, name="notify"),
+    path("resolve/<str:id>", views.resolve, name="resolve"),
     path("404/", views.page404, name="404"),
 ]

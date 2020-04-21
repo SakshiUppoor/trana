@@ -53,8 +53,8 @@ def getPosition():
     if current_user_uid:
         print(current_user_uid)
         user_ref = db.collection(u"Users").document(current_user_uid)
-        print(type(user))
         user = user_ref.get()
+        print(type(user))
         if user.exists:
             return user.to_dict().get("position")
     return None
@@ -74,19 +74,19 @@ def get_components(collection):
     co_list = []
     reports_list = []
     for report in reports:
-
-        if report.to_dict().get("location"):
-            co_list.append(
-                [report.to_dict()["location"][0], report.to_dict()["location"][1]]
-            )
-        entry = {}
-        entry["id"] = report.id
-        if report.to_dict().get("uId"):
-            uId = report.to_dict().get("uId")
-            entry["name"] = getName(uId)
-        for field in report.to_dict():
-            entry[field] = report.to_dict()[field]
-        reports_list.append(entry)
+        if report.to_dict().get("resolved") != True:
+            if report.to_dict().get("location"):
+                co_list.append(
+                    [report.to_dict()["location"][0], report.to_dict()["location"][1]]
+                )
+            entry = {}
+            entry["id"] = report.id
+            if report.to_dict().get("uId"):
+                uId = report.to_dict().get("uId")
+                entry["name"] = getName(uId)
+            for field in report.to_dict():
+                entry[field] = report.to_dict()[field]
+            reports_list.append(entry)
     return co_list, reports_list
 
 
@@ -127,7 +127,7 @@ def signup(request):
         elif position == "pharmacist":
             return HttpResponseRedirect(reverse("medicines"))
         elif position == "user":
-            return HttpResponseRedirect(reverse("appuser"))
+            return HttpResponseRedirect(reverse("users"))
         else:
             return HttpResponseRedirect(reverse("users"))
 
@@ -208,12 +208,18 @@ def usersDashboard(request):
 def notify(request, id):
     med_ref = db.collection(u"Medicines").document(id)
     med_ref.set({u"resolved": True}, merge=True)
-    uId = med_ref.to_dict().get("uId")
+    uId = med_ref.get().to_dict().get("uId")
     user = firebase_admin.auth.get_user(uId)
     print(user.email)
     send_mail(user.email)
 
     return HttpResponseRedirect(reverse("medicines"))
+
+
+def resolve(request, id):
+    report_ref = db.collection(u"Reports").document(id)
+    report_ref.set({u"resolved": True}, merge=True)
+    return HttpResponseRedirect(reverse("reports"))
 
 
 def page404(request):
@@ -229,6 +235,12 @@ def reportCondition(request):
         case = request.POST.get(u"case")
         condition = request.POST.get(u"condition")
         treatment = request.POST.get(u"treatment")
+        area = request.POST.get(u"area")
+        info = request.POST.get(u"info")
+        location = [
+            float(request.POST.get(u"lat")),
+            float(request.POST.get(u"lon")),
+        ]
         uid = current_user_uid
         abc = db.collection(u"Reports").get()
         list_items = []
@@ -236,6 +248,7 @@ def reportCondition(request):
             list_items.append(i)
         count = len(list_items) + 1
         data = {
+            u"area": area,
             u"address": address,
             u"contact": contact,
             u"age": age,
@@ -244,6 +257,8 @@ def reportCondition(request):
             u"condition": condition,
             u"treatment": treatment,
             u"uId": uid,
+            u"location": location,
+            u"description": info,
         }
         db.collection(u"Reports").document(str(count)).set(data)
     return render(request, "condition.html")
@@ -251,11 +266,14 @@ def reportCondition(request):
 
 def orderMedicine(request):
     if request.method == "POST":
+        contact = request.POST.get(u"contact")
         address = request.POST.get(u"address")
         medicine = request.POST.get(u"medicine")
         gender = request.POST.get(u"gender")
+        age = request.POST.get(u"age")
         hospital = request.POST.get(u"hospital")
         doctor = request.POST.get(u"doctor")
+        info = request.POST.get(u"info")
         area = request.POST.get(u"area")
         location = [
             float(request.POST.get(u"lat")),
@@ -269,15 +287,18 @@ def orderMedicine(request):
             list_items.append(i)
         count = len(list_items) + 1
         data = {
+            u"contact": contact,
             u"address": address,
             u"medicine": medicine,
             "url": url,
             u"uId": uid,
             u"location": location,
+            u"age": age,
             u"gender": gender,
             u"hospital": hospital,
             u"doctor": doctor,
             u"area": area,
+            u"description": info,
         }
         db.collection(u"Medicines").document(str(count)).set(data)
 
