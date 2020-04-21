@@ -179,19 +179,20 @@ def medicinesDashboard(request):
             return HttpResponseRedirect(reverse("404"))
     return HttpResponseRedirect(reverse("login"))
 
-
-def appuser(request):
-    return render(request, "appuser.html")
-
-
 def usersDashboard(request):
     return render(request, "appuser.html")
 
 
-def notify(request, UId):
-    user = firebase_admin.auth.get_user(UId)
+def notify(request, UId,id):
+    user = firebase_admin.auth.get_user(id)
     print(user.email)
     send_mail(user.email)
+    med_ref = db.collection(u'Medicines').get()
+    med=med_ref.id
+    med.set({
+    u'resolved': True
+    }, merge=True)
+
     return HttpResponseRedirect(reverse("medicines"))
 
 
@@ -223,7 +224,7 @@ def reportCondition(request):
             u"case": case,
             u"condition": condition,
             u"treatment": treatment,
-            u"uId": uid,
+            u"UId": uid,
         }
         db.collection(u"Reports").document(str(count)).set(data)
     return render(request, "condition.html")
@@ -240,7 +241,7 @@ def orderMedicine(request):
         for i in abc:
             list_items.append(i)
         count = len(list_items) + 1
-        data = {u"address": address, u"medicine": medicine, "url": url, u"uId": uid}
+        data = {u"address": address, u"medicine": medicine, "url": url, u"UId": uid}
         db.collection(u"Medicines").document(str(count)).set(data)
 
     return render(request, "ordermeds.html")

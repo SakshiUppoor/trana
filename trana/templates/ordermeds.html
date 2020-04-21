@@ -41,7 +41,8 @@
             "appId": "1:105597355531:web:b7d7645d90867fb34a690e",
             "measurementId": "G-FQ9WQ7Z7VQ",
         };
-        firebase = pyrebase.initialize_app(config);
+        
+        firebase = firebase_admin.initialize_app(config)
     
         function uploadimage(){
             var storage = firebase.storage();

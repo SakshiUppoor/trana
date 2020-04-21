@@ -110,7 +110,8 @@
                   {{medicine| get_item:'contact'}}
                 </td>
                 <td>
-                <a href="{% url 'notify' UId=medicine|get_item:'UId' %}"><button type="submit" class="btn btn-success" >Send Email</button></a></td>
+                <a href="{% url 'notify' UId=medicine|get_item:'UId' id=medicine|get_item:'id' %}"><button type="submit" class="btn btn-success" >Send Email</button></a>
+              </td>
               </tr>
               {% endfor %}
             </tbody>
