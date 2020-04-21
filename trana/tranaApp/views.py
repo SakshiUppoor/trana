@@ -53,6 +53,7 @@ def getPosition():
     if current_user_uid:
         print(current_user_uid)
         user_ref = db.collection(u"Users").document(current_user_uid)
+        print(type(user))
         user = user_ref.get()
         if user.exists:
             return user.to_dict().get("position")
@@ -111,6 +112,24 @@ def signup(request):
             data[u"pharmacy-name"] = pharmacy_name
             data[u"address"] = address
         db.collection(u"Users").document(uid).set(data)
+
+        global current_user, current_user_uid
+        current_user = authe.sign_in_with_email_and_password(email, password)
+        current_user_uid = current_user["localId"]
+        session_id = current_user["idToken"]
+        request.session["uid"] = str(session_id)
+
+        position = getPosition()
+        print(position)
+        if position == "authority":
+            print("hello")
+            return HttpResponseRedirect(reverse("reports"))
+        elif position == "pharmacist":
+            return HttpResponseRedirect(reverse("medicines"))
+        elif position == "user":
+            return HttpResponseRedirect(reverse("appuser"))
+        else:
+            return HttpResponseRedirect(reverse("users"))
 
     return render(request, "signup.html", {"title": "signup"})
 
@@ -190,7 +209,8 @@ def usersDashboard(request):
     return render(request, "appuser.html")
 
 
-def notify(request, id, uId):
+def notify(request, id):
+    uId = ""
     user = firebase_admin.auth.get_user(uId)
     print(user.email)
     send_mail(user.email)
