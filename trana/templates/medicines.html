@@ -110,8 +110,7 @@
                   {{medicine| get_item:'contact'}}
                 </td>
                 <td>
-                <a href="{% url 'notify' UId=medicine|get_item:'UId' id=medicine|get_item:'id' %}"><button type="submit" class="btn btn-success" >Send Email</button></a>
-              </td>
+                <a href="{% url 'notify' id=medicine|get_item:'id' %}"><button type="submit" class="btn btn-success" >Send Email</button></a></td>
               </tr>
               {% endfor %}
             </tbody>
@@ -129,11 +128,22 @@
       </div>
     </div>
     <script>
+      getLocation()
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(initMap);
+        } else { 
+          x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+      }
+      
+              
       var map;
-      function initMap() {
+      function initMap(position) {
+        console.log(position.coords.latitude);
         map = new google.maps.Map(document.getElementById("map"), {
-          zoom: 10,
-          center: { lat: 19.26318338, lng: 73.03573596 },
+          zoom: 9,
+          center: { lat: position.coords.latitude, lng: position.coords.longitude },
           streetViewControl: false,
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           mapTypeControl: false,
@@ -185,7 +195,7 @@
       }
       var locations = [
       {% for co in co_list %}
-      {lat: {{ co.1 }} , lng: {{ co.0 }} },
+      {lat: {{ co.0 }} , lng: {{ co.1 }} },
       {% endfor %}
       ];
     </script>
