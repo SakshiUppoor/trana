@@ -112,19 +112,15 @@ def signup(request):
         password2 = request.POST.get(u"password2")
 
         if password1==password2:
-            doc_ref = db.collection(u'Users')
-            name_ref=doc_ref.where(u'name', u'==', name)
-            email_ref = doc_ref.where(u'email', u'==', email)
-            if name_ref:
-                messages.info(request,"This username is already taken")
-                return redirect('signup')
-            elif email_ref:
-                messages.info(request,"Account already exists")
-                return redirect('signup')
-            else:
-                user = firebase_admin.auth.create_user(email=email, password=password)
-                uid = user.uid
-                data = {u"name": name, u"position": position,u"email":email}
+                try:
+                    email_ref=firebase_admin.auth.get_user_by_email(email, app=None)
+                    messages.info(request,'Your account already exists')
+                    return redirect('login')
+                except:
+                    user = firebase_admin.auth.create_user(email=email, password=password2)
+                    uid = user.uid
+                    data = {u"name": name, u"position": position,u"email":email}
+                    db.collection(u"Users").document(uid).set(data)
         else:
             messages.error(request,'Passwords do not match')
             return redirect('signup')
@@ -137,7 +133,7 @@ def signup(request):
         db.collection(u"Users").document(uid).set(data)
 
         global current_user, current_user_uid
-        current_user = authe.sign_in_with_email_and_password(email, password)
+        current_user = authe.sign_in_with_email_and_password(email, password2)
         current_user_uid = current_user["localId"]
         session_id = current_user["idToken"]
         request.session["uid"] = str(session_id)
@@ -180,9 +176,18 @@ def login_view(request):
             else:
                 return HttpResponseRedirect(reverse("users"))
         except:
-            messages.error(request, "Invalid Credentials")
-            return render(request, "login.html")
-
+            doc_ref = db.collection(u'Users')
+            email_ref=doc_ref.where(u'email', u'==', email).stream()
+            flag=0
+            for email in email_ref:
+                flag=1
+                break
+            if flag==0:
+                messages.info(request, "Email does not exist,create an account first!")
+                return render(request, "signup.html")
+            else:
+                messages.error(request, "Invalid credentials")
+                return render(request, "login.html")
     return render(request, "login.html", {"title": "login"})
 
 

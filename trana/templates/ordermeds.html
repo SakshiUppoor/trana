@@ -9,61 +9,127 @@
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
 <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+<style>
+  
+  input[type="radio"]{
+    box-sizing: border-box;
+    padding: 0;
+    display: block;
+}
+  
 
+  input[type="submit"]{
+    border:0;
+    cursor: pointer;
+    background: #EF716B;
+    border-radius: 35px;
+    width: 160px;
+    height: 40px;
+    left: 80px;
+    top: 400px;
+    color:white;
+    padding-left:10px;
+    padding-right:10px;
+  }
+  input[type="submit"]:hover{
+   transition: .6s;
+  }
+  .form-check-input {
+    position: absolute;
+    margin-top: .3rem;
+    margin-left: -1.25rem;
+}
+
+</style>
 <div class="form-wrap">
     <form  action="" method='POST' id="meds">
       {% csrf_token %}
-      <div class="form-group">
-        <label for="medicine" >Medicine</label>
-        <input required type="text" class="form-control" id="medicine" name="medicine" placeholder="Medicine">
+      <div class="row my-3">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <h1>Order Medicines</h1>
+        <div class="row">
+          <div class="form-group col-md-12">
+            <label for="medicine" >Medicine</label>
+            <input required type="text" class="form-control" id="medicine" name="medicine" placeholder="Medicine">
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label for="doctor" >Doctor</label>
+            <input required type="text" class="form-control" id="doctor" name="doctor" placeholder="Name of Doctor">
+          </div>
+          
+          <div class="form-group col-md-6">
+            <label for="hospital" >Name of hosptial/clinic</label>
+            <input required type="text" class="form-control" id="hospital" name="hospital" placeholder="Name of Hospital">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="info" class="col-sm-2 col-form-label">Description</label>
+          <br>
+          <div class="col-sm-10">
+          <textarea rows="4" cols="72" name="info" form="med"></textarea>
+          </div>
+        </div> 
+
+        <div class="row">
+          <div class="form-group col-md-6">
+                <label for="address" >Address</label>
+                <input required type="text" class="form-control" id="address" name="address" placeholder="Enter address">
+          </div>
+          
+          <div class="form-group col-md-6">
+            <label for="area" >Area</label>
+            <input required type="text" class="form-control" id="area" name="area" placeholder="Area">
+          </div>
+        </div>
+      <div class="row">
+        
+        <div class="form-group col-md-4">
+          <label for="age" >Age</label>
+          <input type="number" class="form-control" id="age" name="age" placeholder="Age">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="contact" >Contact</label>
+          <input type="text" class="form-control" id="contact" name="contact" placeholder="Contact">
+        </div>
+        <div class="form-group col-md-4">
+          <label for="gender">Gender</label>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" id="male" name="gender" value="male" />
+            <label for="male"  class="form-check-label" >Male</label>
+          </div>
+          <div class="form-check">
+            <input type="radio" class="form-check-input" id="female" name="gender" value="female" />
+            <label for="female"  class="form-check-label" >Female</label>
+          </div>
+        </div>
       </div>
-      
-      <div class="form-group">
-        <label for="doctor" >Doctor</label>
-        <input required type="text" class="form-control" id="doctor" name="doctor" placeholder="Name of Doctor">
+
+      <div class="form-group row">
+        <label for="prescription" class="col-md-2 col-form-label" >Upload prescription</label>
+          <div class="col-md-6">
+          <input required type="file" class="form-control" id="files" name="files[]" >
+          </div>
+          <div class="col-md-4">
+          <button type="button" onclick="uploadimage()">Upload</button>
+          </div>
+          <input type="hidden" name="url" id="url">
       </div>
-      
-      <div class="form-group">
-        <label for="hospital" >Name of hosptial/clinic</label>
-        <input required type="text" class="form-control" id="hospital" name="hospital" placeholder="Name of Hospital">
-      </div>
-      
-      <div class="form-group">
-            <label for="address" >Address</label>
-            <input required type="text" class="form-control" id="address" name="address" placeholder="Enter address">
-      </div>
-      
-      <div class="form-group">
-        <label for="area" >Area</label>
-        <input required type="text" class="form-control" id="area" name="area" placeholder="Area">
-      </div>
-      
-      <label for="user">Male</label>
-      <input required type="radio" class="form-control" id="user" name="gender" value="M" required/>
-      <label for="authority" >Female</label>
-      <input type="radio" class="form-control" id="authority" name="gender" value="F" />
-      </div>
-      
-      <div class="form-group">
-        <label for="age" >Age</label>
-        <input type="number" class="form-control" id="age" name="age" placeholder="Age">
-    </div>
-      <div class="form-group">
-      <label for="prescription" >Upload prescription</label>
-        <input required type="file" class="form-control" id="files" name="files[]" >
-        <input type="hidden" name="url" id="url">
-        <button type="button" onclick="uploadimage()">Upload</button>
-      </div>
+            
+           
       <div class="form-group">
        <input type="hidden" id="lat" name="lat">
         <input type="hidden" id="lon" name="lon">
       </div>
-      <div class="form-group">
-        <label for="info">Info</label>
-        <br>
-        <textarea rows="4" cols="50" name="info" form="meds"></textarea>
-</div>   
+      <div style="text-align:center">
       <input type="submit" value="Order Medicines">
+      </div>
+      </div>
+      <div class="col-md-2"></div>
+      </div>
       </form>
     </div>
     <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
