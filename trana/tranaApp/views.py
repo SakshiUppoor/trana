@@ -51,10 +51,8 @@ authe = firebase.auth()
 
 def getPosition():
     if current_user_uid:
-        print(current_user_uid)
         user_ref = db.collection(u"Users").document(current_user_uid)
         user = user_ref.get()
-        print(type(user))
         if user.exists:
             return user.to_dict().get("position")
     return None
@@ -64,7 +62,16 @@ def getName(uId):
     user_ref = db.collection(u"Users").document(uId)
     user = user_ref.get()
     if user.exists:
+        print(user.to_dict().get("name"))
         return user.to_dict().get("name")
+    return None
+
+
+def getPharmacyDetails(uId):
+    user_ref = db.collection(u"Users").document(uId)
+    user = user_ref.get()
+    if user.exists:
+        return user.to_dict().get("pharmacy-name"), user.to_dict().get("address")
     return None
 
 
@@ -86,6 +93,7 @@ def get_components(collection):
                 entry["name"] = getName(uId)
             for field in report.to_dict():
                 entry[field] = report.to_dict()[field]
+            print(entry)
             reports_list.append(entry)
     return co_list, reports_list
 
@@ -208,11 +216,11 @@ def usersDashboard(request):
 def notify(request, id):
     med_ref = db.collection(u"Medicines").document(id)
     med_ref.set({u"resolved": True}, merge=True)
+    medicine = med_ref.get().to_dict().get("medicine")
     uId = med_ref.get().to_dict().get("uId")
     user = firebase_admin.auth.get_user(uId)
     print(user.email)
-    send_mail(user.email)
-
+    send_mail(user.email, getPharmacyDetails(current_user_uid), medicine)
     return HttpResponseRedirect(reverse("medicines"))
 
 
