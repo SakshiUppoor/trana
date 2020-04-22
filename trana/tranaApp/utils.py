@@ -4,7 +4,7 @@ from email.mime.text import MIMEText
 from .email_credentials import email, pwd
 
 
-def send_mail(email_id):
+def send_mail(email_id, details, medicine):
     me = email
     my_password = pwd
     you = email_id
@@ -14,7 +14,9 @@ def send_mail(email_id):
     msg["From"] = me
     msg["To"] = you
 
-    html = "<html><body><p>Hi, I have the following alerts for you!</p></body></html>"
+    html = "<html><body><p>Hi, I have the following alerts for you!</p> The medicine {} you requested is available at the pharmacy {} located in {}.</body></html>".format(
+        medicine, details[0], details[1]
+    )
     part2 = MIMEText(html, "html")
 
     msg.attach(part2)

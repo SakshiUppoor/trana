@@ -82,6 +82,12 @@
   
  
     
+    <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAo5q4Yv_NCM-Px_c11zyi9zttxj47-MFw&libraries=places&callback=initMap"
+    ></script>
    
     <div class="container">
     <h4>Reports</h4>
@@ -136,6 +142,7 @@
         </div>
       </div>
 
+    </div>
       <!-- The Modal -->
       <div id="myModal" class="modal">
         <!-- Modal content -->
@@ -155,13 +162,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
-    <script
-      async
-      defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAo5q4Yv_NCM-Px_c11zyi9zttxj47-MFw&libraries=places&callback=initMap"
-    ></script>
     <script>
       getLocation()
       function getLocation() {
