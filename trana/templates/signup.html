@@ -74,13 +74,16 @@
       {% csrf_token %}
       <div required class="form-group">
         <label for="name">Name</label>
-        <input required type="text" class="form-control" id="name" name="name" placeholder="Enter Name">
+        <input required type="text" class="form-control" id="name" name="name" placeholder="Enter Name" required>
         
         <label for="email">Email</label>
-        <input required type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+        <input required type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
 
         <label for="password1">Password</label>
-        <input required type="password" class="form-control" id="password1" name="password1" placeholder="Enter password">
+        <input required type="password" class="form-control" id="password1" name="password1" placeholder="Enter password" required>
+
+        <label for="password2">Confirm Password</label>
+        <input required type="password" class="form-control" id="password2" name="password2" placeholder="Confirm password" required>
 
         <input type="radio" class="form-control" id="user" name="position" value="user" required/>
         <label for="user">User</label>

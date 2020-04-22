@@ -47,7 +47,7 @@
         margin: auto;
         padding: 20px;
         border: 1px solid #888;
-        width: 80%;
+        width: 60%;
       }
 
       /* The Close Button */
@@ -64,6 +64,12 @@
         color: #000;
         text-decoration: none;
         cursor: pointer;
+      }
+      .modal-container {
+        text-align: center;
+      }
+      #details {
+        text-align: left;
       }
     </style>
  
@@ -84,8 +90,8 @@
             <thead>
               <tr>
                 <th onclick="sortTable(0)">Name</th>
-                <th onclick="sortTable(1)">Condition</th>
-                <th onclick="sortTable(2)">Case</th>
+                <th onclick="sortTable(1)">Medicine</th>
+                <th onclick="sortTable(2)">Gender</th>
                 <th onclick="sortTable(3)">Area</th>
                 <th>Contact</th>
                 <th>Notify</th>
@@ -95,22 +101,23 @@
               {% for medicine in medicines %}
               <tr>
                 <td onclick="showDetails({{medicine| get_item:'id'}})">
-                  {{medicine| get_item:'address'}}
-                </td>
-                <td onclick="showDetails({{medicine| get_item:'id'}})">
-                  {{medicine| get_item:'condition'}}
-                </td>
-                <td onclick="showDetails({{medicine| get_item:'id'}})">
-                  {{medicine| get_item:'case'}}
+                  {{medicine| get_item:'name'}}
                 </td>
                 <td onclick="showDetails({{medicine| get_item:'id'}})">
                   {{medicine| get_item:'medicine'}}
                 </td>
                 <td onclick="showDetails({{medicine| get_item:'id'}})">
+                  {{medicine| get_item:'gender'}}
+                </td>
+                <td onclick="showDetails({{medicine| get_item:'id'}})">
+                  {{medicine| get_item:'area'}}
+                </td>
+                <td onclick="showDetails({{medicine| get_item:'id'}})">
                   {{medicine| get_item:'contact'}}
                 </td>
                 <td>
-                <a href="{% url 'notify' id=medicine|get_item:'id' %}"><button type="submit" class="btn btn-success" >Send Email</button></a></td>
+                <a href="{% url 'notify' id=medicine|get_item:'id' %}"><button type="submit" class="btn btn-success" >Send Email</button></a>
+              </td>
               </tr>
               {% endfor %}
             </tbody>
@@ -122,8 +129,19 @@
       <div id="myModal" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
+          <div class="modal-container">
+            
           <span class="close">&times;</span>
-          <p id="modalContent">Some text in the Modal..</p>
+          
+          <h1> Details </h1>
+          <div class="row">
+            <div class="col-md-1"></div>
+            <div id="details" class="col-md-5"></div>
+            <div class="col-md-5"><img id="presc"  alt=""></div>
+            <div class="col-md-1"></div>
+
+          </div>
+          </div>
         </div>
       </div>
     </div>
@@ -303,17 +321,20 @@
 
 
       function showDetails(id) {
-        console.log("hi");
         modal.style.display = "block";
-        var p = document.getElementById("modalContent");
-        p.innerHTML = ""
+        var details = document.getElementById("details");
+        var presc = document.getElementById("presc");
+        details.innerHTML = "";
         {% for medicine in medicines %}
           if (parseInt("{{medicine | get_item:'id' }}") == id)
           {
-            {% for key, value in medicine.items %}
-            //console.log("{{key}},{{value}}");
-            p.innerHTML += "{{key}},{{value}} <br>"
-            {% endfor %}
+            details.innerHTML += "<b>Medicine</b>: {{medicine|get_item:'medicine'}} <br>";
+            details.innerHTML += "<b>Doctor</b>: {{medicine|get_item:'doctor'}} <br>";
+            details.innerHTML += "<b>Hospital/ Clinic</b>: {{medicine|get_item:'hospital'}} <br>";
+            details.innerHTML += "<b>Gender</b>: {{medicine|get_item:'gender'}} <br>";
+            details.innerHTML += "<b>Address</b>: {{medicine|get_item:'address'}} <br>";
+            details.innerHTML += "<b>Area</b>: {{medicine|get_item:'area'}} <br>";
+            presc.src = "{{ medicine|get_item:'url' }}";
           }
         {% endfor %}
       }

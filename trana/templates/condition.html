@@ -4,29 +4,12 @@
     
 {% block body%}
 <div class="form-wrap">
-    <form  action="" method='POST'>
+    <form  action="" method='POST' id="report">
       {% csrf_token %}
-      <div class="form-group">
-            <label for="address" >Address</label>
-            <input type="text" class="form-control" id="address" name="address" placeholder="Enter address">
-      </div>
-      <div class="form-group">
-          <label for="contact" >Contact</label>
-          <input type="text" class="form-control" id="contact" name="contact" placeholder="Contact Details">
-      </div>
-      <div class="form-group">
-        <label for="age" >Age</label>
-        <input type="text" class="form-control" id="age" name="age" placeholder="Age">
-    </div>
-      <div class="form-group ">
-        <input type="radio" class="form-control" id="male" name="gender" value="male" />
-        <label for="male" >Male</label>
-        <input type="radio" class="form-control" id="female" name="gender" value="female" />
-        <label for="female" >Female</label>
-      </div> 
       <div class="form-group">
         <label for="case" >Case</label>
         <select name="case" id="case">
+            <option value="Accident">Accident</option>
             <option value="pregnancy">Pregnancy</option>
             <option value="terminal illness">Terminal Illness</option>
             <option value="post operation">Post Opertion</option>
@@ -41,23 +24,80 @@
             <option value="informing">Informing</option>
         </select>
     </div>
-    <div class="form-group">
+      <div class="form-group">
+        <label for="medicine" >Medicine</label>
+        <input required type="text" class="form-control" id="medicine" name="medicine" placeholder="Medicine">
+      </div>
+      
+      <div class="form-group">
         <label for="doctor" >Doctor</label>
-        <input type="text" class="form-control" id="doctor" name="doctor" placeholder="Doctor Name">
+        <input required type="text" class="form-control" id="doctor" name="doctor" placeholder="Name of Doctor">
+      </div>
+      
+      <div class="form-group">
+        <label for="hospital" >Name of hosptial/clinic</label>
+        <input required type="text" class="form-control" id="hospital" name="hospital" placeholder="Name of Hospital">
+      </div>
+      
+      <div class="form-group">
+            <label for="address" >Address</label>
+            <input type="text" class="form-control" id="address" name="address" placeholder="Enter address">
+      </div>
+      
+      <div class="form-group">
+        <label for="area" >Area</label>
+        <input required type="text" class="form-control" id="area" name="area" placeholder="Area">
+      </div>
+      <div class="form-group">
+          <label for="contact" >Contact</label>
+          <input type="text" class="form-control" id="contact" name="contact" placeholder="Contact Details">
+      </div>
+      <div class="form-group">
+        <label for="age" >Age</label>
+        <input type="number" class="form-control" id="age" name="age" placeholder="Age">
     </div>
-    <div class="form-group">
-    <label for="hospital" >Hospital</label>
-    <input type="text" class="form-control" id="hospital" name="hospital" placeholder="Hospital Name">
-    </div>
-    <div class="form-group">
-    <label for="medicine" >Medicine</label>
-    <input type="text" class="form-control" id="medicine" name="medicine" placeholder="Medicine">
-    </div>
+      <div class="form-group ">
+        <input type="radio" class="form-control" id="male" name="gender" value="male" />
+        <label for="male" >Male</label>
+        <input type="radio" class="form-control" id="female" name="gender" value="female" />
+        <label for="female" >Female</label>
+      </div>
       <div class="form-group">
         <label for="treatment">Treatment</label>
         <input type="text" class="form-control" id="treatment" name="treatment" placeholder="Any kind of Special Treatment">
       </div>   
+      <div class="form-group">
+       <input type="hidden" id="lat" name="lat">
+        <input type="hidden" id="lon" name="lon">
+      </div>
+      <div class="form-group">
+        <label for="info">Info</label>
+        <br>
+        <textarea rows="4" cols="50" name="info" form="report"></textarea>
+</div>   
+      
         <input type="submit" value="Report Condition">
       </form>
     </div>
+    <script>
+       
+      var lat = document.getElementById("lat");
+      var lon = document.getElementById("lon");
+      getLocation()
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition);
+        } else { 
+          x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+      }
+      
+      function showPosition(position) {
+        lat.value = position.coords.latitude;
+        lon.value = position.coords.longitude;
+        console.log(position.coords.latitude, position.coords.longitude);
+      }
+              
+    </script>
+
 {% endblock body %}

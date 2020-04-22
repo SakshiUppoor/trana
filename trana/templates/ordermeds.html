@@ -11,7 +11,7 @@
 <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
 
 <div class="form-wrap">
-    <form  action="" method='POST'>
+    <form  action="" method='POST' id="meds">
       {% csrf_token %}
       <div class="form-group">
         <label for="medicine" >Medicine</label>
@@ -42,7 +42,12 @@
       <input required type="radio" class="form-control" id="user" name="gender" value="M" required/>
       <label for="authority" >Female</label>
       <input type="radio" class="form-control" id="authority" name="gender" value="F" />
+      </div>
       
+      <div class="form-group">
+        <label for="age" >Age</label>
+        <input type="number" class="form-control" id="age" name="age" placeholder="Age">
+    </div>
       <div class="form-group">
       <label for="prescription" >Upload prescription</label>
         <input required type="file" class="form-control" id="files" name="files[]" >
@@ -53,6 +58,11 @@
        <input type="hidden" id="lat" name="lat">
         <input type="hidden" id="lon" name="lon">
       </div>
+      <div class="form-group">
+        <label for="info">Info</label>
+        <br>
+        <textarea rows="4" cols="50" name="info" form="meds"></textarea>
+</div>   
       <input type="submit" value="Order Medicines">
       </form>
     </div>

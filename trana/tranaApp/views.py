@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect,redirect
 from django.urls import reverse
 import os
 import firebase_admin
@@ -54,6 +54,7 @@ def getPosition():
         print(current_user_uid)
         user_ref = db.collection(u"Users").document(current_user_uid)
         user = user_ref.get()
+        print(type(user))
         if user.exists:
             return user.to_dict().get("position")
     return None
@@ -73,19 +74,19 @@ def get_components(collection):
     co_list = []
     reports_list = []
     for report in reports:
-
-        if report.to_dict().get("location"):
-            co_list.append(
-                [report.to_dict()["location"][0], report.to_dict()["location"][1]]
-            )
-        entry = {}
-        entry["id"] = report.id
-        if report.to_dict().get("uId"):
-            uId = report.to_dict().get("uId")
-            entry["name"] = getName(uId)
-        for field in report.to_dict():
-            entry[field] = report.to_dict()[field]
-        reports_list.append(entry)
+        if report.to_dict().get("resolved") != True:
+            if report.to_dict().get("location"):
+                co_list.append(
+                    [report.to_dict()["location"][0], report.to_dict()["location"][1]]
+                )
+            entry = {}
+            entry["id"] = report.id
+            if report.to_dict().get("uId"):
+                uId = report.to_dict().get("uId")
+                entry["name"] = getName(uId)
+            for field in report.to_dict():
+                entry[field] = report.to_dict()[field]
+            reports_list.append(entry)
     return co_list, reports_list
 
 
@@ -99,11 +100,26 @@ def signup(request):
         name = request.POST.get(u"name")
         email = request.POST.get(u"email")
         position = request.POST.get(u"position")
-        password = request.POST.get(u"password1")
+        password1 = request.POST.get(u"password1")
+        password2 = request.POST.get(u"password2")
 
-        user = firebase_admin.auth.create_user(email=email, password=password)
-        uid = user.uid
-        data = {u"name": name, u"position": position,u"email":email}
+        if password1==password2:
+            doc_ref = db.collection(u'Users')
+            name_ref=doc_ref.where(u'name', u'==', name)
+            email_ref = doc_ref.where(u'email', u'==', email)
+            if name_ref:
+                messages.info(request,"This username is already taken")
+                return redirect('signup')
+            elif email_ref:
+                messages.info(request,"Account already exists")
+                return redirect('signup')
+            else:
+                user = firebase_admin.auth.create_user(email=email, password=password)
+                uid = user.uid
+                data = {u"name": name, u"position": position,u"email":email}
+        else:
+            messages.error(request,'Passwords do not match')
+            return redirect('signup')
 
         if position == "pharmacist":
             pharmacy_name = request.POST.get(u"pharmacy-name")
@@ -111,6 +127,24 @@ def signup(request):
             data[u"pharmacy-name"] = pharmacy_name
             data[u"address"] = address
         db.collection(u"Users").document(uid).set(data)
+
+        global current_user, current_user_uid
+        current_user = authe.sign_in_with_email_and_password(email, password)
+        current_user_uid = current_user["localId"]
+        session_id = current_user["idToken"]
+        request.session["uid"] = str(session_id)
+
+        position = getPosition()
+        print(position)
+        if position == "authority":
+            print("hello")
+            return HttpResponseRedirect(reverse("reports"))
+        elif position == "pharmacist":
+            return HttpResponseRedirect(reverse("medicines"))
+        elif position == "user":
+            return HttpResponseRedirect(reverse("users"))
+        else:
+            return HttpResponseRedirect(reverse("users"))
 
     return render(request, "signup.html", {"title": "signup"})
 
@@ -181,21 +215,26 @@ def medicinesDashboard(request):
             return HttpResponseRedirect(reverse("404"))
     return HttpResponseRedirect(reverse("login"))
 
+
 def usersDashboard(request):
     return render(request, "appuser.html")
 
 
 def notify(request, id):
-    med_ref = db.collection(u'Medicines').document(id)
-    med_ref.set({
-    u'resolved': True
-    }, merge=True)
-    uId=med_ref.to_dict().get("uId")
+    med_ref = db.collection(u"Medicines").document(id)
+    med_ref.set({u"resolved": True}, merge=True)
+    uId = med_ref.get().to_dict().get("uId")
     user = firebase_admin.auth.get_user(uId)
     print(user.email)
     send_mail(user.email)
-   
+
     return HttpResponseRedirect(reverse("medicines"))
+
+
+def resolve(request, id):
+    report_ref = db.collection(u"Reports").document(id)
+    report_ref.set({u"resolved": True}, merge=True)
+    return HttpResponseRedirect(reverse("reports"))
 
 
 def page404(request):
@@ -211,6 +250,12 @@ def reportCondition(request):
         case = request.POST.get(u"case")
         condition = request.POST.get(u"condition")
         treatment = request.POST.get(u"treatment")
+        area = request.POST.get(u"area")
+        info = request.POST.get(u"info")
+        location = [
+            float(request.POST.get(u"lat")),
+            float(request.POST.get(u"lon")),
+        ]
         uid = current_user_uid
         abc = db.collection(u"Reports").get()
         list_items = []
@@ -218,6 +263,7 @@ def reportCondition(request):
             list_items.append(i)
         count = len(list_items) + 1
         data = {
+            u"area": area,
             u"address": address,
             u"contact": contact,
             u"age": age,
@@ -226,6 +272,8 @@ def reportCondition(request):
             u"condition": condition,
             u"treatment": treatment,
             u"uId": uid,
+            u"location": location,
+            u"description": info,
         }
         db.collection(u"Reports").document(str(count)).set(data)
     return render(request, "condition.html")
@@ -233,11 +281,14 @@ def reportCondition(request):
 
 def orderMedicine(request):
     if request.method == "POST":
+        contact = request.POST.get(u"contact")
         address = request.POST.get(u"address")
         medicine = request.POST.get(u"medicine")
         gender = request.POST.get(u"gender")
+        age = request.POST.get(u"age")
         hospital = request.POST.get(u"hospital")
         doctor = request.POST.get(u"doctor")
+        info = request.POST.get(u"info")
         area = request.POST.get(u"area")
         location = [
             float(request.POST.get(u"lat")),
@@ -251,15 +302,18 @@ def orderMedicine(request):
             list_items.append(i)
         count = len(list_items) + 1
         data = {
+            u"contact": contact,
             u"address": address,
             u"medicine": medicine,
             "url": url,
             u"uId": uid,
             u"location": location,
+            u"age": age,
             u"gender": gender,
             u"hospital": hospital,
             u"doctor": doctor,
             u"area": area,
+            u"description": info,
         }
         db.collection(u"Medicines").document(str(count)).set(data)
 
