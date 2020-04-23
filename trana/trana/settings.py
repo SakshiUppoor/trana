@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-
+import django_heroku
 import os
 from django.contrib.messages import constants as messages
 
@@ -116,9 +116,11 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
-STATIC_ROOT=os.path.join(BASE_DIR,'assets')
+STATIC_ROOT = os.path.join(BASE_DIR, "assets")
 
-MEDIA_URL='/media/'
-MEDIA_ROOT=os.path.join(BASE_DIR,'media')
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 MESSAGE_TAGS = {messages.ERROR: "danger"}
+
+django_heroku.settings(locals())
