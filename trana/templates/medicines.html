@@ -146,7 +146,7 @@
       </div>
     </div>
     <script>
-      getLocation()
+      getLocation();
       function getLocation() {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(initMap);
@@ -158,7 +158,9 @@
               
       var map;
       function initMap(position) {
-        console.log(position.coords.latitude);
+      getLocation();
+
+        //console.log(position.coords.latitude);
         map = new google.maps.Map(document.getElementById("map"), {
           zoom: 9,
           center: { lat: position.coords.latitude, lng: position.coords.longitude },

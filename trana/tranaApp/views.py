@@ -7,6 +7,7 @@ from firebase_admin import credentials, firestore, auth
 from django.contrib import messages
 from django.contrib import auth
 
+import firebase
 from firebase import firebase
 import pyrebase
 
@@ -19,11 +20,11 @@ from .utils import send_mail
 cred = credentials.Certificate(
     os.path.join(os.path.dirname(__file__), "ServiceAccountKey.json")
 )
-deafult_app = firebase_admin.initialize_app(cred)
+default_app = firebase_admin.initialize_app(cred)
 
 db = firestore.client()
 
-current_user = ""
+
 current_user_uid = ""
 
 ##########################
@@ -49,9 +50,11 @@ authe = firebase.auth()
 #############
 
 
-def getPosition():
-    if current_user_uid:
-        user_ref = db.collection(u"Users").document(current_user_uid)
+def getPosition(request):
+    if "current_user" in request.session:
+        current_user = request.session["current_user"]
+        print(current_user)
+        user_ref = db.collection(u"Users").document(current_user["localId"])
         user = user_ref.get()
         if user.exists:
             return user.to_dict().get("position")
@@ -132,13 +135,12 @@ def signup(request):
             data[u"address"] = address
         db.collection(u"Users").document(uid).set(data)
 
-        global current_user, current_user_uid
         current_user = authe.sign_in_with_email_and_password(email, password2)
-        current_user_uid = current_user["localId"]
+        # current_user_uid = current_user["localId"]
         session_id = current_user["idToken"]
         request.session["uid"] = str(session_id)
 
-        position = getPosition()
+        position = getPosition(request)
         print(position)
         if position == "authority":
             print("hello")
@@ -158,13 +160,13 @@ def login_view(request):
         email = request.POST["email"]
         password = request.POST["password"]
         try:
-            global current_user, current_user_uid
             current_user = authe.sign_in_with_email_and_password(email, password)
-            current_user_uid = current_user["localId"]
+            request.session["current_user"] = current_user
+            # current_user_uid = current_user["localId"]
             session_id = current_user["idToken"]
             request.session["uid"] = str(session_id)
-
-            position = getPosition()
+            # print(request.__dict__)
+            position = getPosition(request)
             print(position)
             if position == "authority":
                 print("hello")
@@ -202,8 +204,8 @@ def logout_view(request):
 
 
 def reportsDashboard(request):
-    if getPosition() != None:
-        if getPosition() == "authority":
+    if getPosition(request) != None:
+        if getPosition(request) == "authority":
             co_list, reports_list = get_components("Reports")
             context = {
                 "co_list": co_list,
@@ -216,8 +218,8 @@ def reportsDashboard(request):
 
 
 def medicinesDashboard(request):
-    if getPosition() != None:
-        if getPosition() == "pharmacist":
+    if getPosition(request) != None:
+        if getPosition(request) == "pharmacist":
             co_list, medicines_list = get_components("Medicines")
             context = {
                 "co_list": co_list,
@@ -230,19 +232,20 @@ def medicinesDashboard(request):
 
 
 def usersDashboard(request):
-    if getPosition() != None:
+    if getPosition(request) != None:
         return render(request, "appuser.html")
     return HttpResponseRedirect(reverse("login"))
 
 
 def notify(request, id):
+    current_user = request.session["current_user"]
     med_ref = db.collection(u"Medicines").document(id)
     med_ref.set({u"resolved": True}, merge=True)
     medicine = med_ref.get().to_dict().get("medicine")
     uId = med_ref.get().to_dict().get("uId")
     user = firebase_admin.auth.get_user(uId)
     print(user.email)
-    send_mail(user.email, getPharmacyDetails(current_user_uid), medicine)
+    send_mail(user.email, getPharmacyDetails(current_user["localId"]), medicine)
     return HttpResponseRedirect(reverse("medicines"))
 
 
@@ -271,7 +274,8 @@ def reportCondition(request):
             float(request.POST.get(u"lat")),
             float(request.POST.get(u"lon")),
         ]
-        uid = current_user_uid
+        current_user = firebase.auth().currentUser()
+        uid = current_user.uid
         abc = db.collection(u"Reports").get()
         list_items = []
         for i in abc:
@@ -310,7 +314,7 @@ def orderMedicine(request):
             float(request.POST.get(u"lon")),
         ]
         url = request.POST.get(u"url")
-        uid = current_user_uid
+        uid = current_user.uid
         abc = db.collection(u"Medicines").get()
         list_items = []
         for i in abc:
