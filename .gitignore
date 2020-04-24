@@ -2,4 +2,4 @@ venv/
 **/ServiceAccountKey.json
 **/__pycache__/
 **/db.sqlite3
-**/email_credentials.py
+**/email_credentials.py 
