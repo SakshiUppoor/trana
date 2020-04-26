@@ -293,9 +293,15 @@ def reportCondition(request):
         location = [
             float(request.POST.get(u"lat")),
             float(request.POST.get(u"lon")),
+<<<<<<< HEAD
         ]'''
         current_user = firebase.auth().currentUser()
         uid = current_user.uid
+=======
+        ]
+        current_user = request.session.get("current_user")
+        uid = current_user["localId"]
+>>>>>>> 08db1db2a7e9453e6653d41573b501ae32781862
         abc = db.collection(u"Reports").get()
         list_items = []
         for i in abc:
@@ -335,7 +341,8 @@ def orderMedicine(request):
             float(request.POST.get(u"lon")),
         ]
         url = request.POST.get(u"url")
-        uid = current_user.uid
+        current_user = request.session.get("current_user")
+        uid = current_user["localId"]
         abc = db.collection(u"Medicines").get()
         list_items = []
         for i in abc:
