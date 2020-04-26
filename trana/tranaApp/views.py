@@ -174,22 +174,12 @@ def login_view(request):
             elif position == "pharmacist":
                 return HttpResponseRedirect(reverse("medicines"))
             elif position == "user":
-                return HttpResponseRedirect(reverse("appuser"))
+                return HttpResponseRedirect(reverse("users"))
             else:
                 return HttpResponseRedirect(reverse("users"))
-        except Exception as e:
-            print(e)
-            doc_ref = db.collection(u"Users")
-            email_ref = doc_ref.where(u"email", u"==", email).stream()
-            flag = 0
-            for email in email_ref:
-                flag = 1
-                break
-            if flag == 0:
-                messages.info(request, "Email does not exist,create an account first!")
-                return HttpResponseRedirect(reverse("login"))
-            else:
-                messages.error(request, "Invalid credentials")
+        except:
+            messages.error(request, "Invalid credentials")
+            return render(request, "login.html")
     return render(request, "login.html", {"title": "login"})
 
 
@@ -264,6 +254,7 @@ def getreport(request):
             for report in report_ref:
                 print(u'Document data: {}'.format(report.to_dict()))
             get_report=report.to_dict()
+            del get_report['uId']
             context = {
                 "co_list": co_list,
                 "reports": reports_list,
@@ -284,6 +275,8 @@ def getmedicine(request):
             for med in med_ref:
                 print(u'Medicine data: {}'.format(med.to_dict()))
             get_med=med.to_dict()
+            del get_med['uId']
+            del get_med['url']
             context = {
                 "co_list": co_list,
                 "reports": reports_list,
