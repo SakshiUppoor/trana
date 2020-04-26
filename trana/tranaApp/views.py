@@ -11,7 +11,7 @@ import firebase
 from firebase import firebase
 import pyrebase
 
-from .utils import send_mail
+#from .utils import send_mail
 
 ###########################
 # FIRESTORE CONFIGURATION #
@@ -254,6 +254,25 @@ def resolve(request, id):
     report_ref.set({u"resolved": True}, merge=True)
     return HttpResponseRedirect(reverse("reports"))
 
+def getreport(request):
+    if getPosition(request) != None:
+        if getPosition(request) == "user":
+            co_list, reports_list = get_components("Reports")
+            current_user = firebase.auth().currentUser()
+            uid = current_user.uid
+            report_ref = db.collection(u"Reports").where(u'uId',u'==',uid).stream()
+            report=report_ref.get()
+            get_report=report.to_dict()
+            context = {
+                "co_list": co_list,
+                "reports": reports_list,
+                "get_report":get_report,
+            }
+            return render(request, "getreport.html", context)
+        else:
+            return HttpResponseRedirect(reverse("404"))
+    return HttpResponseRedirect(reverse("login"))
+
 
 def page404(request):
     return render(request, "404.html")
@@ -270,10 +289,11 @@ def reportCondition(request):
         treatment = request.POST.get(u"treatment")
         area = request.POST.get(u"area")
         info = request.POST.get(u"info")
+        '''
         location = [
             float(request.POST.get(u"lat")),
             float(request.POST.get(u"lon")),
-        ]
+        ]'''
         current_user = firebase.auth().currentUser()
         uid = current_user.uid
         abc = db.collection(u"Reports").get()
@@ -288,7 +308,7 @@ def reportCondition(request):
             u"age": age,
             u"gender": gender,
             u"case": case,
-            u"condition": condition,
+            #u"condition": condition,
             u"treatment": treatment,
             u"uId": uid,
             u"location": location,
@@ -309,6 +329,7 @@ def orderMedicine(request):
         doctor = request.POST.get(u"doctor")
         info = request.POST.get(u"info")
         area = request.POST.get(u"area")
+    
         location = [
             float(request.POST.get(u"lat")),
             float(request.POST.get(u"lon")),

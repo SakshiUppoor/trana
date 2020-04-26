@@ -11,6 +11,7 @@ from .views import (
     notify,
     resolve,
     page404,
+    getreport
 )
 
 urlpatterns = [
@@ -26,4 +27,5 @@ urlpatterns = [
     path("notify/<str:id>", notify, name="notify"),
     path("resolve/<str:id>", resolve, name="resolve"),
     path("404/", page404, name="404"),
+    path("getreport/",getreport,name='getreport')
 ]

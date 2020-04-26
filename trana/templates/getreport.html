@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title%}Get Report{% endblock title %}
+    
+{% block body%}
+{% for g in get_report %}
+<p>{{g.age}}</p>
+<p>{{g.address}}</p>
+<p>{{g.gender}}</p>
+<p>{{g.case}}</p>
+{% endfor %}
+{% endblock %}
