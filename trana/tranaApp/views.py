@@ -258,10 +258,11 @@ def getreport(request):
     if getPosition(request) != None:
         if getPosition(request) == "user":
             co_list, reports_list = get_components("Reports")
-            current_user = firebase.auth().currentUser()
-            uid = current_user.uid
+            current_user = request.session.get("current_user")
+            uid = current_user["localId"]
             report_ref = db.collection(u"Reports").where(u'uId',u'==',uid).stream()
-            report=report_ref.get()
+            for report in report_ref:
+                print(u'Document data: {}'.format(report.to_dict()))
             get_report=report.to_dict()
             context = {
                 "co_list": co_list,
@@ -273,6 +274,25 @@ def getreport(request):
             return HttpResponseRedirect(reverse("404"))
     return HttpResponseRedirect(reverse("login"))
 
+def getmedicine(request):
+    if getPosition(request) != None:
+        if getPosition(request) == "user":
+            co_list, reports_list = get_components("Medicines")
+            current_user = request.session.get("current_user")
+            uid = current_user["localId"]
+            med_ref = db.collection(u"Medicines").where(u'uId',u'==',uid).stream()
+            for med in med_ref:
+                print(u'Medicine data: {}'.format(med.to_dict()))
+            get_med=med.to_dict()
+            context = {
+                "co_list": co_list,
+                "reports": reports_list,
+                "get_med":get_med,
+            }
+            return render(request, "getmed.html", context)
+        else:
+            return HttpResponseRedirect(reverse("404"))
+    return HttpResponseRedirect(reverse("login"))
 
 def page404(request):
     return render(request, "404.html")
@@ -293,15 +313,11 @@ def reportCondition(request):
         location = [
             float(request.POST.get(u"lat")),
             float(request.POST.get(u"lon")),
-<<<<<<< HEAD
         ]'''
-        current_user = firebase.auth().currentUser()
-        uid = current_user.uid
-=======
-        ]
         current_user = request.session.get("current_user")
         uid = current_user["localId"]
->>>>>>> 08db1db2a7e9453e6653d41573b501ae32781862
+
+        
         abc = db.collection(u"Reports").get()
         list_items = []
         for i in abc:
@@ -314,10 +330,10 @@ def reportCondition(request):
             u"age": age,
             u"gender": gender,
             u"case": case,
-            #u"condition": condition,
+            u"condition": condition,
             u"treatment": treatment,
             u"uId": uid,
-            u"location": location,
+            #u"location": location,
             u"description": info,
         }
         db.collection(u"Reports").document(str(count)).set(data)
@@ -335,11 +351,11 @@ def orderMedicine(request):
         doctor = request.POST.get(u"doctor")
         info = request.POST.get(u"info")
         area = request.POST.get(u"area")
-    
+        '''
         location = [
             float(request.POST.get(u"lat")),
             float(request.POST.get(u"lon")),
-        ]
+        ]'''
         url = request.POST.get(u"url")
         current_user = request.session.get("current_user")
         uid = current_user["localId"]
@@ -354,7 +370,7 @@ def orderMedicine(request):
             u"medicine": medicine,
             "url": url,
             u"uId": uid,
-            u"location": location,
+            #u"location": location,
             u"age": age,
             u"gender": gender,
             u"hospital": hospital,

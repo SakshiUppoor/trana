@@ -12,19 +12,19 @@
         max-height: 60vh;
       }
 </style>
-<p><h3 style="text-align:center;">Report Details</h3></p>  
+<p><h3 style="text-align:center;">Medicine Details</h3></p>  
 <div class="table-container">
     <table class="table table-bordered" id="my-table">
     <thead>
         <tr>
-            {% for key,value in get_report.items %}
+            {% for key,value in get_med.items %}
             <th>{{key}}</th>
             {% endfor %}
         </tr>
     </thead>
     <tbody id="myTable">
         <tr>
-            {% for key,value in get_report.items %}
+            {% for key,value in get_med.items %}
             <td>{{value}}</td>
             {% endfor %}
         </tr>
