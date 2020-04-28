@@ -4,106 +4,157 @@
     
     {% block body%}
     <style>
-      html,
-      body {
+        html,
+        body {
         height: 100%;
         margin: 0;
         padding: 0;
       }
-
-      .form-wrap{
-        margin:auto 20em;
-        padding:40px 20px;
-        font-size:20px;
-        color:#4B7FFB;
-      }
-
-      input[type="text"],input[type="email"],input[type="password"],input[type="button"]{
-        width:100%;
-        background: none;
-        border-radius: 3px;
-        padding: 6px 15px;
-        box-sizing: border-box;
-        margin-bottom: 20px;
-       
-      }
-      input[type="radio"]{
-        -webkit-appearance: none;
-        position: relative;
-        cursor: pointer;
-        display: inline-block;
-        border-radius:60%;
-        height:20px;
-        width:20px;
-        outline:none;
-        margin-left: 10px;
-        margin-top:10px;
-      }
-      
-      
-
-      input[type="submit"]{
-        border:0;
-        cursor: pointer;
-        background: #EF716B;
-        border-radius: 35px;
-        width: 145px;
-        height: 40px;
-        left: 80px;
-        top: 400px;
-      }
-      input[type="submit"]:hover{
-       transition: .6s;
-      }
-      .pharmacist-details {
-        display: none;
-  transition: 0.5s;
-  transition-timing-function: ease-in-out;
-      }
-  #pharmacist:checked ~ .pharmacist-details{
- display: block;
-  max-height: auto;
-  overflow: visible;
-}
-
+        
+      .elementor-widget-wrap {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #fbfbfd;
+            
+        }
+        .sign_in{
+            height:100%;
+            padding:120px 0;
+        }
+        .container {
+            max-width: 1200px;
+            box-sizing: border-box;
+            height: 100%;
+        }
+        .sign_info {
+            border: 20px solid #fff;
+            background: #fbfbfd;
+            padding: 80px 50px;
+            height:100%;
+            margin-bottom: 25px;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+            height:100%;
+        }
+        .heading{
+            margin-bottom: 40px;
+            color: #222d39;
+            padding-left:30px;
+            font-weight: 600;
+            font-size: 24px;
+            font-family: 'Quicksand', sans-serif;
+        }
+        .form-wrap{
+            padding-left:30px;
+        }
+        .text_box{
+            margin-bottom: 25px;
+        }
+        .form-data{
+            color: #161341;
+            font-size: 14px;
+            margin-bottom: 15px;
+            font-weight: 500;
+            font-family: 'Quicksand', sans-serif;
+        }
+        input[type="text"],input[type="email"],input[type="password"]{
+            font: 400 15px/60px "Quicksand", sans-serif;
+            color: #222d39;
+            height: 60px;
+            border-radius: 4px;
+            background-color: white;
+            box-shadow: 0 2px 4px 0 rgba(12, 0, 46, 0.04);
+            width: 100%;
+            border: 1px solid #fff;
+            padding-left: 30px;
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        }
+        input[type="submit"]{
+            font: 500 14px "Quicksand", sans-serif;
+            background: #5e2ced;
+            color: #fff;
+            padding: 15px 30px;
+        }
+        .img-signup{
+            width:400px;
+            height:400px;
+            background-image:url(../static/images/signup.png);
+            background-size:contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: white;
+        }
+        .sub-heading{
+            font: 400 16px/34px "Quicksand", sans-serif;
+            color: #677294;
+            text-align:left;
+            padding-left:40px;
+        }
+        a{
+            color: inherit;
+            text-decoration: none;
+        }
+        .sign_btn_transparent {
+            display: inline-block;
+            background: transparent;
+            border-color: #5e2ced;
+            margin-left:40px;
+        }
+        .btn_three {
+            font: 500 14px "Quicksand", sans-serif;
+            padding: 15px 30px;
+            border: 1px solid #7444fd;
+            margin-top: 10px;
+            margin-left:40px;
+        }
+        
     </style>
-
-   
-    <div class="form-wrap">
-    <form  action="{% url 'signup' %}" method='POST'>
-      {% csrf_token %}
-      <div required class="form-group">
-        <label for="name">Name</label>
-        <input required type="text" class="form-control" id="name" name="name" placeholder="Enter Name" required>
-        
-        <label for="email">Email</label>
-        <input required type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
-
-        <label for="password1">Password</label>
-        <input required type="password" class="form-control" id="password1" name="password1" placeholder="Enter password" required>
-
-        <label for="password2">Confirm Password</label>
-        <input required type="password" class="form-control" id="password2" name="password2" placeholder="Confirm password" required>
-
-        <input type="radio" class="form-control" id="user" name="position" value="user" required/>
-        <label for="user">User</label>
-        <input type="radio" class="form-control" id="authority" name="position" value="authority" />
-        <label for="authority" >Authority</label>
-        <input type="radio" class="form-control" id="pharmacist" name="position" value="pharmacist" />
-        <label for="pharmacist">Pharmacist</label>
-        
-
-        <div class="pharmacist-details">
-          <label for="pharmacy">Name of Pharmacy</label>
-          <input class="form-control"  type="text" id="pharmacy-name" name="pharmacy-name" placeholder="Enter Name of Pharmacy">
-          <label for="name">Address of Pharmacy</label>
-          <input  class="form-control" type="text" id="address" name="address" placeholder="Enter address of Pharmacy">
+    <div class="elementor-widget-wrap">
+    <section class="sign_in">
+    <div class="container">
+        <div class="sign_info">
+          <div class="row">
+              <div class='col-lg-5'>
+                  <div class="img-signup">
+                  </div>
+                  <h3 class="sub-heading">Already have an account?</h3>
+                  <p><a href="{% url 'login'%}" class="btn_three sign_btn_transparent">Sign In</a></p>
+              </div>
+              <div class='col-lg-7'>
+                  <h2 class="heading">Hello There</h2>
+                <div class="form-wrap">
+                    <form  action="{% url 'signup' %}" method='POST'>
+                      {% csrf_token %}
+                        <div required class="form-group text_box">
+                            <label for="name" class="form-data">Name</label>
+                            <input required type="text" class="form-control" id="name" name="name" placeholder="UserName" required>
+                        </div>
+                        <div required class="form-group text_box">
+                            <label for="email" class="form-data">Email</label>
+                            <input required type="email" class="form-control" id="email" name="email" placeholder="trana@gmail.com" required>
+                         </div>
+                        <div required class="form-group text_box">
+                            <label for="password1" class="form-data">Password</label>
+                            <input required type="password" class="form-control" id="password1" name="password1" placeholder="******" required>
+                        </div>
+                        <div required class="form-group text_box">
+                            <label for="password2" class="form-data">Confirm Password</label>
+                            <input required type="password" class="form-control" id="password2" name="password2" placeholder="******" required>
+                        </div>
+                            <input type="submit" value="Register" />
+                       
+                         
+                    </form>
+                    </div>
+              </div>
+          </div>  
         </div>
-        <br>
-        <input type="submit" value="Register" />
-      </div>
-         
-    </form>
     </div>
-   
-    {% endblock body%}
+    </section>
+    </div>
+    {% endblock body %}

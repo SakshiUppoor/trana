@@ -152,7 +152,7 @@ def signup(request):
         else:
             return HttpResponseRedirect(reverse("users"))
 
-    return render(request, "sign.html", {"title": "signup"})
+    return render(request, "signup.html", {"title": "signup"})
 
 
 def login_view(request):
