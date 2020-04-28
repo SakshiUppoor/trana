@@ -152,7 +152,7 @@ def signup(request):
         else:
             return HttpResponseRedirect(reverse("users"))
 
-    return render(request, "sign.html", {"title": "signup"})
+    return render(request, "signup.html", {"title": "signup"})
 
 
 def login_view(request):
@@ -180,7 +180,7 @@ def login_view(request):
         except:
             messages.error(request, "Invalid credentials")
             return render(request, "login.html")
-    return render(request, "log.html", {"title": "login"})
+    return render(request, "login.html", {"title": "login"})
 
 
 def logout_view(request):
