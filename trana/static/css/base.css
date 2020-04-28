@@ -21,8 +21,6 @@ nav {
   width: 100%;
   text-align: center;
 }
-.nav-left {
-}
 .appname {
   font-size: 40px;
   margin: auto 20px;
@@ -41,12 +39,6 @@ button {
   color: #5e2ced;
   background: rgba(255, 255, 255, 0);
   border: #5e2ced 1.8px solid;
-}
-.container {
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
 }
 .page {
   font-weight: 700;
@@ -74,66 +66,9 @@ button {
   background-color: #fff !important;
   transition: all 0.02s linear;
 }
-.card {
-  margin: 20px 10px;
-  border: none !important;
-  text-align: center;
-  padding: 40px !important;
-}
-.heading {
-  font-weight: 900;
-  font-size: 45px;
-}
-.heading-3 {
-  font-weight: 600;
-  font-size: 25px;
-}
-.row {
-  text-align: center;
-}
-.hero-image {
-  max-width: 70%;
-}
-.hero {
-  padding: 70px;
-  padding-top: 15vh;
-  padding-bottom: 0;
-  text-align: center;
-}
 button {
   font-weight: 600;
   margin: 10px;
-}
-.purple-sec {
-  color: #5e2ced;
-  background: #e7e1fb;
-}
-.purple-sec:hover {
-  color: #fff;
-  background: #5e2ced;
-}
-.green-sec {
-  color: #00c99b;
-  background: #d5f6ef;
-}
-.green-sec:hover {
-  color: #fff;
-  background: #00c99b;
-}
-.row > div {
-  padding: 0;
-}
-.cards {
-  justify-content: center;
-  margin: 0 10px;
-}
-.icon {
-  height: 80px;
-  width: 80px;
-  margin: auto;
-}
-.purple {
-  color: #5e2ced;
 }
 button:focus {
   outline: none;
