@@ -180,7 +180,7 @@ def login_view(request):
         except:
             messages.error(request, "Invalid credentials")
             return render(request, "login.html")
-    return render(request, "login.html", {"title": "login"})
+    return render(request, "log.html", {"title": "login"})
 
 
 def logout_view(request):
