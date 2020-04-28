@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% block title%}Signup{% endblock title %}<div class="modal-body">
+    
+    {% block body%}
+    <style>
+        html,
+        body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+        
+      .elementor-widget-wrap {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #fbfbfd;
+            
+        }
+        .sign_in{
+            height:100%;
+            padding:120px 0;
+        }
+        .container {
+            max-width: 1200px;
+            box-sizing: border-box;
+            height: 100%;
+        }
+        .sign_info {
+            border: 20px solid #fff;
+            background: #fbfbfd;
+            padding: 80px 50px;
+            height:100%;
+            margin-bottom: 25px;
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px;
+            height:100%;
+        }
+        .heading{
+            margin-bottom: 40px;
+            color: #222d39;
+            padding-left:30px;
+            font-weight: 600;
+            font-size: 24px;
+            font-family: 'Quicksand', sans-serif;
+        }
+        .form-wrap{
+            padding-left:30px;
+        }
+        .text_box{
+            margin-bottom: 25px;
+        }
+        .form-data{
+            color: #161341;
+            font-size: 14px;
+            margin-bottom: 15px;
+            font-weight: 500;
+            font-family: 'Quicksand', sans-serif;
+        }
+        input[type="text"],input[type="email"],input[type="password"]{
+            font: 400 15px/60px "Quicksand", sans-serif;
+            color: #222d39;
+            height: 60px;
+            border-radius: 4px;
+            background-color: white;
+            box-shadow: 0 2px 4px 0 rgba(12, 0, 46, 0.04);
+            width: 100%;
+            border: 1px solid #fff;
+            padding-left: 30px;
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        }
+        input[type="submit"]{
+            font: 500 14px "Quicksand", sans-serif;
+            background: #5e2ced;
+            color: #fff;
+            padding: 15px 30px;
+        }
+        .img-signup{
+            width:400px;
+            height:400px;
+            background-image:url(../static/images/signup.png);
+            background-size:contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: white;
+        }
+        .sub-heading{
+            font: 400 16px/34px "Quicksand", sans-serif;
+            color: #677294;
+            text-align:left;
+            padding-left:40px;
+        }
+        a{
+            color: inherit;
+            text-decoration: none;
+        }
+        .sign_btn_transparent {
+            display: inline-block;
+            background: transparent;
+            border-color: #5e2ced;
+            margin-left:40px;
+        }
+        .btn_three {
+            font: 500 14px "Quicksand", sans-serif;
+            padding: 15px 30px;
+            border: 1px solid #7444fd;
+            margin-top: 10px;
+            margin-left:40px;
+        }
+        
+    </style>
+    <div class="elementor-widget-wrap">
+    <section class="sign_in">
+    <div class="container">
+        <div class="sign_info">
+          <div class="row">
+              <div class='col-lg-5'>
+                  <div class="img-signup">
+                  </div>
+                  <h3 class="sub-heading">Already have an account?</h3>
+                  <p><a href="{% url 'login'%}" class="btn_three sign_btn_transparent">Sign In</a></p>
+              </div>
+              <div class='col-lg-7'>
+                  <h2 class="heading">Hello There</h2>
+                <div class="form-wrap">
+                    <form  action="{% url 'signup' %}" method='POST'>
+                      {% csrf_token %}
+                        <div required class="form-group text_box">
+                            <label for="name" class="form-data">Name</label>
+                            <input required type="text" class="form-control" id="name" name="name" placeholder="UserName" required>
+                        </div>
+                        <div required class="form-group text_box">
+                            <label for="email" class="form-data">Email</label>
+                            <input required type="email" class="form-control" id="email" name="email" placeholder="trana@gmail.com" required>
+                         </div>
+                        <div required class="form-group text_box">
+                            <label for="password1" class="form-data">Password</label>
+                            <input required type="password" class="form-control" id="password1" name="password1" placeholder="******" required>
+                        </div>
+                        <div required class="form-group text_box">
+                            <label for="password2" class="form-data">Confirm Password</label>
+                            <input required type="password" class="form-control" id="password2" name="password2" placeholder="******" required>
+                        </div>
+                            <input type="submit" value="Register" />
+                       
+                         
+                    </form>
+                    </div>
+              </div>
+          </div>  
+        </div>
+    </div>
+    </section>
+    </div>
+    {% endblock body %}
