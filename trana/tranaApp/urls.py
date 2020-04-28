@@ -12,6 +12,8 @@ from .views import (
     resolve,
     page404,
     landing,
+    getreport,
+    getmedicine,
 )
 
 urlpatterns = [
@@ -28,4 +30,6 @@ urlpatterns = [
     path("notify/<str:id>", notify, name="notify"),
     path("resolve/<str:id>", resolve, name="resolve"),
     path("404/", page404, name="404"),
+    path("getreport/", getreport, name="getreport"),
+    path("getmedicine/", getmedicine, name="getmedicine"),
 ]
