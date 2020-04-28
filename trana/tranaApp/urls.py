@@ -11,6 +11,7 @@ from .views import (
     notify,
     resolve,
     page404,
+    landing,
 )
 
 urlpatterns = [
@@ -18,7 +19,8 @@ urlpatterns = [
     path("signup/", signup, name="signup"),
     path("login/", login_view, name="login"),
     path("logout/", logout_view, name="logout"),
-    path("", usersDashboard, name="users"),
+    path("", landing, name="landing"),
+    path("users/", usersDashboard, name="users"),
     path("reports/", reportsDashboard, name="reports"),
     path("medicines/", medicinesDashboard, name="medicines"),
     path("condition/", reportCondition, name="condition"),

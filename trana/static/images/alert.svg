@@ -12,7 +12,7 @@
    viewBox="0 0 512 512"
    version="1.1"
    id="svg834"
-   sodipodi:docname="alert-circle-sharp.svg"
+   sodipodi:docname="alert.svg"
    inkscape:version="0.92.3 (2405546, 2018-03-11)">
   <metadata
      id="metadata840">
@@ -41,7 +41,7 @@
      id="namedview836"
      showgrid="false"
      inkscape:zoom="1.6757812"
-     inkscape:cx="256"
+     inkscape:cx="156.34499"
      inkscape:cy="256"
      inkscape:window-x="-9"
      inkscape:window-y="-9"
@@ -54,7 +54,8 @@
      style="fill:#fff"
      id="polygon830" />
   <path
-     d="M256,48C141.31,48,48,141.31,48,256s93.31,208,208,208,208-93.31,208-208S370.69,48,256,48Zm20,319.91H236v-40h40ZM272,304H240l-6-160h44Z"
+     d="M 256.00001,0.8578096 C 115.31607,0.8578096 0.8578096,115.31607 0.8578096,256.00001 c 0,140.68394 114.4582604,255.1422 255.1422004,255.1422 140.68394,0 255.1422,-114.45826 255.1422,-255.1422 0,-140.68394 -114.45826,-255.1422004 -255.1422,-255.1422004 z M 280.53292,393.27388 h -49.06581 v -49.06581 h 49.06581 z m -4.90659,-78.3949 h -39.25264 l -7.35987,-196.26323 h 53.97239 z"
      id="path832"
-     style="fill:#ffffff;fill-opacity:1" />
+     style="fill:#5e2ced;fill-opacity:1;stroke-width:1"
+     inkscape:connector-curvature="0" />
 </svg>

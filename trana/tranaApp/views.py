@@ -338,3 +338,13 @@ def orderMedicine(request):
         db.collection(u"Medicines").document(str(count)).set(data)
 
     return render(request, "ordermeds.html")
+
+
+#####################
+#       HOME        #
+#####################
+
+
+def landing(request):
+    return render(request, "landing.html", {"title": "landing"})
+
