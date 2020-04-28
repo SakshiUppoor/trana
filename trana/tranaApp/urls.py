@@ -11,6 +11,7 @@ from .views import (
     notify,
     resolve,
     page404,
+    landing,
     getreport,
     getmedicine,
 )
@@ -20,7 +21,8 @@ urlpatterns = [
     path("signup/", signup, name="signup"),
     path("login/", login_view, name="login"),
     path("logout/", logout_view, name="logout"),
-    path("", usersDashboard, name="users"),
+    path("", landing, name="landing"),
+    path("users/", usersDashboard, name="users"),
     path("reports/", reportsDashboard, name="reports"),
     path("medicines/", medicinesDashboard, name="medicines"),
     path("condition/", reportCondition, name="condition"),
@@ -28,6 +30,6 @@ urlpatterns = [
     path("notify/<str:id>", notify, name="notify"),
     path("resolve/<str:id>", resolve, name="resolve"),
     path("404/", page404, name="404"),
-    path("getreport/",getreport,name='getreport'),
-    path("getmedicine/",getmedicine,name='getmedicine'),
+    path("getreport/", getreport, name="getreport"),
+    path("getmedicine/", getmedicine, name="getmedicine"),
 ]

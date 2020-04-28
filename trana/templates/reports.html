@@ -163,10 +163,21 @@
         </div>
       </div>
     <script>
+      getLocation();
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(initMap);
+        } else { 
+          x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+      }
       
               
       var map;
       function initMap(position) {
+      getLocation();
+
+        //console.log(position.coords.latitude);
         map = new google.maps.Map(document.getElementById("map"), {
           zoom: 9,
           center: { lat: position.coords.latitude, lng: position.coords.longitude },

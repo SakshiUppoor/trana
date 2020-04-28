@@ -1,0 +1,141 @@
+* {
+  font-family: "Quicksand", sans-serif;
+  font-size: 18px;
+  color: #273b5e;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: #f7fdfd;
+}
+.appname {
+  height: 35px;
+}
+a {
+  text-decoration: none;
+}
+nav {
+  padding: 1em 0;
+  position: fixed;
+  z-index: 20;
+  width: 100%;
+  text-align: center;
+}
+.nav-left {
+}
+.appname {
+  font-size: 40px;
+  margin: auto 20px;
+}
+button {
+  border: none;
+  padding: 10px 35px;
+  margin: 0 10px;
+  border-radius: 0.4em;
+}
+.primary {
+  color: #fff;
+  background: #ef716b;
+}
+.secondary {
+  color: #5e2ced;
+  background: rgba(255, 255, 255, 0);
+  border: #5e2ced 1.8px solid;
+}
+.container {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.page {
+  font-weight: 700;
+  margin: 20px !important;
+  text-decoration: none;
+  color: #273b5e;
+}
+.page:hover {
+  color: #5e2ced;
+  text-decoration: none;
+}
+.nav-item {
+  padding: 5px 0;
+}
+.current {
+  color: #5e2ced;
+}
+.scrolled,
+.card {
+  background-color: #fff !important;
+  transition: background-color 0.2s linear;
+  box-shadow: 0 4px 6px 0 rgba(12, 0, 46, 0.06);
+}
+.show {
+  background-color: #fff !important;
+  transition: all 0.02s linear;
+}
+.card {
+  margin: 20px 10px;
+  border: none !important;
+  text-align: center;
+  padding: 40px !important;
+}
+.heading {
+  font-weight: 900;
+  font-size: 45px;
+}
+.heading-3 {
+  font-weight: 600;
+  font-size: 25px;
+}
+.row {
+  text-align: center;
+}
+.hero-image {
+  max-width: 70%;
+}
+.hero {
+  padding: 70px;
+  padding-top: 15vh;
+  padding-bottom: 0;
+  text-align: center;
+}
+button {
+  font-weight: 600;
+  margin: 10px;
+}
+.purple-sec {
+  color: #5e2ced;
+  background: #e7e1fb;
+}
+.purple-sec:hover {
+  color: #fff;
+  background: #5e2ced;
+}
+.green-sec {
+  color: #00c99b;
+  background: #d5f6ef;
+}
+.green-sec:hover {
+  color: #fff;
+  background: #00c99b;
+}
+.row > div {
+  padding: 0;
+}
+.cards {
+  justify-content: center;
+  margin: 0 10px;
+}
+.icon {
+  height: 80px;
+  width: 80px;
+  margin: auto;
+}
+.purple {
+  color: #5e2ced;
+}
+button:focus {
+  outline: none;
+  transition: background 0.2s;
+}
