@@ -57,9 +57,146 @@
 
   
 <div id="MedicinesForm" class="tabcontent">
-    <h3>Order Medicines</h3>
-    <p>medicine form</p>
-  </div>
+  <div class="elementor-widget-wrap">
+    <section class="sign_in">
+      <div class="container">
+        <div class="sign_info">
+          <div class="row">
+            <div class='col-lg-2'></div>
+            <div class='col-lg-8'>
+              <h2 class="heading">Order Medicine</h2>
+                <div class="form-wrap">
+                    <form  action="{% url 'signup' %}" method='POST'>
+                      {% csrf_token %}
+
+                      <div class="row">
+                      <div class="col-md-12">
+                        <div class="form-group text_box">
+                          <label for="medicine" class="form-data" >Medicine*</label>
+                          <input required type="text" class="form-control" id="medicine" name="medicine" placeholder="Medicine">
+                        </div>
+                        </div>
+                      </div>
+
+                        <div class="row">
+                          <div class="col-md-6">
+                          <div class="form-group text_box">
+                                <label for="address" class="form-data">Address*</label>
+                                <input type="text" class="form-control" id="address" name="address" placeholder="Enter address">
+                          </div>
+                          </div>
+                        
+                          <div class="col-md-6">
+                          <div class="form-group text_box">
+                            <label for="area" class="form-data">Area*</label>
+                            <input required type="text" class="form-control" id="area" name="area" placeholder="Area">
+                          </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          
+                          <div class=" col-md-4">
+                            <div class="form-group text-box">
+                              <label for="gender" class="form-data">Gender*</label>
+                              <div class="form-check">
+                                <input type="radio" class="form-check-input" id="male" name="gender" value="male" />
+                                <label for="male"  class="form-data">Male</label>
+                              </div>
+                              <div class="form-check">
+                                <input type="radio" class="form-check-input" id="female" name="gender" value="female" />
+                                <label for="female"  class="form-data">Female</label>
+                              </div>
+                            </div>
+                            </div>
+
+                          <div class="col-md-4">
+                          <div class="form-group text_box">
+                            <label for="age" class="form-data">Age*</label>
+                            <input type="text" class="form-control" id="age" name="age" placeholder="Age">
+                          </div>
+                          </div>
+
+                          <div class="col-md-4">
+                            <div class="form-group text_box">
+                                <label for="contact" class="form-data">Contact*</label>
+                                <input type="text" class="form-control" id="contact" name="contact" placeholder="Contact Details">
+                            </div>
+                          </div>
+                          
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-8">
+                              <div class="form-group text_box">
+                                <label for="prescription" class="form-data" >Upload prescription*</label>
+                                <input required type="file" class="form-data" id="files" name="files[]" >
+                              </div>
+                            </div>
+                            <div class="col-md-4">
+                              <div class="form-group text_box">
+                              <button type="button" id="upload" class="form-data" onclick="uploadimage()">Upload</button>
+                              </div>
+                            </div>
+                            <input type="hidden" name="url" id="url">
+                        </div>
+
+                        <div class="row">
+
+                          <div class="col-md-6">
+                          <div class="form-group text-box">
+                            <label for="doctor" class="form-data">Doctor</label>
+                            <input required type="text" class="form-control" id="doctor" name="doctor" placeholder="Name of Doctor">
+                          </div>
+                          </div>
+
+                          <div class="col-md-6">
+                          <div class="form-group text_box">
+                            <label for="hospital" class="form-data">Name of hosptial/clinic</label>
+                            <input required type="text" class="form-control" id="hospital" name="hospital" placeholder="Name of Hospital">
+                          </div>
+                          </div>
+                        </div>
+
+                        <div class="row">
+                          <div class="col-md-12">
+                            <div class="form-group text_box">
+                              <label for="treatment" class="form-data">Treatment</label>
+                            <input type="text" class="form-data" id="treatment" name="treatment" placeholder="Any kind of Special Treatment">
+                            </div>
+                          </div> 
+                        </div>  
+
+                        <div class="row">
+                          <div class="col-md-12">
+                          <div class="form-group text_box">
+                            <label for="info" class="form-data">Description</label>
+                            <textarea rows="4" cols="72" name="info" form="report"></textarea>
+                          </div>
+                          </div>
+                        </div>   
+
+                       
+                              
+                        <!--<div class="form-group">
+                        <input type="hidden" id="lat" name="lat">
+                          <input type="hidden" id="lon" name="lon">
+                        </div>
+                        -->
+
+                        <div style="text-align:center">
+                        <input type="submit" value="Report Condition">
+                        </div>
+                        </div>
+                      </form>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
 
   
 <div id="ReportsForm" class="tabcontent">
