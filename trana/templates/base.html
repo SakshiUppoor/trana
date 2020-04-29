@@ -108,9 +108,7 @@
         </div>
       </div>
     </nav>
-    <div class="row">
-      <div class="col-md-2"></div>
-      <div class="col-md-8">
+    
         <div class="body">
         
       {% for message in messages %}
@@ -123,9 +121,16 @@
       {% endfor %}
     {% block body%}{% endblock body%}
         </div>
-      </div>
+     
     </div>
   </body>
+  <footer class="footer_end">
+    <div class="footer_top">
+      <div class="container">
+        
+      </div>
+    </div>
+  </footer> 
   {% block script %}
   {% endblock script %}
 </html>

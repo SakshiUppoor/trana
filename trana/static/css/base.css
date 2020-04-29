@@ -74,3 +74,26 @@ button:focus {
   outline: none;
   transition: background 0.2s;
 }
+.footer_end{
+  overflow: hidden;
+  display:block;
+  background-color: #5e2ced;
+  height:60%;
+ 
+}
+.footer_top{
+  padding: 120px 0px 270px;
+  position:relative;
+  box-sizing: border-box;
+  
+  
+}
+.container{
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top:30px;
+  height:10vh;
+}
