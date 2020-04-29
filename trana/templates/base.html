@@ -78,28 +78,17 @@
           </li>
         </ul>
         <div class="controls">
-          <a href="#">
-            <button class="secondary">
+          
       {% if title == "login" or title == "signup" or title == "landing" %}
+            <a href="{% url 'landing' %}">
+            <button class="secondary">
             Login
+            </button>
       {% else %}
-      <li class="nav-item">
-        <a href="{% url 'logout' %}">
-          <button class="secondary">Logout</button>
-        </a> 
-      </li>
-
-      <li class="nav-item">
-      <a href="{% url 'getreport' %}">
-        <button class="secondary">Get Report</button>
-      </a>
-      </li>
-
-      <li class="nav-item">
-        <a href="{% url 'getmedicine' %}">
-          <button class="secondary">Get Medicine</button>
-        </a>
-      </li>
+      <a href="{% url 'logout' %}">
+            <button class="secondary">
+            Logout
+            </button>
       {% endif %}
             </button>
           </a>
@@ -108,10 +97,6 @@
         </div>
       </div>
     </nav>
-    <div class="row">
-      <div class="col-md-2"></div>
-      <div class="col-md-8">
-        <div class="body">
         
       {% for message in messages %}
       <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
@@ -126,8 +111,10 @@
       </div>
     </div>
   </body>
+  <script>
   {% block script %}
   {% endblock script %}
+  </script>
 </html>
 
   

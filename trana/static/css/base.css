@@ -74,3 +74,6 @@ button:focus {
   outline: none;
   transition: background 0.2s;
 }
+.body {
+  padding: 10vh 0;
+}

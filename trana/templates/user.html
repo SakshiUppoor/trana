@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="Stylesheet" href="{% static 'css/user.css' %}">
+{% endblock css %}
+{% block style %}
+
+{% endblock style %}
+
+{% block body %}
+
+
+<div class="tab">
+  <div class="homebutton">
+    <button class="tablinks active" onclick="openTab(event, 'Home')"><ion-icon name="home-outline"></ion-icon></button>
+  </div>
+  <div class="notifbutton">
+    <button class="tablinks" onclick="openTab(event, 'Notifications')"><ion-icon name="notifications-outline"></ion-icon></button>
+  </div>
+  <div class="reportsbutton">
+    <button class="tablinks" onclick="openTab(event, 'Reports')"><ion-icon name="alert-circle-outline"></ion-icon></button>
+  </div>
+  <div class="medicinesbutton">
+    <button class="tablinks" onclick="openTab(event, 'Medicines')"><ion-icon name="medkit-outline"></ion-icon></button>
+  </div>
+</div>
+<div class="body">
+<div id="Home" class="tabcontent" style="display: block;">
+  <h3>Home</h3>
+  <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus facilis quos, rem nihil nisi mollitia velit nobis necessitatibus pariatur recusandae.
+      
+  <div class="ordermed">
+    <button class="tablinks" onclick="openTab(event, 'MedicinesForm')">Order Medicines</button>
+  </div>
+  <div class="reportcondition">
+    <button class="tablinks" onclick="openTab(event, 'ReportsForm')">Report Condition</button>
+  </div>
+  </p>
+</div>
+
+<div id="Notifications" class="tabcontent">
+  <h3>Notifications</h3>
+  <p>No new notifications.</p> 
+</div>
+
+<div id="Reports" class="tabcontent">
+  <h3>Reports</h3>
+  <p>All your Reports</p>
+</div>
+
+
+<div id="Medicines" class="tabcontent">
+    <h3>Medicines</h3>
+    <p>All Medicines requests</p>
+  </div>
+
+  
+<div id="MedicinesForm" class="tabcontent">
+    <h3>Order Medicines</h3>
+    <p>medicine form</p>
+  </div>
+
+  
+<div id="ReportsForm" class="tabcontent">
+    <h3>Report conditon</h3>
+    <p>report form</p>
+  </div>
+
+</body>
+{% endblock body %}
+
+{% block script %}
+function openTab(evt, tabName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+{% endblock script %}
