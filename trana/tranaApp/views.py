@@ -11,7 +11,7 @@ import firebase
 from firebase import firebase
 import pyrebase
 
-#from .utils import send_mail
+# from .utils import send_mail
 
 ###########################
 # FIRESTORE CONFIGURATION #
@@ -222,9 +222,11 @@ def medicinesDashboard(request):
 
 
 def usersDashboard(request):
-    if getPosition(request) != None:
-        return render(request, "appuser.html")
-    return HttpResponseRedirect(reverse("login"))
+    # if getPosition(request) != None:
+    #    return render(request, "appuser.html")
+
+    return render(request, "user.html")
+    # return HttpResponseRedirect(reverse("login"))
 
 
 def notify(request, id):
@@ -244,26 +246,28 @@ def resolve(request, id):
     report_ref.set({u"resolved": True}, merge=True)
     return HttpResponseRedirect(reverse("reports"))
 
+
 def getreport(request):
     if getPosition(request) != None:
         if getPosition(request) == "user":
             co_list, reports_list = get_components("Reports")
             current_user = request.session.get("current_user")
             uid = current_user["localId"]
-            report_ref = db.collection(u"Reports").where(u'uId',u'==',uid).stream()
+            report_ref = db.collection(u"Reports").where(u"uId", u"==", uid).stream()
             for report in report_ref:
-                print(u'Document data: {}'.format(report.to_dict()))
-            get_report=report.to_dict()
-            del get_report['uId']
+                print(u"Document data: {}".format(report.to_dict()))
+            get_report = report.to_dict()
+            del get_report["uId"]
             context = {
                 "co_list": co_list,
                 "reports": reports_list,
-                "get_report":get_report,
+                "get_report": get_report,
             }
             return render(request, "getreport.html", context)
         else:
             return HttpResponseRedirect(reverse("404"))
     return HttpResponseRedirect(reverse("login"))
+
 
 def getmedicine(request):
     if getPosition(request) != None:
@@ -271,21 +275,22 @@ def getmedicine(request):
             co_list, reports_list = get_components("Medicines")
             current_user = request.session.get("current_user")
             uid = current_user["localId"]
-            med_ref = db.collection(u"Medicines").where(u'uId',u'==',uid).stream()
+            med_ref = db.collection(u"Medicines").where(u"uId", u"==", uid).stream()
             for med in med_ref:
-                print(u'Medicine data: {}'.format(med.to_dict()))
-            get_med=med.to_dict()
-            del get_med['uId']
-            del get_med['url']
+                print(u"Medicine data: {}".format(med.to_dict()))
+            get_med = med.to_dict()
+            del get_med["uId"]
+            del get_med["url"]
             context = {
                 "co_list": co_list,
                 "reports": reports_list,
-                "get_med":get_med,
+                "get_med": get_med,
             }
             return render(request, "getmed.html", context)
         else:
             return HttpResponseRedirect(reverse("404"))
     return HttpResponseRedirect(reverse("login"))
+
 
 def page404(request):
     return render(request, "404.html")
@@ -302,15 +307,14 @@ def reportCondition(request):
         treatment = request.POST.get(u"treatment")
         area = request.POST.get(u"area")
         info = request.POST.get(u"info")
-        '''
+        """
         location = [
             float(request.POST.get(u"lat")),
             float(request.POST.get(u"lon")),
-        ]'''
+        ]"""
         current_user = request.session.get("current_user")
         uid = current_user["localId"]
 
-        
         abc = db.collection(u"Reports").get()
         list_items = []
         for i in abc:
@@ -326,7 +330,7 @@ def reportCondition(request):
             u"condition": condition,
             u"treatment": treatment,
             u"uId": uid,
-            #u"location": location,
+            # u"location": location,
             u"description": info,
         }
         db.collection(u"Reports").document(str(count)).set(data)
@@ -344,11 +348,11 @@ def orderMedicine(request):
         doctor = request.POST.get(u"doctor")
         info = request.POST.get(u"info")
         area = request.POST.get(u"area")
-        '''
+        """
         location = [
             float(request.POST.get(u"lat")),
             float(request.POST.get(u"lon")),
-        ]'''
+        ]"""
         url = request.POST.get(u"url")
         current_user = request.session.get("current_user")
         uid = current_user["localId"]
@@ -363,7 +367,7 @@ def orderMedicine(request):
             u"medicine": medicine,
             "url": url,
             u"uId": uid,
-            #u"location": location,
+            # u"location": location,
             u"age": age,
             u"gender": gender,
             u"hospital": hospital,
@@ -383,4 +387,3 @@ def orderMedicine(request):
 
 def landing(request):
     return render(request, "landing.html", {"title": "landing"})
-
