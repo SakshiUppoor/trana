@@ -30,8 +30,7 @@
         .sign_info {
             border: 20px solid #fff;
             background: #fbfbfd;
-            padding: 80px 50px;
-            height:100%;
+            padding: 1em;
             margin-bottom: 25px;
         }
         .row {
@@ -79,15 +78,16 @@
             background: #5e2ced;
             color: #fff;
             padding: 15px 30px;
+            border: none;
+            border-radius: 0.5em;
         }
         .img-login{
-            width:400px;
+            width:auto;
             height:400px;
-            background-image:url(../static/images/login.png);
+            background-image:url(../static/images/login.svg);
             background-size:contain;
             background-repeat: no-repeat;
             background-position: center;
-            background-color: white;
         }
         .new_account{
         font: 400 15px/26px "Poppins", sans-serif;
@@ -111,7 +111,7 @@
             <div class="sign_info">
                 <div class="row">
                     <div class='col-lg-7'>
-                        <h2 class="heading">Welcome Back</h2>
+                        <h2 class="heading" style="font-size:30px;">Welcome back!</h2>
                         <div class="form-wrap">
                             <form  action="" method='POST'>
                             {% csrf_token %}
@@ -124,10 +124,12 @@
                                     <input type="password" class="form-control" id="password" name="password" placeholder="******">
                                 </div>
                                 <input required type="submit" value="Login"/>
-                                <div class="new_account">"New User?"
-                                    <a class="signup-link" href="{% url 'signup' %}">
-                                        Don't have an account?
-                                    </a>
+                                <div class="new_account">Don't have an account?                                    <a class="signup-link" href="{% url 'signup' %}">
+                                            <a href="{% url 'signup' %}">
+                <button class="secondary">
+                Get started
+                </button>
+                </a>
                                 </div>
                             </form>
                         </div>

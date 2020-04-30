@@ -156,31 +156,34 @@ def signup(request):
 
 
 def login_view(request):
-    if request.method == "POST":
-        email = request.POST["email"]
-        password = request.POST["password"]
-        try:
-            current_user = authe.sign_in_with_email_and_password(email, password)
-            request.session["current_user"] = current_user
-            # current_user_uid = current_user["localId"]
-            session_id = current_user["idToken"]
-            request.session["uid"] = str(session_id)
-            print(request.__dict__)
-            position = getPosition(request)
-            print(position)
-            if position == "authority":
-                print("hello")
-                return HttpResponseRedirect(reverse("reports"))
-            elif position == "pharmacist":
-                return HttpResponseRedirect(reverse("medicines"))
-            elif position == "user":
-                return HttpResponseRedirect(reverse("users"))
-            else:
-                return HttpResponseRedirect(reverse("users"))
-        except:
-            messages.error(request, "Invalid credentials")
-            return render(request, "login.html")
-    return render(request, "login.html", {"title": "login"})
+    if getPosition(request) != "user":
+        if request.method == "POST":
+            email = request.POST["email"]
+            password = request.POST["password"]
+            try:
+                current_user = authe.sign_in_with_email_and_password(email, password)
+                request.session["current_user"] = current_user
+                # current_user_uid = current_user["localId"]
+                session_id = current_user["idToken"]
+                request.session["uid"] = str(session_id)
+                print(request.__dict__)
+                position = getPosition(request)
+                print(position)
+                if position == "authority":
+                    print("hello")
+                    return HttpResponseRedirect(reverse("reports"))
+                elif position == "pharmacist":
+                    return HttpResponseRedirect(reverse("medicines"))
+                elif position == "user":
+                    return HttpResponseRedirect(reverse("users"))
+                else:
+                    return HttpResponseRedirect(reverse("users"))
+            except Exception as e:
+                print(e)
+                messages.error(request, "Invalid credentials")
+                return render(request, "login.html")
+        return render(request, "login.html", {"title": "login"})
+    return redirect("users")
 
 
 def logout_view(request):
@@ -224,32 +227,33 @@ def medicinesDashboard(request):
 def usersDashboard(request):
     # if getPosition(request) != None:
     #    return render(request, "appuser.html")
+    print(getPosition(request))
+    if getPosition(request) == "user":
+        current_user = request.session.get("current_user")
+        uid = current_user["localId"]
+        report_ref = db.collection(u"Reports").where(u"uId", u"==", uid).stream()
+        reports_list = []
+        for report in report_ref:
+            print(u"Document data: {}".format(report.to_dict()))
+            get_report = report.to_dict()
+            get_report["id"] = report.id
+            del get_report["uId"]
+            reports_list.append(get_report)
 
-    current_user = request.session.get("current_user")
-    uid = current_user["localId"]
-    report_ref = db.collection(u"Reports").where(u"uId", u"==", uid).stream()
-    reports_list = []
-    for report in report_ref:
-        print(u"Document data: {}".format(report.to_dict()))
-        get_report = report.to_dict()
-        get_report["id"] = report.id
-        del get_report["uId"]
-        reports_list.append(get_report)
-
-    med_ref = db.collection(u"Medicines").where(u"uId", u"==", uid).stream()
-    meds_list = []
-    for med in med_ref:
-        print(u"Document data: {}".format(med.to_dict()))
-        get_med = med.to_dict()
-        get_med["id"] = med.id
-        del get_med["uId"]
-        meds_list.append(get_med)
-    context = {
-        "meds": meds_list,
-        "reports": reports_list,
-    }
-    return render(request, "user.html", context)
-    # return HttpResponseRedirect(reverse("login"))
+        med_ref = db.collection(u"Medicines").where(u"uId", u"==", uid).stream()
+        meds_list = []
+        for med in med_ref:
+            print(u"Document data: {}".format(med.to_dict()))
+            get_med = med.to_dict()
+            get_med["id"] = med.id
+            del get_med["uId"]
+            meds_list.append(get_med)
+        context = {
+            "meds": meds_list,
+            "reports": reports_list,
+        }
+        return render(request, "user.html", context)
+    return HttpResponseRedirect(reverse("login"))
 
 
 def notify(request, id):
@@ -344,7 +348,7 @@ def reportCondition(request):
             list_items.append(i)
         count = len(list_items) + 1
         data = {
-            u"patient":patient,
+            u"patient": patient,
             u"area": area,
             u"address": address,
             u"contact": contact,
@@ -373,7 +377,7 @@ def orderMedicine(request):
         doctor = request.POST.get(u"doctor")
         info = request.POST.get(u"info")
         area = request.POST.get(u"area")
-        
+
         location = [
             float(request.POST.get(u"lat")),
             float(request.POST.get(u"lon")),
