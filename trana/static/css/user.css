@@ -1,13 +1,14 @@
 /* Style the tab */
 .tab {
   overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
+  border: 1px solid rgba(204, 204, 204, 0.479);
+  background-color: #ffffff;
   position: fixed;
   bottom: 0;
   width: 100vw;
   justify-content: space-around;
   z-index: 2000;
+  display: flex;
 }
 
 /* Style the buttons inside the tab */
@@ -24,12 +25,16 @@
 
 /* Change background color of buttons on hover */
 .tab button:hover {
-  background-color: #ddd;
+  background-color: #e7e1fb;
 }
 
 /* Create an active/current tablink class */
 .tab button.active {
-  background-color: #ccc;
+  background-color: #e7e1fb;
+}
+
+.active i {
+  color: #5e2ced;
 }
 
 /* Style the tab content */
@@ -228,6 +233,8 @@ select:focus {
     width: auto;
     margin: auto;
     height: 100vh;
+    flex-direction: column;
+    justify-content: center;
   }
   .body {
     padding: 10vw !important;
