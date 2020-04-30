@@ -321,6 +321,7 @@ def page404(request):
 
 def reportCondition(request):
     if request.method == "POST":
+        patient = request.POST.get(u"patient")
         address = request.POST.get(u"address")
         contact = request.POST.get(u"contact")
         age = request.POST.get(u"age")
@@ -330,11 +331,10 @@ def reportCondition(request):
         treatment = request.POST.get(u"treatment")
         area = request.POST.get(u"area")
         info = request.POST.get(u"info")
-        """
         location = [
             float(request.POST.get(u"lat")),
             float(request.POST.get(u"lon")),
-        ]"""
+        ]
         current_user = request.session.get("current_user")
         uid = current_user["localId"]
 
@@ -344,6 +344,7 @@ def reportCondition(request):
             list_items.append(i)
         count = len(list_items) + 1
         data = {
+            u"patient":patient,
             u"area": area,
             u"address": address,
             u"contact": contact,
@@ -353,7 +354,7 @@ def reportCondition(request):
             u"condition": condition,
             u"treatment": treatment,
             u"uId": uid,
-            # u"location": location,
+            u"location": location,
             u"description": info,
         }
         db.collection(u"Reports").document(str(count)).set(data)
@@ -372,11 +373,11 @@ def orderMedicine(request):
         doctor = request.POST.get(u"doctor")
         info = request.POST.get(u"info")
         area = request.POST.get(u"area")
-        """
+        
         location = [
             float(request.POST.get(u"lat")),
             float(request.POST.get(u"lon")),
-        ]"""
+        ]
         url = request.POST.get(u"url")
         current_user = request.session.get("current_user")
         uid = current_user["localId"]
@@ -391,7 +392,7 @@ def orderMedicine(request):
             u"medicine": medicine,
             "url": url,
             u"uId": uid,
-            # u"location": location,
+            u"location": location,
             u"age": age,
             u"gender": gender,
             u"hospital": hospital,
