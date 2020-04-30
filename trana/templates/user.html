@@ -10,7 +10,9 @@
 
 {% block body %}
 
-
+<!--
+              -------------------------------DISPLAY TAB ICONS------------------------------
+-->
 <div class="tab">
   <div class="homebutton">
     <button class="tablinks active" onclick="openTab(event, 'Home')"><ion-icon name="home-outline"></ion-icon></button>
@@ -30,43 +32,145 @@
   <h3>Home</h3>
   <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus facilis quos, rem nihil nisi mollitia velit nobis necessitatibus pariatur recusandae.
       
-  <div class="ordermed">
-    <button class="tablinks" onclick="openTab(event, 'MedicinesForm')">Order Medicines</button>
-  </div>
-  <div class="reportcondition">
-    <button class="tablinks" onclick="openTab(event, 'ReportsForm')">Report Condition</button>
-  </div>
+    <div style="text-align:center;">
+      <div class="reportcondition">
+        <button class="tablinks purple-sec" onclick="openTab(event, 'ReportsForm')">Report Condition</button>
+      </div>
+    <div class="ordermed">
+      <button class="tablinks green-sec" onclick="openTab(event, 'MedicinesForm')">Order Medicines</button>
+    </div>
+    </div>
   </p>
 </div>
+
+<!--
+              -------------------------------NOTIFICATIONS------------------------------
+-->
 
 <div id="Notifications" class="tabcontent">
   <h3>Notifications</h3>
   <p>No new notifications.</p> 
 </div>
 
+
+<!--
+              -------------------------------MY REPORTS------------------------------
+-->
+
 <div id="Reports" class="tabcontent">
   <h3>Reports</h3>
-  <p>All your Reports</p>
+  <div class="accordion" id="accordionExample">
+    
+  {% for report in reports %}
+    <div class="card" style="text-transform: capitalize">
+      <div class="card-header" id="headingOne">
+          <div class="report-heading">
+            {{ report|get_item:'case' }}
+          </div>
+          {% if report|get_item:'resolved' %}
+            <div class="status resolved">
+            Resolved
+          </div>
+            {% else %}
+            <div class="status">
+            Not resolved
+          </div>
+            {% endif %}
+          
+          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#a{{report|get_item:'id'}}" aria-expanded="false" aria-controls="a{{report|get_item:'id'}}">
+            <ion-icon name="chevron-down-outline"></ion-icon>
+          </button>
+
+      </div>
+  
+      <div id="a{{report|get_item:'id'}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+        {% for key, value in report.items %}
+        {% if key != 'id' and key != 'description' %}
+        <div><b>{{key}}:</b> {{value}}</div>
+        {% endif %}
+        {% endfor %}  
+        {% if report|get_item:'description' %}
+        {{ report|get_item:'description' }}
+        {% else %}
+        No description provided.
+        {% endif %}  
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+
+  </div>
 </div>
 
 
+<!--
+              -------------------------------MY MEDICINES------------------------------
+-->
+
 <div id="Medicines" class="tabcontent">
     <h3>Medicines</h3>
-    <p>All Medicines requests</p>
+    <div class="accordion" id="accordionExample">
+      
+    {% for med in meds %}
+      <div class="card" style="text-transform: capitalize">
+        <div class="card-header" id="headingOne">
+            <div class="report-heading">
+              {{ med|get_item:'medicine' }}
+            </div>
+            {% if med|get_item:'resolved' %}
+              <div class="status resolved">
+              Resolved
+            </div>
+              {% else %}
+              <div class="status">
+              Not resolved
+            </div>
+              {% endif %}
+            
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#a{{med|get_item:'id'}}" aria-expanded="false" aria-controls="a{{med|get_item:'id'}}">
+              <ion-icon name="chevron-down-outline"></ion-icon>
+            </button>
+  
+        </div>
+    
+        <div id="a{{med|get_item:'id'}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div class="card-body">
+          {% for key, value in med.items %}
+          {% if key != 'id' and key != 'description' %}
+          <div><b>{{key}}:</b> {{value}}</div>
+          {% endif %}
+          {% endfor %}  
+          {% if med|get_item:'description' %}
+          {{ med|get_item:'description' }}
+          {% else %}
+          No description provided.
+          {% endif %}  
+          </div>          
+          {% if med|get_item:'url' %}
+          <img src="{{report|get_item:'url'}}">
+          {% endif %}  
+        </div>
+      </div>
+    {% endfor %}
+  
+    </div>
   </div>
 
+  <!--
+              -------------------------------ORDER MEDICINES------------------------------
+-->
   
 <div id="MedicinesForm" class="tabcontent">
   <div class="elementor-widget-wrap">
-    <section class="sign_in">
       <div class="container">
-        <div class="sign_info">
+        <div class="sign_info" style="padding: 20px 0.5em!important;">
           <div class="row">
             <div class='col-lg-2'></div>
             <div class='col-lg-8'>
               <h2 class="heading">Order Medicine</h2>
-                <div class="form-wrap">
-                    <form  action="{% url 'signup' %}" method='POST'>
+                <div class="form-wrap" style="padding: 0px;">
+                    <form  action="{% url 'medicine' %}" method='POST'>
                       {% csrf_token %}
 
                       <div class="row">
@@ -178,14 +282,14 @@
 
                        
                               
-                        <!--<div class="form-group">
+                        <div class="form-group">
                         <input type="hidden" id="lat" name="lat">
                           <input type="hidden" id="lon" name="lon">
                         </div>
-                        -->
+                        
 
                         <div style="text-align:center">
-                        <input type="submit" value="Report Condition">
+                        <input type="submit" value="Send">
                         </div>
                         </div>
                       </form>
@@ -196,20 +300,21 @@
           </div>
         </section>
       </div>
-    </div>
 
+<!--
+              -------------------------------REPORT CONDITION------------------------------
+-->
   
 <div id="ReportsForm" class="tabcontent">
   <div class="elementor-widget-wrap">
-    <section class="sign_in">
       <div class="container">
-        <div class="sign_info">
+        <div class="sign_info" style="padding: 20px 0.5em!important;">
           <div class="row">
             <div class='col-lg-2'></div>
             <div class='col-lg-8'>
               <h2 class="heading">Report Condition</h2>
-                <div class="form-wrap">
-                    <form  action="{% url 'signup' %}" method='POST'>
+                <div class="form-wrap" style="padding: 0px;">
+                    <form  action="{% url 'condition' %}" method='POST'>
                       {% csrf_token %}
                       <div class="row">
                         <div class="col-md-12">
@@ -334,12 +439,11 @@
                         </div>
                         </div>
                       </div>   
-                      <!--<div class="form-group">
+                      <div class="form-group">
                        <input type="hidden" id="lat" name="lat">
                         <input type="hidden" id="lon" name="lon">
                       </div>
-                      -->
-                    
+                      
                       <div style="text-align:center">
                       <input type="submit" value="Report Condition">
                       </div>
@@ -352,9 +456,9 @@
     </section>
   </div>
 </div><script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
-<!--
+
 <script>
-   
+  //Getting the location saving it to the hidden field
   var lat = document.getElementById("lat");
   var lon = document.getElementById("lon");
   getLocation()
@@ -372,19 +476,19 @@
     console.log(position.coords.latitude, position.coords.longitude);
   }
           
-</script>
--->
-<script>
+
+
+
 // Your web app's Firebase configuration
 var firebaseConfig = {
-apiKey: "AIzaSyDXMensLWaA5AvH2M7r6DhR6oCIu1kXG5U",
-authDomain: "trana-cfbcf.firebaseapp.com",
-databaseURL: "https://trana-cfbcf.firebaseio.com",
-projectId: "trana-cfbcf",
-storageBucket: "trana-cfbcf.appspot.com",
-messagingSenderId: "105597355531",
-appId: "1:105597355531:web:b7d7645d90867fb34a690e",
-measurementId: "G-FQ9WQ7Z7VQ"
+  "apiKey": "AIzaSyBybJho0cdp9_nQzX_eT3arRl2jIHNgyU4",
+  "authDomain": "tra1-bfac8.firebaseapp.com",
+  "databaseURL": "https://tra1-bfac8.firebaseio.com",
+  "projectId": "tra1-bfac8",
+  "storageBucket": "tra1-bfac8.appspot.com",
+  "messagingSenderId": "404257539306",
+  "appId": "1:404257539306:web:5c266442fe78892bde0393",
+  "measurementId": "G-1FLRML6GY5",
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -400,7 +504,7 @@ alert('Prescription uploaded successfully');
 }else{
 alert('Kindly upload prescription');
 }
-
+//Uploading the Image
 function uploadimage(){
     var storage = firebase.storage();
     var file = document.getElementById("files").files[0];
@@ -422,9 +526,13 @@ function uploadimage(){
 
 
       }
+
+
 </script>
+</div>
 
 </body>
+
 {% endblock body %}
 
 {% block script %}
@@ -444,3 +552,4 @@ function openTab(evt, tabName) {
 
 
 {% endblock script %}
+

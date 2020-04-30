@@ -17,7 +17,7 @@ a {
 nav {
   padding: 1em 0;
   position: fixed;
-  z-index: 20;
+  z-index: 3 !important;
   width: 100%;
   text-align: center;
 }
@@ -76,4 +76,27 @@ button:focus {
 }
 .body {
   padding: 10vh 0;
+}
+
+.green-sec {
+  color: #00c99b;
+  background: #d5f6ef;
+}
+.green-sec:hover {
+  color: #fff;
+  background: #00c99b;
+}
+
+button:focus,
+input[type="submit"]:focus {
+  outline: none;
+}
+
+.purple-sec {
+  color: #5e2ced;
+  background: #e7e1fb;
+}
+.purple-sec:hover {
+  color: #fff;
+  background: #5e2ced;
 }

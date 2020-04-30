@@ -32,14 +32,14 @@ current_user_uid = ""
 ##########################
 
 config = {
-    "apiKey": "AIzaSyDXMensLWaA5AvH2M7r6DhR6oCIu1kXG5U",
-    "authDomain": "trana-cfbcf.firebaseapp.com",
-    "databaseURL": "https://trana-cfbcf.firebaseio.com",
-    "projectId": "trana-cfbcf",
-    "storageBucket": "trana-cfbcf.appspot.com",
-    "messagingSenderId": "105597355531",
-    "appId": "1:105597355531:web:b7d7645d90867fb34a690e",
-    "measurementId": "G-FQ9WQ7Z7VQ",
+    "apiKey": "AIzaSyBybJho0cdp9_nQzX_eT3arRl2jIHNgyU4",
+    "authDomain": "tra1-bfac8.firebaseapp.com",
+    "databaseURL": "https://tra1-bfac8.firebaseio.com",
+    "projectId": "tra1-bfac8",
+    "storageBucket": "tra1-bfac8.appspot.com",
+    "messagingSenderId": "404257539306",
+    "appId": "1:404257539306:web:5c266442fe78892bde0393",
+    "measurementId": "G-1FLRML6GY5",
 }
 
 firebase = pyrebase.initialize_app(config)
@@ -110,7 +110,7 @@ def signup(request):
     if request.method == "POST":
         name = request.POST.get(u"name")
         email = request.POST.get(u"email")
-        position = request.POST.get(u"position")
+        position = "user"
         password1 = request.POST.get(u"password1")
         password2 = request.POST.get(u"password2")
 
@@ -165,7 +165,7 @@ def login_view(request):
             # current_user_uid = current_user["localId"]
             session_id = current_user["idToken"]
             request.session["uid"] = str(session_id)
-            # print(request.__dict__)
+            print(request.__dict__)
             position = getPosition(request)
             print(position)
             if position == "authority":
@@ -225,7 +225,30 @@ def usersDashboard(request):
     # if getPosition(request) != None:
     #    return render(request, "appuser.html")
 
-    return render(request, "user.html")
+    current_user = request.session.get("current_user")
+    uid = current_user["localId"]
+    report_ref = db.collection(u"Reports").where(u"uId", u"==", uid).stream()
+    reports_list = []
+    for report in report_ref:
+        print(u"Document data: {}".format(report.to_dict()))
+        get_report = report.to_dict()
+        get_report["id"] = report.id
+        del get_report["uId"]
+        reports_list.append(get_report)
+
+    med_ref = db.collection(u"Medicines").where(u"uId", u"==", uid).stream()
+    meds_list = []
+    for med in med_ref:
+        print(u"Document data: {}".format(med.to_dict()))
+        get_med = med.to_dict()
+        get_med["id"] = med.id
+        del get_med["uId"]
+        meds_list.append(get_med)
+    context = {
+        "meds": meds_list,
+        "reports": reports_list,
+    }
+    return render(request, "user.html", context)
     # return HttpResponseRedirect(reverse("login"))
 
 
@@ -250,18 +273,18 @@ def resolve(request, id):
 def getreport(request):
     if getPosition(request) != None:
         if getPosition(request) == "user":
-            co_list, reports_list = get_components("Reports")
             current_user = request.session.get("current_user")
             uid = current_user["localId"]
             report_ref = db.collection(u"Reports").where(u"uId", u"==", uid).stream()
+            reports_list = []
             for report in report_ref:
                 print(u"Document data: {}".format(report.to_dict()))
-            get_report = report.to_dict()
-            del get_report["uId"]
+                get_report = report.to_dict()
+                del get_report["uId"]
+                reports_list.append(get_report)
             context = {
-                "co_list": co_list,
                 "reports": reports_list,
-                "get_report": get_report,
+                "reports_list": reports_list,
             }
             return render(request, "getreport.html", context)
         else:
@@ -298,6 +321,7 @@ def page404(request):
 
 def reportCondition(request):
     if request.method == "POST":
+        patient = request.POST.get(u"patient")
         address = request.POST.get(u"address")
         contact = request.POST.get(u"contact")
         age = request.POST.get(u"age")
@@ -307,11 +331,10 @@ def reportCondition(request):
         treatment = request.POST.get(u"treatment")
         area = request.POST.get(u"area")
         info = request.POST.get(u"info")
-        """
         location = [
             float(request.POST.get(u"lat")),
             float(request.POST.get(u"lon")),
-        ]"""
+        ]
         current_user = request.session.get("current_user")
         uid = current_user["localId"]
 
@@ -321,6 +344,7 @@ def reportCondition(request):
             list_items.append(i)
         count = len(list_items) + 1
         data = {
+            u"patient":patient,
             u"area": area,
             u"address": address,
             u"contact": contact,
@@ -330,10 +354,11 @@ def reportCondition(request):
             u"condition": condition,
             u"treatment": treatment,
             u"uId": uid,
-            # u"location": location,
+            u"location": location,
             u"description": info,
         }
         db.collection(u"Reports").document(str(count)).set(data)
+        return redirect("users")
     return render(request, "condition.html")
 
 
@@ -377,6 +402,7 @@ def orderMedicine(request):
         }
         db.collection(u"Medicines").document(str(count)).set(data)
 
+        return redirect("users")
     return render(request, "ordermeds.html")
 
 

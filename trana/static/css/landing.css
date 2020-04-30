@@ -33,22 +33,6 @@
   text-align: center;
 }
 
-.purple-sec {
-  color: #5e2ced;
-  background: #e7e1fb;
-}
-.purple-sec:hover {
-  color: #fff;
-  background: #5e2ced;
-}
-.green-sec {
-  color: #00c99b;
-  background: #d5f6ef;
-}
-.green-sec:hover {
-  color: #fff;
-  background: #00c99b;
-}
 .row > div {
   padding: 0;
 }
