@@ -114,7 +114,7 @@
           <input required type="file" class="form-control" id="files" name="files[]" >
           </div>
           <div class="col-md-4">
-          <button type="button" onclick="uploadimage()">Upload</button>
+          <button type="button" id="upload_pres" onclick="uploadimage()">Upload</button>
           </div>
           <input type="hidden" name="url" id="url">
       </div>
@@ -172,6 +172,15 @@
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
 
+  $("#upload_pres").click(function()
+  {
+    $(this).data('clicked', true);
+  });
+  if($("#upload_pres").data('clicked'))
+  {
+    alert('yes');
+  }
+
     function uploadimage(){
         var storage = firebase.storage();
         var file = document.getElementById("files").files[0];
@@ -190,6 +199,8 @@
         document.getElementById("url").value = downloadURL;
         alert("file uploaded successfully");
       });
+
+    
           }
 </script>
 {% endblock body %}

@@ -225,11 +225,11 @@
                           <div class="form-group text_box">
                             <label for="case" class="form-data">Case*</label>
                             <select name="case" id="case">
-                              <option value="Accident" class="option">Accident</option>
-                              <option value="pregnancy" class="option">Pregnancy</option>
-                              <option value="terminal illness" class="option">Terminal Illness</option>
-                              <option value="post operation" class="option">Post Opertion</option>
-                              <option value="accident recovery" class="option">Accident Recovery</option>
+                              <option value="Accident">Accident</option>
+                              <option value="pregnancy">Pregnancy</option>
+                              <option value="terminal illness">Terminal Illness</option>
+                              <option value="post operation">Post Opertion</option>
+                              <option value="accident recovery">Accident Recovery</option>
                             </select>
                           </div>
                         </div>
@@ -351,7 +351,78 @@
       </div>
     </section>
   </div>
-</div>
+</div><script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+<!--
+<script>
+   
+  var lat = document.getElementById("lat");
+  var lon = document.getElementById("lon");
+  getLocation()
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else { 
+      x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+  }
+  
+  function showPosition(position) {
+    lat.value = position.coords.latitude;
+    lon.value = position.coords.longitude;
+    console.log(position.coords.latitude, position.coords.longitude);
+  }
+          
+</script>
+-->
+<script>
+// Your web app's Firebase configuration
+var firebaseConfig = {
+apiKey: "AIzaSyDXMensLWaA5AvH2M7r6DhR6oCIu1kXG5U",
+authDomain: "trana-cfbcf.firebaseapp.com",
+databaseURL: "https://trana-cfbcf.firebaseio.com",
+projectId: "trana-cfbcf",
+storageBucket: "trana-cfbcf.appspot.com",
+messagingSenderId: "105597355531",
+appId: "1:105597355531:web:b7d7645d90867fb34a690e",
+measurementId: "G-FQ9WQ7Z7VQ"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+
+$("#upload_pres").click(function()
+{
+$(this).data('clicked', true);
+});
+if($("#upload_pres").data('clicked'))
+{
+alert('Prescription uploaded successfully');
+}else{
+alert('Kindly upload prescription');
+}
+
+function uploadimage(){
+    var storage = firebase.storage();
+    var file = document.getElementById("files").files[0];
+    var storageRef = storage.ref();
+    var thisref = storageRef.child('presciptions/' + file.name).put(file);
+    thisref.on('state_changed',function(snapshot){
+    console.log("file uploaded succesfully");
+    },
+    function(error) {
+      console.log(error);
+    },
+    function() {
+    // Upload completed successfully, now we can get the download URL
+    var downloadURL = thisref.snapshot.downloadURL;
+    console.log("got url");
+    document.getElementById("url").value = downloadURL;
+    alert("file uploaded successfully");
+  });
+
+
+      }
+</script>
 
 </body>
 {% endblock body %}
@@ -370,4 +441,6 @@ function openTab(evt, tabName) {
   document.getElementById(tabName).style.display = "block";
   evt.currentTarget.className += " active";
 }
+
+
 {% endblock script %}

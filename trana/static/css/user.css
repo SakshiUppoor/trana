@@ -111,13 +111,14 @@ input[type="text"],input[type="email"],input[type="password"]{
   padding-left: 30px;
   transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
+
 input[type="file"]{
-  
+  font: 400 15px/60px "Quicksand", sans-serif;
+  height: 60px;
     border: 0;
     box-shadow: none;
     background: 0 0;
     margin-top: -5px;
-    font: 300 15px/26px "Poppins",sans-serif;
     color: #9ca3b9;
     display: block;
 }
@@ -169,8 +170,6 @@ select{
   padding-left: 30px;
   transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
 }
-select:focus{
-  box-shadow: 0 10px 14px 0 rgba(12,0,46,0.06);
-  border-color: #f2effc;
-  outline: 0;
+option:hover{
+  background-color: #f2effc !important;
 }
