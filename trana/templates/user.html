@@ -30,12 +30,14 @@
   <h3>Home</h3>
   <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus facilis quos, rem nihil nisi mollitia velit nobis necessitatibus pariatur recusandae.
       
-  <div class="ordermed">
-    <button class="tablinks" onclick="openTab(event, 'MedicinesForm')">Order Medicines</button>
-  </div>
-  <div class="reportcondition">
-    <button class="tablinks" onclick="openTab(event, 'ReportsForm')">Report Condition</button>
-  </div>
+    <div style="text-align:center;">
+      <div class="reportcondition">
+        <button class="tablinks purple-sec" onclick="openTab(event, 'ReportsForm')">Report Condition</button>
+      </div>
+    <div class="ordermed">
+      <button class="tablinks green-sec" onclick="openTab(event, 'MedicinesForm')">Order Medicines</button>
+    </div>
+    </div>
   </p>
 </div>
 
@@ -46,27 +48,111 @@
 
 <div id="Reports" class="tabcontent">
   <h3>Reports</h3>
-  <p>All your Reports</p>
+  <div class="accordion" id="accordionExample">
+    
+  {% for report in reports %}
+    <div class="card" style="text-transform: capitalize">
+      <div class="card-header" id="headingOne">
+          <div class="report-heading">
+            {{ report|get_item:'case' }}
+          </div>
+          {% if report|get_item:'resolved' %}
+            <div class="status resolved">
+            Resolved
+          </div>
+            {% else %}
+            <div class="status">
+            Not resolved
+          </div>
+            {% endif %}
+          
+          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#a{{report|get_item:'id'}}" aria-expanded="false" aria-controls="a{{report|get_item:'id'}}">
+            <ion-icon name="chevron-down-outline"></ion-icon>
+          </button>
+
+      </div>
+  
+      <div id="a{{report|get_item:'id'}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+        {% for key, value in report.items %}
+        {% if key != 'id' and key != 'description' %}
+        <div><b>{{key}}:</b> {{value}}</div>
+        {% endif %}
+        {% endfor %}  
+        {% if report|get_item:'description' %}
+        {{ report|get_item:'description' }}
+        {% else %}
+        No description provided.
+        {% endif %}  
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+
+  </div>
 </div>
 
 
 <div id="Medicines" class="tabcontent">
     <h3>Medicines</h3>
-    <p>All Medicines requests</p>
+    <div class="accordion" id="accordionExample">
+      
+    {% for med in meds %}
+      <div class="card" style="text-transform: capitalize">
+        <div class="card-header" id="headingOne">
+            <div class="report-heading">
+              {{ med|get_item:'medicine' }}
+            </div>
+            {% if med|get_item:'resolved' %}
+              <div class="status resolved">
+              Resolved
+            </div>
+              {% else %}
+              <div class="status">
+              Not resolved
+            </div>
+              {% endif %}
+            
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#a{{med|get_item:'id'}}" aria-expanded="false" aria-controls="a{{med|get_item:'id'}}">
+              <ion-icon name="chevron-down-outline"></ion-icon>
+            </button>
+  
+        </div>
+    
+        <div id="a{{med|get_item:'id'}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div class="card-body">
+          {% for key, value in med.items %}
+          {% if key != 'id' and key != 'description' %}
+          <div><b>{{key}}:</b> {{value}}</div>
+          {% endif %}
+          {% endfor %}  
+          {% if med|get_item:'description' %}
+          {{ med|get_item:'description' }}
+          {% else %}
+          No description provided.
+          {% endif %}  
+          </div>          
+          {% if med|get_item:'url' %}
+          <img src="{{report|get_item:'url'}}">
+          {% endif %}  
+        </div>
+      </div>
+    {% endfor %}
+  
+    </div>
   </div>
 
   
 <div id="MedicinesForm" class="tabcontent">
   <div class="elementor-widget-wrap">
-    <section class="sign_in">
       <div class="container">
-        <div class="sign_info">
+        <div class="sign_info" style="padding: 20px 0.5em!important;">
           <div class="row">
             <div class='col-lg-2'></div>
             <div class='col-lg-8'>
               <h2 class="heading">Order Medicine</h2>
-                <div class="form-wrap">
-                    <form  action="{% url 'signup' %}" method='POST'>
+                <div class="form-wrap" style="padding: 0px;">
+                    <form  action="{% url 'medicine' %}" method='POST'>
                       {% csrf_token %}
 
                       <div class="row">
@@ -185,7 +271,7 @@
                         -->
 
                         <div style="text-align:center">
-                        <input type="submit" value="Report Condition">
+                        <input type="submit" value="Send">
                         </div>
                         </div>
                       </form>
@@ -196,20 +282,18 @@
           </div>
         </section>
       </div>
-    </div>
 
   
 <div id="ReportsForm" class="tabcontent">
   <div class="elementor-widget-wrap">
-    <section class="sign_in">
       <div class="container">
-        <div class="sign_info">
+        <div class="sign_info" style="padding: 20px 0.5em!important;">
           <div class="row">
             <div class='col-lg-2'></div>
             <div class='col-lg-8'>
               <h2 class="heading">Report Condition</h2>
-                <div class="form-wrap">
-                    <form  action="{% url 'signup' %}" method='POST'>
+                <div class="form-wrap" style="padding: 0px;">
+                    <form  action="{% url 'condition' %}" method='POST'>
                       {% csrf_token %}
                       <div class="row">
                         <div class="col-md-12">
@@ -353,7 +437,10 @@
   </div>
 </div>
 
+</div>
+
 </body>
+
 {% endblock body %}
 
 {% block script %}
@@ -370,4 +457,7 @@ function openTab(evt, tabName) {
   document.getElementById(tabName).style.display = "block";
   evt.currentTarget.className += " active";
 }
+
+
 {% endblock script %}
+
