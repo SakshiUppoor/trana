@@ -373,11 +373,11 @@ def orderMedicine(request):
         doctor = request.POST.get(u"doctor")
         info = request.POST.get(u"info")
         area = request.POST.get(u"area")
-        """
+        
         location = [
             float(request.POST.get(u"lat")),
             float(request.POST.get(u"lon")),
-        ]"""
+        ]
         url = request.POST.get(u"url")
         current_user = request.session.get("current_user")
         uid = current_user["localId"]
@@ -392,7 +392,7 @@ def orderMedicine(request):
             u"medicine": medicine,
             "url": url,
             u"uId": uid,
-            # u"location": location,
+            u"location": location,
             u"age": age,
             u"gender": gender,
             u"hospital": hospital,
