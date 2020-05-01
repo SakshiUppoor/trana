@@ -180,7 +180,7 @@
             <div class='col-lg-8'>
               <h2 class="heading">Order Medicine</h2>
                 <div class="form-wrap" style="padding: 0px;">
-                    <form  action="{% url 'medicine' %}" method='POST'>
+                    <form  action="{% url 'medicine' %}" method='POST' id="medicine">
                       {% csrf_token %}
                       <div class="row">
                         <div class="col-md-12">
@@ -312,7 +312,7 @@
                           <div class="col-md-12">
                           <div class="form-group text_box">
                             <label for="info" class="form-data">Other Info</label>
-                            <textarea rows="4" cols="72" name="info" form="report"></textarea>
+                            <textarea rows="4" cols="72" name="info" form="medicine"></textarea>
                           </div>
                           </div>
                         </div>   
@@ -352,7 +352,7 @@
             <div class='col-lg-8'>
               <h2 class="heading">Report Condition</h2>
                 <div class="form-wrap" style="padding: 0px;">
-                    <form  action="{% url 'condition' %}" method='POST'>
+                    <form  action="{% url 'condition' %}" method='POST' id="report">
                       {% csrf_token %}
                       <div class="row">
                         <div class="col-md-12">
@@ -384,9 +384,9 @@
                               <option value="critical">Critical</option>
                               <option value="urgent">Urgent</option>
                               <option value="informing">Informing</option>
-                              <option value="reporting">Reporting Situation</option>
-                              <option value="ambulance">May Need Ambulance</option>
-                              <option value="consulating">Needs Dr.Consulting</option>
+                              <option value="reporting">Reporting situation</option>
+                              <option value="ambulance">May need an ambulance</option>
+                              <option value="consulating">Need doctor consulting</option>
                             </select>
                           </div>
                         </div>
