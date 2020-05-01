@@ -182,6 +182,14 @@
                 <div class="form-wrap" style="padding: 0px;">
                     <form  action="{% url 'medicine' %}" method='POST'>
                       {% csrf_token %}
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="form-group text_box">
+                            <label for="patient" class="form-data" >Patient*</label>
+                            <input required type="text" class="form-control" id="patient" name="patient" placeholder="Name of Patient">
+                          </div>
+                          </div>
+                        </div>
 
                       <div class="row">
                       <div class="col-md-12">
@@ -193,14 +201,21 @@
                       </div>
 
                         <div class="row">
-                          <div class="col-md-6">
+                          <div class="col-md-4">
+                            <div class="form-group text_box">
+                                  <label for="country" class="form-data">Country*</label>
+                                  <input required type="text" class="form-control" id="country" name="country" placeholder="Country Name">
+                            </div>
+                            </div>
+
+                          <div class="col-md-4">
                           <div class="form-group text_box">
                                 <label for="address" class="form-data">Address*</label>
-                                <input type="text" class="form-control" id="address" name="address" placeholder="Enter address">
+                                <input required type="text" class="form-control" id="address" name="address" placeholder="Enter address">
                           </div>
                           </div>
                         
-                          <div class="col-md-6">
+                          <div class="col-md-4">
                           <div class="form-group text_box">
                             <label for="area" class="form-data">Area*</label>
                             <input required type="text" class="form-control" id="area" name="area" placeholder="Area">
@@ -227,14 +242,14 @@
                           <div class="col-md-4">
                           <div class="form-group text_box">
                             <label for="age" class="form-data">Age*</label>
-                            <input type="text" class="form-control" id="age" name="age" placeholder="Age">
+                            <input required type="text" class="form-control" id="age" name="age" placeholder="Age">
                           </div>
                           </div>
 
                           <div class="col-md-4">
                             <div class="form-group text_box">
                                 <label for="contact" class="form-data">Contact*</label>
-                                <input type="text" class="form-control" id="contact" name="contact" placeholder="Contact Details">
+                                <input required type="text" class="form-control" id="contact" name="contact" placeholder="Contact Details">
                             </div>
                           </div>
                           
@@ -253,8 +268,8 @@
                               
                               </div>
                             </div>
-                            <div class="col-md-1">
-                              <i id="loader" class="fa fa-notch" aria-hidden="true"></i>
+                            <div class="col-md-1 hide" id="loader">
+                              <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
                             </div>
 
                             <input type="hidden" name="url" id="url">
@@ -262,26 +277,33 @@
 
                         <div class="row">
 
-                          <div class="col-md-6">
+                          <div class="col-md-4">
                           <div class="form-group text-box">
                             <label for="doctor" class="form-data">Doctor</label>
                             <input type="text" class="form-control" id="doctor" name="doctor" placeholder="Name of Doctor">
                           </div>
                           </div>
 
-                          <div class="col-md-6">
+                          <div class="col-md-4">
                           <div class="form-group text_box">
                             <label for="hospital" class="form-data">Name of hosptial/clinic</label>
                             <input type="text" class="form-control" id="hospital" name="hospital" placeholder="Name of Hospital">
                           </div>
+                          </div>
+
+                          <div class="col-md-4">
+                            <div class="form-group text_box">
+                              <label for="hospitalAddress" class="form-data" >Hospital Address</label>
+                              <input  type="text" class="form-control" id="hospitalAddress" name="hospitalAddress" placeholder="Address">
+                            </div>
                           </div>
                         </div>
 
                         <div class="row">
                           <div class="col-md-12">
                             <div class="form-group text_box">
-                              <label for="treatment" class="form-data">Treatment</label>
-                            <input type="text" class="form-data" id="treatment" name="treatment" placeholder="Any kind of Special Treatment">
+                              <label for="treatment" class="form-data">Case details</label>
+                            <input type="text" class="form-data" id="treatment" name="treatment" placeholder="Other details of case">
                             </div>
                           </div> 
                         </div>  
@@ -289,7 +311,7 @@
                         <div class="row">
                           <div class="col-md-12">
                           <div class="form-group text_box">
-                            <label for="info" class="form-data">Description</label>
+                            <label for="info" class="form-data">Other Info</label>
                             <textarea rows="4" cols="72" name="info" form="report"></textarea>
                           </div>
                           </div>
@@ -362,20 +384,30 @@
                               <option value="critical">Critical</option>
                               <option value="urgent">Urgent</option>
                               <option value="informing">Informing</option>
+                              <option value="reporting">Reporting Situation</option>
+                              <option value="ambulance">May Need Ambulance</option>
+                              <option value="consulating">Needs Dr.Consulting</option>
                             </select>
                           </div>
                         </div>
                       </div>
                 
                       <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                          <div class="form-group text_box">
+                                <label for="country" class="form-data">Country*</label>
+                                <input required type="text" class="form-control" id="country" name="country" placeholder="Country Name">
+                          </div>
+                          </div>
+
+                        <div class="col-md-4">
                         <div class="form-group text_box">
                               <label for="address" class="form-data">Address*</label>
-                              <input type="text" class="form-control" id="address" name="address" placeholder="Enter address">
+                              <input  required type="text" class="form-control" id="address" name="address" placeholder="Enter address">
                         </div>
                         </div>
                       
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                         <div class="form-group text_box">
                           <label for="area" class="form-data">Area*</label>
                           <input required type="text" class="form-control" id="area" name="area" placeholder="Area">
@@ -402,26 +434,20 @@
                         <div class="col-md-4">
                         <div class="form-group text_box">
                           <label for="age" class="form-data">Age*</label>
-                          <input type="text" class="form-control" id="age" name="age" placeholder="Age">
+                          <input  required type="text" class="form-control" id="age" name="age" placeholder="Age">
                         </div>
                         </div>
 
                         <div class="col-md-4">
                           <div class="form-group text_box">
                               <label for="contact" class="form-data">Contact*</label>
-                              <input type="text" class="form-control" id="contact" name="contact" placeholder="Contact Details">
+                              <input  required type="text" class="form-control" id="contact" name="contact" placeholder="Contact Details">
                           </div>
                         </div>
                         
                       </div>
 
                       <div class="row">
-                        <div class="col-md-4">
-                        <div class="form-group text_box">
-                          <label for="medicine" class="form-data" >Medicine</label>
-                          <input  type="text" class="form-control" id="medicine" name="medicine" placeholder="Medicine">
-                        </div>
-                        </div>
 
                         <div class="col-md-4">
                         <div class="form-group text-box">
@@ -436,13 +462,21 @@
                           <input  type="text" class="form-control" id="hospital" name="hospital" placeholder="Name of Hospital">
                         </div>
                         </div>
+
+                        <div class="col-md-4">
+                          <div class="form-group text_box">
+                            <label for="hospitalAddress" class="form-data" >Hospital Address</label>
+                            <input  type="text" class="form-control" id="hospitalAddress" name="hospitalAddress" placeholder="Address">
+                          </div>
+                        </div>
+
                       </div>
 
                       <div class="row">
                         <div class="col-md-12">
                           <div class="form-group text_box">
-                            <label for="treatment" class="form-data">Treatment</label>
-                          <input type="text" class="form-data" id="treatment" name="treatment" placeholder="Any kind of Special Treatment">
+                            <label for="treatment" class="form-data">Case details</label>
+                          <input type="text" class="form-data" id="treatment" name="treatment" placeholder="Other details of case">
                           </div>
                         </div> 
                       </div>  
@@ -450,7 +484,7 @@
                       <div class="row">
                         <div class="col-md-12">
                         <div class="form-group text_box">
-                          <label for="info" class="form-data">Description</label>
+                          <label for="info" class="form-data">Other Info</label>
                           <textarea rows="4" cols="72" name="info" form="report"></textarea>
                         </div>
                         </div>
@@ -461,7 +495,7 @@
                       </div>
                       
                       <div style="text-align:center">
-                      <input type="submit" value="Report Condition">
+                      <input type="submit" id="report_condition" value="Report Condition">
                       </div>
                     </form>
                 </div>
@@ -566,12 +600,12 @@ function openTab(evt, tabName) {
 }
 
 function loading() {
-  $("#loader").attr('class', 'fa fa-circle-o-notch fa-1x fa-spin');
+  $("#loader").attr('class', 'show');
 }
 
 function stoploading() {
-  $("#loader").attr('class', 'fa fa-check');
-  $("#loader").css("color","#00c99b");
+  $("#loader").html("<i class='fa fa-check'></i>");
+  $("#loader").children().css("color","#00c99b");
 }
 {% endblock script %}
 

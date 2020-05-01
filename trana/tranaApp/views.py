@@ -327,6 +327,8 @@ def reportCondition(request):
     try:
         if request.method == "POST":
             patient = request.POST.get(u"patient")
+            country = request.POST.get(u"country")
+            hospitalAddress = request.POST.get(u"hospitalAddress")
             address = request.POST.get(u"address")
             contact = request.POST.get(u"contact")
             age = request.POST.get(u"age")
@@ -356,6 +358,8 @@ def reportCondition(request):
                 u"treatment": treatment,
                 u"uId": uid,
                 u"description": info,
+                u"country": country,
+                u"hospitalAddress": hospitalAddress,
             }
             if (
                 type(request.POST.get(u"lat")) != str
@@ -377,6 +381,9 @@ def reportCondition(request):
 def orderMedicine(request):
     try:
         if request.method == "POST":
+            patient = request.POST.get(u"patient")
+            country = request.POST.get(u"country")
+            hospitalAddress = request.POST.get(u"hospitalAddress")
             contact = request.POST.get(u"contact")
             address = request.POST.get(u"address")
             medicine = request.POST.get(u"medicine")
@@ -406,6 +413,9 @@ def orderMedicine(request):
                 u"doctor": doctor,
                 u"area": area,
                 u"description": info,
+                u"patient": patient,
+                u"country": country,
+                u"hospitalAddress": hospitalAddress,
             }
             if (
                 type(request.POST.get(u"lat")) != str
