@@ -4,6 +4,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
+    
+<link rel='icon' href="{% static 'images/fav2.png' %}" type='image/x-icon'/ >
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link
@@ -43,9 +46,11 @@
     <nav class="nav navbar fixed-top navbar-expand-lg navbar-light">
       <div class="container">
         <div class="nav-left">
+          <a href="{% url 'users' %}">
           <div>
             <img class="appname" src="../static/images/logo.png" alt="" />
           </div>
+          </a>
         </div>
         <button
           class="navbar-toggler"
@@ -62,28 +67,33 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto pages">
               <li class="nav-item">
-            <a class="page current" href="">Home</a>
+            <a class="page 
+            {% if title == "landing" %}
+            current
+            {% endif %}
+            " href="{% url 'landing' %}">Home</a>
               </li>
           
           <li class="nav-item">
-            <a class="page" href="">Blog</a>
+            <a class="page" href="https://tranalive.wordpress.com/" target="blank">Blog</a>
           </li>
           
-          <li class="nav-item">
+          <!--<li class="nav-item">
             <a class="page" href="">About</a>
           </li>
           
           <li class="nav-item">
             <a class="page" href="">Contact</a>
-          </li>
+          </li>-->
         </ul>
         <div class="controls">
           
       {% if title == "login" or title == "signup" or title == "landing" %}
-            <a href="{% url 'landing' %}">
+            <a href="{% url 'login' %}">
             <button class="secondary">
             Login
             </button>
+            </a>
       {% else %}
       <a href="{% url 'logout' %}">
             <button class="secondary">
@@ -99,7 +109,7 @@
     </nav>
         
       {% for message in messages %}
-      <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+      <div style="padding-top: 12vh;" class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
         <strong>Message:</strong>{{message}}
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>

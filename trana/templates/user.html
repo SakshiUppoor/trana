@@ -15,23 +15,23 @@
 -->
 <div class="tab">
   <div class="homebutton">
-    <button class="tablinks active" onclick="openTab(event, 'Home')"><ion-icon name="home-outline"></ion-icon></button>
+    <button id="home" class="tablinks active" onclick="openTab(event, 'Home')"><i class="fa fa-home" aria-hidden="true"></i></button>
   </div>
   <div class="notifbutton">
-    <button class="tablinks" onclick="openTab(event, 'Notifications')"><ion-icon name="notifications-outline"></ion-icon></button>
+    <button id="notif" class="tablinks" onclick="openTab(event, 'Notifications')"><i class="fa fa-bell-o" aria-hidden="true"></i></button>
   </div>
   <div class="reportsbutton">
-    <button class="tablinks" onclick="openTab(event, 'Reports')"><ion-icon name="alert-circle-outline"></ion-icon></button>
+    <button id-"reports" class="tablinks" onclick="openTab(event, 'Reports')"><i class="fa fa-exclamation" aria-hidden="true"></i></button>
   </div>
   <div class="medicinesbutton">
-    <button class="tablinks" onclick="openTab(event, 'Medicines')"><ion-icon name="medkit-outline"></ion-icon></button>
+    <button id="medicines" class="tablinks" onclick="openTab(event, 'Medicines')"><i class="fa fa-medkit" aria-hidden="true"></i></button>
   </div>
 </div>
 <div class="body">
 <div id="Home" class="tabcontent" style="display: block;">
   <h3>Home</h3>
-  <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus facilis quos, rem nihil nisi mollitia velit nobis necessitatibus pariatur recusandae.
-      
+ <!--<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus facilis quos, rem nihil nisi mollitia velit nobis necessitatibus pariatur recusandae.
+ -->  
     <div style="text-align:center;">
       <div class="reportcondition">
         <button class="tablinks purple-sec" onclick="openTab(event, 'ReportsForm')">Report Condition</button>
@@ -86,7 +86,7 @@
       <div id="a{{report|get_item:'id'}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
         <div class="card-body">
         {% for key, value in report.items %}
-        {% if key != 'id' and key != 'description' %}
+        {% if key != 'id' and key != 'description' and key != 'location' %}
         <div><b>{{key}}:</b> {{value}}</div>
         {% endif %}
         {% endfor %}  
@@ -136,20 +136,27 @@
     
         <div id="a{{med|get_item:'id'}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
           <div class="card-body">
-          {% for key, value in med.items %}
-          {% if key != 'id' and key != 'description' %}
-          <div><b>{{key}}:</b> {{value}}</div>
-          {% endif %}
-          {% endfor %}  
-          {% if med|get_item:'description' %}
-          {{ med|get_item:'description' }}
-          {% else %}
-          No description provided.
-          {% endif %}  
-          </div>          
-          {% if med|get_item:'url' %}
-          <img src="{{report|get_item:'url'}}">
-          {% endif %}  
+            <div class="row">
+              <div class="col-md-6">
+
+                {% for key, value in med.items %}
+                {% if key != 'id' and key != 'description' and key != 'url' and key != 'location' %}
+                <div><b>{{key}}:</b> {{value}}</div>
+                {% endif %}
+                {% endfor %}  
+                {% if med|get_item:'description' %}
+                {{ med|get_item:'description' }}
+                {% else %}
+                No description provided.
+                {% endif %}      
+              </div>
+              <div class="col-md-6">
+                {% if med|get_item:'url' %}
+                <img style="width: inherit;" src="{{med|get_item:'url'}}">
+                {% endif %} 
+              </div>
+            </div>       
+            </div>
         </div>
       </div>
     {% endfor %}
