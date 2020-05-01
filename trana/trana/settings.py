@@ -26,7 +26,7 @@ SECRET_KEY = "td*8aft02ip*z866$(@hw8&c#en6eoi^=y=8m-#z5*8rd!fr0b"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
