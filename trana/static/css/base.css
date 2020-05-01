@@ -181,7 +181,6 @@ input[type="password"]:focus {
 .img-signup{
   width:auto;
   height:400px;
-  background-image:url("{% static 'images/signup.png' %}");
   background-size:contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -189,7 +188,6 @@ input[type="password"]:focus {
 .img-login{
   width:auto;
   height:400px;
-  background-image:url("{% static 'images/login.png' %}");
   background-size:contain;
   background-repeat: no-repeat;
   background-position: center;
