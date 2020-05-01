@@ -326,6 +326,8 @@ def page404(request):
 def reportCondition(request):
     if request.method == "POST":
         patient = request.POST.get(u"patient")
+        country=request.POST.get(u"country")
+        hospitalAddress = request.POST.get(u"hospitalAddress")
         address = request.POST.get(u"address")
         contact = request.POST.get(u"contact")
         age = request.POST.get(u"age")
@@ -345,6 +347,7 @@ def reportCondition(request):
         count = len(list_items) + 1
         data = {
             u"patient": patient,
+            u"country":country,
             u"area": area,
             u"address": address,
             u"contact": contact,
@@ -355,6 +358,8 @@ def reportCondition(request):
             u"treatment": treatment,
             u"uId": uid,
             u"description": info,
+            u"hospitalAddress": hospitalAddress,
+            
         }
         if (
             type(request.POST.get(u"lat")) != str
@@ -372,9 +377,11 @@ def reportCondition(request):
 
 def orderMedicine(request):
     if request.method == "POST":
+        patient=request.POST['patient']
+        country=request.POST['country']
         contact = request.POST.get(u"contact")
         address = request.POST.get(u"address")
-        medicine = request.POST.get(u"medicine")
+        hospitalAddress = request.POST.get(u"hospitalAddress")
         gender = request.POST.get(u"gender")
         age = request.POST.get(u"age")
         hospital = request.POST.get(u"hospital")
@@ -395,9 +402,11 @@ def orderMedicine(request):
             list_items.append(i)
         count = len(list_items) + 1
         data = {
+            u"patient":patient,
+            u"country":country,
             u"contact": contact,
             u"address": address,
-            u"medicine": medicine,
+            u"hospitalAddress": hospitalAddress,
             "url": url,
             u"uId": uid,
             u"location": location,
