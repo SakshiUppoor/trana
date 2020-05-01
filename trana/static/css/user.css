@@ -107,7 +107,7 @@ input[type="text"],
 input[type="email"],
 input[type="password"] {
   font: 400 15px/60px "Quicksand", sans-serif;
-  color: #222d39;
+  color: #a9a9a9;
   height: 60px;
   border-radius: 4px;
   background-color: white;
