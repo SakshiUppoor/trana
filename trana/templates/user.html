@@ -239,7 +239,7 @@
                             </div>
                             <div class="col-md-4">
                               <div class="form-group text_box">
-                              <button type="button" id="upload" class="form-data" onclick="uploadimage()">Upload</button>
+                              <button type="button" class="form-data" onclick="uploadimage()">Upload</button>
                               </div>
                             </div>
                             <input type="hidden" name="url" id="url">
@@ -494,16 +494,7 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 
-$("#upload_pres").click(function()
-{
-$(this).data('clicked', true);
-});
-if($("#upload_pres").data('clicked'))
-{
-alert('Prescription uploaded successfully');
-}else{
-alert('Kindly upload prescription');
-}
+
 //Uploading the Image
 function uploadimage(){
     var storage = firebase.storage();
