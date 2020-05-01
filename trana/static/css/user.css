@@ -243,3 +243,13 @@ select:focus {
     margin-left: 10vw !important;
   }
 }
+
+input[type="submit"]:disabled {
+  background: #d1d1d1;
+  color: #6d6a8b;
+}
+
+#loader {
+  animation: rotate 3s infinite;
+  animation-timing-function: cubic-bezier(1, 0, 0.5, 1);
+}

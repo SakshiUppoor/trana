@@ -7,7 +7,9 @@
 {% block style %}
 
 {% endblock style %}
-
+.body {
+  padding: 23vh 5vw;
+}
 {% block body %}
 
 <!--
@@ -27,6 +29,7 @@
     <button id="medicines" class="tablinks" onclick="openTab(event, 'Medicines')"><i class="fa fa-medkit" aria-hidden="true"></i></button>
   </div>
 </div>
+<!--        Home        -->
 <div class="body">
 <div id="Home" class="tabcontent" style="display: block;">
   <h3>Home</h3>
@@ -238,7 +241,7 @@
                         </div>
 
                         <div class="row">
-                          <div class="col-md-8">
+                          <div class="col-md-7">
                               <div class="form-group text_box">
                                 <label for="prescription" class="form-data" >Upload prescription*</label>
                                 <input required type="file" class="form-data" id="files" name="files[]" >
@@ -246,9 +249,14 @@
                             </div>
                             <div class="col-md-4">
                               <div class="form-group text_box">
-                              <button type="button" class="form-data" onclick="uploadimage()">Upload</button>
+                              <button type="button" class="form-data secondary" onclick="uploadimage()">Upload</button>
+                              
                               </div>
                             </div>
+                            <div class="col-md-1">
+                              <i id="loader" class="fa fa-notch" aria-hidden="true"></i>
+                            </div>
+
                             <input type="hidden" name="url" id="url">
                         </div>
 
@@ -296,7 +304,8 @@
                         
 
                         <div style="text-align:center">
-                        <input type="submit" value="Send">
+                        <input id="send" disabled type="submit" value="Send">
+                        <p id="error" class="text-danger">Please upload prescription</p>
                         </div>
                         </div>
                       </form>
@@ -485,45 +494,53 @@
           
 
 
-
-// Your web app's Firebase configuration
-var firebaseConfig = {
-  "apiKey": "AIzaSyBybJho0cdp9_nQzX_eT3arRl2jIHNgyU4",
-  "authDomain": "tra1-bfac8.firebaseapp.com",
-  "databaseURL": "https://tra1-bfac8.firebaseio.com",
-  "projectId": "tra1-bfac8",
-  "storageBucket": "tra1-bfac8.appspot.com",
-  "messagingSenderId": "404257539306",
-  "appId": "1:404257539306:web:5c266442fe78892bde0393",
-  "measurementId": "G-1FLRML6GY5",
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyBybJho0cdp9_nQzX_eT3arRl2jIHNgyU4",
+    authDomain: "tra1-bfac8.firebaseapp.com",
+    databaseURL: "https://tra1-bfac8.firebaseio.com",
+    projectId: "tra1-bfac8",
+    storageBucket: "tra1-bfac8.appspot.com",
+    messagingSenderId: "404257539306",
+    appId: "1:404257539306:web:5c266442fe78892bde0393",
+    measurementId: "G-1FLRML6GY5"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
 
 
 //Uploading the Image
 function uploadimage(){
     var storage = firebase.storage();
     var file = document.getElementById("files").files[0];
-    var storageRef = storage.ref();
-    var thisref = storageRef.child('presciptions/' + file.name).put(file);
-    thisref.on('state_changed',function(snapshot){
-    console.log("file uploaded succesfully");
-    },
-    function(error) {
-      console.log(error);
-    },
-    function() {
-    // Upload completed successfully, now we can get the download URL
-    var downloadURL = thisref.snapshot.downloadURL;
-    console.log("got url");
-    document.getElementById("url").value = downloadURL;
-    alert("file uploaded successfully");
-  });
-
-
-      }
+    console.log(file);
+    var error = document.getElementById("error")
+    if (file) {
+      var storageRef = storage.ref();
+      var thisref = storageRef.child('presciptions/' + file.name).put(file);
+      thisref.on('state_changed',function(snapshot){
+      console.log("file uploaded succesfully");
+      loading();
+      error.textContent = "Please waiting while the prescription is uploading"
+      },
+      function(error) {
+        console.log(error);
+      },
+      function() {
+      // Upload completed successfully, now we can get the download URL
+      var downloadURL = thisref.snapshot.downloadURL;
+      console.log("got url");
+      document.getElementById("url").value = downloadURL;
+      error.textContent = ""
+      document.getElementById("send").disabled = false;
+      stoploading();
+    });
+    }
+    else {
+      alert("Please upload an image")
+    }
+}
 
 
 </script>
@@ -548,6 +565,13 @@ function openTab(evt, tabName) {
   evt.currentTarget.className += " active";
 }
 
+function loading() {
+  $("#loader").attr('class', 'fa fa-circle-o-notch fa-1x fa-spin');
+}
 
+function stoploading() {
+  $("#loader").attr('class', 'fa fa-check');
+  $("#loader").css("color","#00c99b");
+}
 {% endblock script %}
 

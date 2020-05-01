@@ -34,7 +34,7 @@ button {
 }
 .primary {
   color: #fff;
-  background: #ef716b;
+  background: #5e2ced;
 }
 .secondary {
   color: #5e2ced;
@@ -175,33 +175,33 @@ input[type="password"]:focus {
   box-shadow: 0 2px 4px 0 rgba(12, 0, 46, 0.04);
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
-.img-login{
-  width:auto;
-  height:400px;
-  background-image:url(../static/images/login.png);
-  background-size:contain;
+.img-login {
+  width: auto;
+  height: 400px;
+  background-image: url(../static/images/login.png);
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-.img-signup{
-  width:auto;
-  height:400px;
-  background-image:url(../static/images/signup.png);
-  background-size:contain;
+.img-signup {
+  width: auto;
+  height: 400px;
+  background-image: url(../static/images/signup.png);
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
-.new_account{
-font: 400 15px/26px "Poppins", sans-serif;
-color: #9ca3b9;
-margin-top:20px;
+.new_account {
+  font: 400 15px/26px "Poppins", sans-serif;
+  color: #9ca3b9;
+  margin-top: 20px;
 }
 
-.signup-link{
-color: #5e2ced;
-display: inline-block;
-margin-left: 6px;
+.signup-link {
+  color: #5e2ced;
+  display: inline-block;
+  margin-left: 6px;
 }
 
 input[type="submit"] {

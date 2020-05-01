@@ -324,94 +324,105 @@ def page404(request):
 
 
 def reportCondition(request):
-    if request.method == "POST":
-        patient = request.POST.get(u"patient")
-        address = request.POST.get(u"address")
-        contact = request.POST.get(u"contact")
-        age = request.POST.get(u"age")
-        gender = request.POST.get(u"gender")
-        case = request.POST.get(u"case")
-        condition = request.POST.get(u"condition")
-        treatment = request.POST.get(u"treatment")
-        area = request.POST.get(u"area")
-        info = request.POST.get(u"info")
-        current_user = request.session.get("current_user")
-        uid = current_user["localId"]
+    try:
+        if request.method == "POST":
+            patient = request.POST.get(u"patient")
+            address = request.POST.get(u"address")
+            contact = request.POST.get(u"contact")
+            age = request.POST.get(u"age")
+            gender = request.POST.get(u"gender")
+            case = request.POST.get(u"case")
+            condition = request.POST.get(u"condition")
+            treatment = request.POST.get(u"treatment")
+            area = request.POST.get(u"area")
+            info = request.POST.get(u"info")
+            current_user = request.session.get("current_user")
+            uid = current_user["localId"]
 
-        abc = db.collection(u"Reports").get()
-        list_items = []
-        for i in abc:
-            list_items.append(i)
-        count = len(list_items) + 1
-        data = {
-            u"patient": patient,
-            u"area": area,
-            u"address": address,
-            u"contact": contact,
-            u"age": age,
-            u"gender": gender,
-            u"case": case,
-            u"condition": condition,
-            u"treatment": treatment,
-            u"uId": uid,
-            u"description": info,
-        }
-        if (
-            type(request.POST.get(u"lat")) != str
-            and type(request.POST.get(u"lon")) != str
-        ):
-            location = [
-                float(request.POST.get(u"lat")),
-                float(request.POST.get(u"lon")),
-            ]
-            data[u"location"] = location
-        db.collection(u"Reports").document().set(data)
-        return redirect("users")
-    return render(request, "condition.html")
+            abc = db.collection(u"Reports").get()
+            list_items = []
+            for i in abc:
+                list_items.append(i)
+            count = len(list_items) + 1
+            data = {
+                u"patient": patient,
+                u"area": area,
+                u"address": address,
+                u"contact": contact,
+                u"age": age,
+                u"gender": gender,
+                u"case": case,
+                u"condition": condition,
+                u"treatment": treatment,
+                u"uId": uid,
+                u"description": info,
+            }
+            if (
+                type(request.POST.get(u"lat")) != str
+                and type(request.POST.get(u"lon")) != str
+            ):
+                location = [
+                    float(request.POST.get(u"lat")),
+                    float(request.POST.get(u"lon")),
+                ]
+                data[u"location"] = location
+            db.collection(u"Reports").document().set(data)
+            return redirect("users")
+        return render(request, "condition.html")
+    except Exception as e:
+        print(e)
+        return redirect("404")
 
 
 def orderMedicine(request):
-    if request.method == "POST":
-        contact = request.POST.get(u"contact")
-        address = request.POST.get(u"address")
-        medicine = request.POST.get(u"medicine")
-        gender = request.POST.get(u"gender")
-        age = request.POST.get(u"age")
-        hospital = request.POST.get(u"hospital")
-        doctor = request.POST.get(u"doctor")
-        info = request.POST.get(u"info")
-        area = request.POST.get(u"area")
+    try:
+        if request.method == "POST":
+            contact = request.POST.get(u"contact")
+            address = request.POST.get(u"address")
+            medicine = request.POST.get(u"medicine")
+            gender = request.POST.get(u"gender")
+            age = request.POST.get(u"age")
+            hospital = request.POST.get(u"hospital")
+            doctor = request.POST.get(u"doctor")
+            info = request.POST.get(u"info")
+            area = request.POST.get(u"area")
+            url = request.POST.get(u"url")
+            current_user = request.session.get("current_user")
+            uid = current_user["localId"]
+            abc = db.collection(u"Medicines").get()
+            list_items = []
+            for i in abc:
+                list_items.append(i)
+            count = len(list_items) + 1
+            data = {
+                u"contact": contact,
+                u"address": address,
+                u"medicine": medicine,
+                "url": url,
+                u"uId": uid,
+                u"age": age,
+                u"gender": gender,
+                u"hospital": hospital,
+                u"doctor": doctor,
+                u"area": area,
+                u"description": info,
+            }
+            if (
+                type(request.POST.get(u"lat")) != str
+                and type(request.POST.get(u"lon")) != str
+            ):
+                location = [
+                    float(request.POST.get(u"lat")),
+                    float(request.POST.get(u"lon")),
+                ]
+                data[u"location"] = location
+            db.collection(u"Medicines").document().set(data)
 
-        location = [
-            float(request.POST.get(u"lat")),
-            float(request.POST.get(u"lon")),
-        ]
-        url = request.POST.get(u"url")
-        current_user = request.session.get("current_user")
-        uid = current_user["localId"]
-        abc = db.collection(u"Medicines").get()
-        list_items = []
-        for i in abc:
-            list_items.append(i)
-        count = len(list_items) + 1
-        data = {
-            u"contact": contact,
-            u"address": address,
-            u"medicine": medicine,
-            "url": url,
-            u"uId": uid,
-            u"location": location,
-            u"age": age,
-            u"gender": gender,
-            u"hospital": hospital,
-            u"doctor": doctor,
-            u"area": area,
-            u"description": info,
-        }
-        db.collection(u"Medicines").document(str(count)).set(data)
-
-        return redirect("users")
-    return render(request, "ordermeds.html")
+            return redirect("users")
+        return render(request, "ordermeds.html")
+    except Exception as e:
+        print(e)
+        return redirect("404")
 
 
 #####################
