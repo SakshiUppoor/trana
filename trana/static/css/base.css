@@ -156,7 +156,7 @@ input[type="text"],
 input[type="email"],
 input[type="password"] {
   font: 400 15px/60px "Quicksand", sans-serif;
-  color: #a9a9a9;
+  color: #222d39;
   height: 60px;
   border-radius: 4px;
   background-color: white;
@@ -211,3 +211,7 @@ input[type="submit"] {
   border-radius: 0.5em;
   width: 150px;
 }
+
+input[type="submit"]:hover{
+  transition: .6s;
+ }
