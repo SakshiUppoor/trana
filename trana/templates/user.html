@@ -180,7 +180,7 @@
             <div class='col-lg-8'>
               <h2 class="heading">Order Medicine</h2>
                 <div class="form-wrap" style="padding: 0px;">
-                    <form  action="{% url 'medicine' %}" method='POST'>
+                    <form  action="{% url 'medicine' %}" method='POST' id="medicine">
                       {% csrf_token %}
                       <div class="row">
                         <div class="col-md-12">
@@ -312,7 +312,7 @@
                           <div class="col-md-12">
                           <div class="form-group text_box">
                             <label for="info" class="form-data">Other Info</label>
-                            <textarea rows="4" cols="72" name="info" form="report"></textarea>
+                            <textarea rows="4" cols="72" name="info" form="medicine"></textarea>
                           </div>
                           </div>
                         </div>   
@@ -352,7 +352,7 @@
             <div class='col-lg-8'>
               <h2 class="heading">Report Condition</h2>
                 <div class="form-wrap" style="padding: 0px;">
-                    <form  action="{% url 'condition' %}" method='POST'>
+                    <form  action="{% url 'condition' %}" method='POST' id="report">
                       {% csrf_token %}
                       <div class="row">
                         <div class="col-md-12">
@@ -369,10 +369,12 @@
                             <label for="case" class="form-data">Case*</label>
                             <select name="case" id="case">
                               <option value="Accident">Accident</option>
-                              <option value="pregnancy">Pregnancy</option>
-                              <option value="terminal illness">Terminal Illness</option>
-                              <option value="post operation">Post Opertion</option>
-                              <option value="accident recovery">Accident Recovery</option>
+                              <option value="Pregnancy">Pregnancy</option>
+                              <option value="Terminal Illness">Terminal Illness</option>
+                              <option value="Post Operation">Post Opertion</option>
+                              <option value="Accident Recovery">Accident Recovery</option>
+                              <option value="Child">Child</option>
+                              <option value="Other">Other</option>
                             </select>
                           </div>
                         </div>
@@ -381,12 +383,9 @@
                           <div class="form-group text_box">
                             <label for="condition" class="form-data">Condition*</label>
                             <select name="condition" id="condition">
-                              <option value="critical">Critical</option>
-                              <option value="urgent">Urgent</option>
-                              <option value="informing">Informing</option>
-                              <option value="reporting">Reporting Situation</option>
-                              <option value="ambulance">May Need Ambulance</option>
-                              <option value="consulating">Needs Dr.Consulting</option>
+                              <option value="Reporting">Reporting situation</option>
+                              <option value="May need an ambulance">May need an ambulance</option>
+                              <option value="Need doctor consulating">Need doctor consulting</option>
                             </select>
                           </div>
                         </div>

@@ -40,7 +40,6 @@ button {
   color: #5e2ced;
   background: rgba(255, 255, 255, 0);
   border: #5e2ced 1.8px solid;
- 
 }
 .page {
   font-weight: 700;
@@ -157,7 +156,7 @@ input[type="text"],
 input[type="email"],
 input[type="password"] {
   font: 400 15px/60px "Quicksand", sans-serif;
-  color:#a9a9a9;
+  color: #222d39;
   height: 60px;
   border-radius: 4px;
   background-color: white;
@@ -177,18 +176,17 @@ input[type="password"]:focus {
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
 
-
-.img-signup{
-  width:auto;
-  height:400px;
-  background-size:contain;
+.img-signup {
+  width: auto;
+  height: 400px;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
-.img-login{
-  width:auto;
-  height:400px;
-  background-size:contain;
+.img-login {
+  width: auto;
+  height: 400px;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -211,9 +209,5 @@ input[type="submit"] {
   padding: 15px 30px;
   border: none;
   border-radius: 0.5em;
-<<<<<<< HEAD
+  width: 150px;
 }
-=======
-  width:150px;
-}
->>>>>>> 4f8f19ecfac2cd23a403b411fff3cd2cc9581b03

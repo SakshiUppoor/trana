@@ -338,6 +338,7 @@ def reportCondition(request):
             treatment = request.POST.get(u"treatment")
             area = request.POST.get(u"area")
             info = request.POST.get(u"info")
+            print("!!!!", info)
             current_user = request.session.get("current_user")
             uid = current_user["localId"]
 
