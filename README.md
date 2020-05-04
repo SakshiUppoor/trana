@@ -1,9 +1,6 @@
-# त्राण
 <br />
 <p align="center">
-  <img src="https://github.com/SakshiUppoor/trana/blob/master/trana/static/images/logo.png" alt="Logo" width="80" height="80">
-
-  <h3 align="center">Trana</h3>
+  <img src="https://github.com/SakshiUppoor/trana/blob/master/trana/static/images/logo.png" alt="Logo" height="80">
 
   <p align="center">
     A mobile responsive website built to reach out people during medical emergencies and resolve their requests!
@@ -20,9 +17,9 @@
 </p>
 
 ## Team
-* <a href="https://github.com/SakshiUppoor"><b>Sakshi Uppoor</b></a> - Frontend,  Design & Backend
-* <a href="https://github.com/SaakshiShah25"><b>Saakshi Shah</b></a> - Frontend &  Design
-* <a href="https://github.com/sanket1703"><b>Sanket Shah</b></a> - Mentor
+* <a href="https://github.com/SakshiUppoor"><b>Sakshi Uppoor</b></a> - Full Stack & Design
+* <a href="https://github.com/SaakshiShah25"><b>Saakshi Shah</b></a> - Full Stack &  Design
+* <a href="https://github.com/sanket1703"><b>Sanket Shah</b></a> - 
 ## About the Project
 <p align="center">
 <img style="margin:1em" src="" width="100%"/>
@@ -36,18 +33,18 @@
 * Notifications
 * Get Report
 * Get Medicine
-* (Authority Only) View Report
+* (Authority Only) View Reports
 * (Pharmacist Only) View Medicine Requests 
 
 ### Features
 
-##### UserDashboard
+##### User Dashboard
 Designed with simplicity and provides ease to the user to report condition and order medicines. 
 
-##### ReportDashboard
+##### Reports Dashboard
 Accessible only to the concerned authority who can view the reports of users along with their geographic location displayed on the map.
 
-##### MedicineDashboard
+##### Medicines Dashboard
 Accessible only to the concerned pharmacist who can view the medicine requests along with their geographic location displayed on the map. 
 
 
