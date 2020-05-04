@@ -110,7 +110,7 @@ def signup(request):
     if request.method == "POST":
         name = request.POST.get(u"name")
         email = request.POST.get(u"email")
-        position = "user"
+        position = request.POST.get(u"position")
         password1 = request.POST.get(u"password1")
         password2 = request.POST.get(u"password2")
 
@@ -129,10 +129,31 @@ def signup(request):
             return redirect("signup")
 
         if position == "pharmacist":
+            phname=request.POST.get(u"phname")
             pharmacy_name = request.POST.get(u"pharmacy-name")
             address = request.POST.get(u"address")
-            data[u"pharmacy-name"] = pharmacy_name
-            data[u"address"] = address
+            registration=request.POST.get(u"registration")
+            data[u"pharmacist-name"]=phname
+            data[u"pharmacy-name"]=pharmacy_name
+            data[u"address"]=address
+            data[u"registration"]=registration
+
+        db.collection(u"Users").document(uid).set(data)
+
+        if position == "authority":
+            auname=request.POST.get(u"auname")
+            designation = request.POST.get(u"designation")
+            organisation = request.POST.get(u"organisation")
+            offadd=request.POST.get(u"offadd")
+            phone=request.POST.get(u"phone")
+            offemail=request.POST.get(u"offemail")
+            data[u"authority-name"]=auname
+            data[u"designation"]=designation
+            data[u"oganisation"]=organisation
+            data[u"office-address"]=offadd
+            data[u"contact-number"]=phone
+            data[u"office-email"]=offemail
+
         db.collection(u"Users").document(uid).set(data)
 
         current_user = authe.sign_in_with_email_and_password(email, password2)
@@ -153,6 +174,8 @@ def signup(request):
             return HttpResponseRedirect(reverse("users"))
 
     return render(request, "signup.html", {"title": "signup"})
+
+
 
 
 def login_view(request):
