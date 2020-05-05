@@ -19,7 +19,7 @@
 ## Team
 * <a href="https://github.com/SakshiUppoor"><b>Sakshi Uppoor</b></a> - Full Stack & Design
 * <a href="https://github.com/SaakshiShah25"><b>Saakshi Shah</b></a> - Full Stack &  Design
-* <a href="https://github.com/sanket1703"><b>Sanket Shah</b></a> - 
+* <a href="https://github.com/sanket1703"><b>Sanket Shah</b></a> - Project Manager
 ## About the Project
 <p align="center">
 <img style="margin:1em" src="" width="100%"/>
