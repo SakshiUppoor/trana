@@ -186,7 +186,23 @@ input[type="tel"]:focus {
   padding-left: 1.25rem;
   margin-left:10px;
 }
-
+select {
+  font: 400 15px/60px "Quicksand", sans-serif;
+  color: #222d39;
+  height: 60px;
+  border-radius: 4px;
+  background-color: white;
+  box-shadow: 0 2px 4px 0 rgba(12, 0, 46, 0.04);
+  width: 100%;
+  border: 1px solid #fff;
+  padding-left: 30px;
+  transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+select:focus {
+  box-shadow: 0 10px 14px 0 rgba(12, 0, 46, 0.06);
+  border-color: #f2effc;
+  outline: 0;
+}
 .img-signup {
   width: auto;
   height: 400px;
