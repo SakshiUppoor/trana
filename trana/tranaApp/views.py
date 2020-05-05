@@ -135,7 +135,7 @@ def signup(request):
             return redirect("signup")
 
         if position == "pharmacist":
-            phname=request.POST.get(u"phname")
+            phname = request.POST.get(u"phname")
             pharmacy_name = request.POST.get(u"pharmacy-name")
             address = request.POST.get(u"address")
             code=request.POST.get(u"code")
@@ -149,18 +149,18 @@ def signup(request):
         db.collection(u"Users").document(uid).set(data)
 
         if position == "authority":
-            auname=request.POST.get(u"auname")
+            auname = request.POST.get(u"auname")
             designation = request.POST.get(u"designation")
             organisation = request.POST.get(u"organisation")
-            offadd=request.POST.get(u"offadd")
-            phone=request.POST.get(u"phone")
-            offemail=request.POST.get(u"offemail")
-            data[u"authority-name"]=auname
-            data[u"designation"]=designation
-            data[u"oganisation"]=organisation
-            data[u"office-address"]=offadd
-            data[u"contact-number"]=phone
-            data[u"office-email"]=offemail
+            offadd = request.POST.get(u"offadd")
+            phone = request.POST.get(u"phone")
+            offemail = request.POST.get(u"offemail")
+            data[u"authority-name"] = auname
+            data[u"designation"] = designation
+            data[u"oganisation"] = organisation
+            data[u"office-address"] = offadd
+            data[u"contact-number"] = phone
+            data[u"office-email"] = offemail
 
         db.collection(u"Users").document(uid).set(data)
 
@@ -184,37 +184,47 @@ def signup(request):
     return render(request, "signup.html", {"title": "signup"})
 
 
-
-
 def login_view(request):
     if getPosition(request) != "user":
         if request.method == "POST":
-            email = request.POST["email"]
-            password = request.POST["password"]
-            try:
-                current_user = authe.sign_in_with_email_and_password(email, password)
-                request.session["current_user"] = current_user
-                # current_user_uid = current_user["localId"]
-                session_id = current_user["idToken"]
-                request.session["uid"] = str(session_id)
-                print(request.__dict__)
-                position = getPosition(request)
-                print(position)
-                if position == "authority":
-                    print("hello")
-                    return HttpResponseRedirect(reverse("reports"))
-                elif position == "pharmacist":
-                    return HttpResponseRedirect(reverse("medicines"))
-                elif position == "user":
-                    return HttpResponseRedirect(reverse("users"))
-                else:
-                    return HttpResponseRedirect(reverse("users"))
-            except Exception as e:
-                print(e)
-                messages.error(request, "Invalid credentials")
+            if "reset" in request.POST:
+                messages.error(
+                    request, "Password reset linked has been sent to your mail."
+                )
                 return render(request, "login.html")
+            else:
+                email = request.POST["email"]
+                password = request.POST["password"]
+                try:
+                    current_user = authe.sign_in_with_email_and_password(
+                        email, password
+                    )
+                    request.session["current_user"] = current_user
+                    # current_user_uid = current_user["localId"]
+                    session_id = current_user["idToken"]
+                    request.session["uid"] = str(session_id)
+                    print(request.__dict__)
+                    position = getPosition(request)
+                    print(position)
+                    if position == "authority":
+                        print("hello")
+                        return HttpResponseRedirect(reverse("reports"))
+                    elif position == "pharmacist":
+                        return HttpResponseRedirect(reverse("medicines"))
+                    elif position == "user":
+                        return HttpResponseRedirect(reverse("users"))
+                    else:
+                        return HttpResponseRedirect(reverse("users"))
+                except Exception as e:
+                    print(e)
+                    messages.error(request, "Invalid credentials")
+                    return render(request, "login.html")
         return render(request, "login.html", {"title": "login"})
     return redirect("users")
+
+
+def reset_password(request):
+    return render(request, "forgot_password.html")
 
 
 def logout_view(request):

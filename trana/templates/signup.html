@@ -36,18 +36,18 @@
                         <div class="form-group text-box">
                             <label for="position" class="form-data">Position*</label>
                         <div class="form-check">
-                            <input type="radio" class="form-check-input" id="user" name="position" value="user" />
+                            <input type="radio" class="form-check-input" id="user" name="position" value="user" onclick="javascript:accountCheck();"/>
                             <label for="user" class="form-data">User</label>
                         </div>
                         <div class="form-check">
-                            <input type="radio" class="form-check-input" id="authority" name="position" value="authority" />
+                            <input type="radio" class="form-check-input" id="authority" name="position" value="authority" onclick="javascript:accountCheck();"/>
                             <label for="authority" class="form-data">Authority</label>
                         </div>
                         <div class="form-check">
-                            <input type="radio" class="form-check-input" id="pharmacist" name="position" value="pharmacist" />
+                            <input type="radio" class="form-check-input" id="pharmacist" name="position" value="pharmacist" onclick="javascript:accountCheck();"/>
                             <label for="pharmacist" class="form-data">Pharmacist</label>
                         </div>
-                        <div class="pharmacist-details">
+                        <div id="pharmacist-details">
                             <label for="phname" class="form-data">Pharmacist Name</label>
                             <input class="form-control"  type="text" id="phname" name="phname" placeholder="Enter Name of Pharmacist">
                             <label for="pharmacy-name" class="form-data">Name of Pharmacy</label>
@@ -58,7 +58,7 @@
                             <label for="registration" class="form-data">Registration Number</label>
                             <input  class="form-control" type="text" id="registration" name="registration" placeholder="Enter store's Registration Number">
                         </div>
-                        <div class="authority-details">
+                        <div id="authority-details">
                             <label for="auname" class="form-data">Authority Name</label>
                             <input class="form-control"  type="text" id="auname" name="auname" placeholder="Enter Name of Authority">
                             <label for="designation" class="form-data">Designation</label>
@@ -328,3 +328,25 @@
     </section>
     </div>
     {% endblock body %}
+    {% block script %}
+            document.getElementById('pharmacist-details').style.display = 'none';
+            document.getElementById('authority-details').style.display = 'none';
+
+
+        function accountCheck() {
+            if (document.getElementById('pharmacist').checked) {
+                document.getElementById('pharmacist-details').style.display = 'block';
+                document.getElementById('authority-details').style.display = 'none';
+            }
+            else if (document.getElementById('authority').checked) {
+                document.getElementById('pharmacist-details').style.display = 'none';
+                document.getElementById('authority-details').style.display = 'block';
+            }
+            else {
+                document.getElementById('pharmacist-details').style.display = 'none';
+                document.getElementById('authority-details').style.display = 'none';
+            
+            }
+        }
+
+    {% endblock script %}
