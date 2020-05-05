@@ -14,12 +14,14 @@ from .views import (
     landing,
     getreport,
     getmedicine,
+    reset_password,
 )
 
 urlpatterns = [
     # path("", home, name="home"),
     path("signup/", signup, name="signup"),
     path("login/", login_view, name="login"),
+    path("reset/", reset_password, name="reset"),
     path("logout/", logout_view, name="logout"),
     path("", landing, name="landing"),
     path("users/", usersDashboard, name="users"),
