@@ -1,7 +1,10 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load app_filters %}
 {% block title%}PostLogin{% endblock title %}
 
+{% block css %}
+{% endblock css %}
 {% block body%}
 
     <style>
@@ -23,7 +26,7 @@
         max-width: 95vw;
       }
       .table {
-        padding: 20px;
+        padding: 0 20px;
       }
       .navbar {
         margin-bottom: 30px;
@@ -76,21 +79,75 @@
         cursor: pointer;
       }
       
+.collapsed {
+  background-color: rgba(204, 204, 204, 0) !important;
+}
+
+.btn-link {
+  background-color: #ccc;
+}
+
+.status {
+  margin: auto 0;
+  color: #fff;
+  background: #f7c100;
+  padding: 5px 0.5em;
+  border-radius: 0.5em;
+}
+
+.card {
+  background: #fff;
+}
+
+.card-header {
+  display: flex;
+  background-color: #fff;
+}
+
+.report-heading {
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.resolved {
+  background: #00c99b;
+}
+
+
+@media only screen and (max-width: 768px) {
+
+#map {
+    display:none;
+}
+
+}
+
+
+@media only screen and (min-width: 768px) {
+
+.table {
+    max-height: 75vh;
+    overflow-y: scroll;
+}
+
+body {
+    overflow-y:hidden;
+}
+
+}
+
     </style>
- 
-   <div style="margin-top: 10vh" >
-    <h1> Medicines </h1>
+   <div class="body" >
+    <h1 style="margin-left: 30px"> Reports </h1>
     <div class="container">
       <div class="row">
-        <div class="col-sm-4" id="map"></div>
-        <div class="table col-sm-8">
-          <input
-            class="form-control"
-            id="myInput"
-            type="text"
-            placeholder="Search.."
-          />
-          <br />
+        <div class="col-sm-7" id="map"></div>
+        <div class="table col-sm-5">
+          
+  <div class="accordion" id="accordionExample">
+  </div>
+  <!---
           <table class="table table-bordered" id="my-table">
             <thead>
               <tr>
@@ -127,6 +184,7 @@
               {% endfor %}
             </tbody>
           </table>
+          -->
         </div>
       </div>
 </div>
@@ -150,25 +208,41 @@
         </div>
       </div>
     </div>
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAo5q4Yv_NCM-Px_c11zyi9zttxj47-MFw&libraries=places&callback=initMap"
+    ></script>
+    <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
     <script>
+        var lat, lon;
       getLocation();
       function getLocation() {
         if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(showPosition);
           navigator.geolocation.getCurrentPosition(initMap);
         } else { 
           x.innerHTML = "Geolocation is not supported by this browser.";
         }
       }
       
-              
-      var map;
-      function initMap(position) {
-      getLocation();
+    function showPosition(position) {
+        window.lat = position.coords.latitude;
+        window.lon = position.coords.longitude;
+        //console.log(position.coords.latitude, position.coords.longitude);
+    }   
+ 
 
+
+    console.log(lat, lon);
+      var map;
+      function initMap() {
+      getLocation();
+        console.log(window.lat, window.lon)
         //console.log(position.coords.latitude);
         map = new google.maps.Map(document.getElementById("map"), {
-          zoom: 9,
-          center: { lat: position.coords.latitude, lng: position.coords.longitude },
+          zoom: 13,
+          center: { lat: window.lat, lng: window.lon },
           streetViewControl: false,
           mapTypeId: google.maps.MapTypeId.ROADMAP,
           mapTypeControl: false,
@@ -223,86 +297,80 @@
       {lat: {{ co.0 }} , lng: {{ co.1 }} },
       {% endfor %}
       ];
-    </script>
-    <script
-      async
-      defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAo5q4Yv_NCM-Px_c11zyi9zttxj47-MFw&libraries=places&callback=initMap"
-    ></script>
-    <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
-
-    <script>
-      $(document).ready(function () {
-        $("#myInput").on("keyup", function () {
-          var value = $(this).val().toLowerCase();
-          $("#myTable tr").filter(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-          });
-        });
-      });
-
-      function sortTable(n) {
-        var table,
-          rows,
-          switching,
-          i,
-          x,
-          y,
-          shouldSwitch,
-          dir,
-          switchcount = 0;
-        table = document.getElementById("my-table");
-        switching = true;
-        //Set the sorting direction to ascending:
-        dir = "asc";
-        /*Make a loop that will continue until
-        no switching has been done:*/
-        while (switching) {
-          //start by saying: no switching is done:
-          switching = false;
-          rows = table.rows;
-          /*Loop through all table rows (except the
-          first, which contains table headers):*/
-          for (i = 1; i < rows.length - 1; i++) {
-            //start by saying there should be no switching:
-            shouldSwitch = false;
-            /*Get the two elements you want to compare,
-            one from current row and one from the next:*/
-            x = rows[i].getElementsByTagName("TD")[n];
-            y = rows[i + 1].getElementsByTagName("TD")[n];
-            /*check if the two rows should switch place,
-            based on the direction, asc or desc:*/
-            if (dir == "asc") {
-              if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
-                //if so, mark as a switch and break the loop:
-                shouldSwitch = true;
-                break;
-              }
-            } else if (dir == "desc") {
-              if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
-                //if so, mark as a switch and break the loop:
-                shouldSwitch = true;
-                break;
-              }
-            }
-          }
-          if (shouldSwitch) {
-            /*If a switch has been marked, make the switch
-            and mark that a switch has been done:*/
-            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-            switching = true;
-            //Each time a switch is done, increase this count by 1:
-            switchcount++;
-          } else {
-            /*If no switching has been done AND the direction is "asc",
-            set the direction to "desc" and run the while loop again.*/
-            if (switchcount == 0 && dir == "asc") {
-              dir = "desc";
-              switching = true;
-            }
-          }
+      console.log(
+      {% for co in co_list %}
+      {{ co.0 }},{{ co.1 }},
+      {% endfor %})
+      function isInRadius(lat1, lon1, lat2, lon2) {
+	if ((lat1 == lat2) && (lon1 == lon2)) {
+		dist= 0;
+	}
+	else {
+		var radlat1 = Math.PI * lat1/180;
+		var radlat2 = Math.PI * lat2/180;
+		var theta = lon1-lon2;
+		var radtheta = Math.PI * theta/180;
+		var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+		if (dist > 1) {
+			dist = 1;
+		}
+		dist = Math.acos(dist);
+		dist = dist * 180/Math.PI;
+		dist = dist * 60 * 1.1515;
+		dist = dist * 1.609344;
+        //console.log(dist);
+        //console.log(lat1, lon1, lat2, lon2);
+	}
+        console.log(dist);
+		if(dist<=10) {
+            return true;
         }
-      }
+        else
+            return false;
+}
+
+function getReports() {
+    var parent = document.getElementById("accordionExample");
+    {% for med in reports %}
+    {% if med|get_item:'location' %}
+    console.log("{{ med|get_item:'case' }}");
+    var lat2 =  parseFloat({{med|get_co:'lat'}});
+    var lon2 = parseFloat({{med|get_co:'lon'}});
+    //console.log(isInRadius(lat, lon, lat2, lon2));
+    //console.log("{{med|get_item:'address'}} {{med|get_item:'area'}}'");
+    if(isInRadius(lat, lon, lat2, lon2)) {
+        parent.innerHTML += `<div class="card" style="text-transform: capitalize">
+      <div class="card-header" id="headingOne">
+          <div class="report-heading">
+            {{ med|get_item:'case' }}
+          </div>          
+          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#a{{med|get_item:'id'}}" aria-expanded="false" aria-controls="a{{med|get_item:'id'}}">
+            <ion-icon name="chevron-down-outline"></ion-icon>
+          </button>
+
+      </div>
+  
+      <div id="a{{med|get_item:'id'}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+        {% for key, value in med.items %}
+        {% if key != 'id' and key != 'description' and key != 'location' and key != 'url' and key != 'uId'%}
+        <div><b>{{key}}:</b> {{value}}</div>
+        {% endif %}
+        {% endfor %}  
+        {% if med|get_item:'description' %}
+        {{ med|get_item:'description' }}
+        {% else %}
+        No description provided.
+        {% endif %}  
+        <div>
+                <a style="margin:auto;" href="{% url 'resolve' id=med|get_item:'id' %}"><button style="margin:auto;" type="submit" class="btn btn-success" >Mark as resolved</button></a>
+        </div>
+        </div>`
+    }
+    {% endif %}
+    {% endfor %}
+}
+
     </script>
     <script>
       // Get the modal
@@ -327,24 +395,6 @@
       }
 
 
-      function showDetails(id) {
-        modal.style.display = "block";
-        var details = document.getElementById("details");
-        var presc = document.getElementById("presc");
-        details.innerHTML = "";
-        {% for medicine in medicines %}
-          if (parseInt("{{medicine | get_item:'id' }}") == id)
-          {
-            details.innerHTML += "<b>Medicine</b>: {{medicine|get_item:'medicine'}} <br>";
-            details.innerHTML += "<b>Doctor</b>: {{medicine|get_item:'doctor'}} <br>";
-            details.innerHTML += "<b>Hospital/ Clinic</b>: {{medicine|get_item:'hospital'}} <br>";
-            details.innerHTML += "<b>Gender</b>: {{medicine|get_item:'gender'}} <br>";
-            details.innerHTML += "<b>Address</b>: {{medicine|get_item:'address'}} <br>";
-            details.innerHTML += "<b>Area</b>: {{medicine|get_item:'area'}} <br>";
-            presc.src = "{{ medicine|get_item:'url' }}";
-          }
-        {% endfor %}
-      }
     </script>
   </body>
 </html>

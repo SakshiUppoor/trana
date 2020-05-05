@@ -23,96 +23,15 @@
               -------------------------------DISPLAY TAB ICONS------------------------------
 -->
 <div class="tab">
-  <div class="homebutton">
-    <button id="home" class="tablinks active" onclick="openTab(event, 'Home')"><i class="fa fa-home" aria-hidden="true"></i></button>
-  </div>
-  <div class="notifbutton">
-    <button id="notif" class="tablinks" onclick="openTab(event, 'Notifications')"><i class="fa fa-bell-o" aria-hidden="true"></i></button>
-  </div>
-  <div class="reportsbutton">
-    <button id-"reports" class="tablinks" onclick="openTab(event, 'Reports')"><i class="fa fa-exclamation" aria-hidden="true"></i></button>
-  </div>
   <div class="medicinesbutton">
-    <button id="medicines" class="tablinks" onclick="openTab(event, 'Medicines')"><i class="fa fa-medkit" aria-hidden="true"></i></button>
+    <button id="medicines" class="tablinks active" onclick="openTab(event, 'Medicines')"><i class="fa fa-exclamation" aria-hidden="true"></i></button>
+  </div>
+  <div class="order">
+    <button id="order" class="tablinks" onclick="openTab(event, 'Order')"><i class="fa fa-bell-o" aria-hidden="true"></i></button>
   </div>
 </div>
 <!--        Home        -->
 <div class="body">
-<div id="Home" class="tabcontent" style="display: block;">
-  <h3>Home</h3>
- <!--<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Temporibus facilis quos, rem nihil nisi mollitia velit nobis necessitatibus pariatur recusandae.
- -->  
-    <div style="text-align:center;">
-      <div class="reportcondition">
-        <button class="tablinks purple-sec" onclick="openTab(event, 'ReportsForm')">Report Condition</button>
-      </div>
-    <div class="ordermed">
-      <button class="tablinks green-sec" onclick="openTab(event, 'MedicinesForm')">Order Medicines</button>
-    </div>
-    </div>
-  </p>
-</div>
-
-<!--
-              -------------------------------NOTIFICATIONS------------------------------
--->
-
-<div id="Notifications" class="tabcontent">
-  <h3>Notifications</h3>
-  <p>No new notifications.</p> 
-</div>
-
-
-<!--
-              -------------------------------MY REPORTS------------------------------
--->
-
-<div id="Reports" class="tabcontent">
-  <h3>Reports</h3>
-  <div class="accordion" id="accordionExample">
-    
-  {% for report in reports %}
-    <div class="card" style="text-transform: capitalize">
-      <div class="card-header" id="headingOne">
-          <div class="report-heading">
-            {{ report|get_item:'case' }}
-          </div>
-          {% if report|get_item:'resolved' %}
-            <div class="status resolved">
-            Resolved
-          </div>
-            {% else %}
-            <div class="status">
-            Not resolved
-          </div>
-            {% endif %}
-          
-          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#a{{report|get_item:'id'}}" aria-expanded="false" aria-controls="a{{report|get_item:'id'}}">
-            <ion-icon name="chevron-down-outline"></ion-icon>
-          </button>
-
-      </div>
-  
-      <div id="a{{report|get_item:'id'}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-        <div class="card-body">
-        {% for key, value in report.items %}
-        {% if key != 'id' and key != 'description' and key != 'location' %}
-        <div><b>{{key}}:</b> {{value}}</div>
-        {% endif %}
-        {% endfor %}  
-        {% if report|get_item:'description' %}
-        {{ report|get_item:'description' }}
-        {% else %}
-        No description provided.
-        {% endif %}  
-        </div>
-      </div>
-    </div>
-  {% endfor %}
-
-  </div>
-</div>
-
 
 <!--
               -------------------------------MY MEDICINES------------------------------
@@ -122,54 +41,6 @@
     <h3>Medicines</h3>
     <div class="accordion" id="accordionExample">
       
-    {% for med in meds %}
-      <div class="card" style="text-transform: capitalize">
-        <div class="card-header" id="headingOne">
-            <div class="report-heading">
-              {{ med|get_item:'medicine' }}
-            </div>
-            {% if med|get_item:'resolved' %}
-              <div class="status resolved">
-              Resolved
-            </div>
-              {% else %}
-              <div class="status">
-              Not resolved
-            </div>
-              {% endif %}
-            
-            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#a{{med|get_item:'id'}}" aria-expanded="false" aria-controls="a{{med|get_item:'id'}}">
-              <ion-icon name="chevron-down-outline"></ion-icon>
-            </button>
-  
-        </div>
-    
-        <div id="a{{med|get_item:'id'}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-6">
-
-                {% for key, value in med.items %}
-                {% if key != 'id' and key != 'description' and key != 'url' and key != 'location' %}
-                <div><b>{{key}}:</b> {{value}}</div>
-                {% endif %}
-                {% endfor %}  
-                {% if med|get_item:'description' %}
-                {{ med|get_item:'description' }}
-                {% else %}
-                No description provided.
-                {% endif %}      
-              </div>
-              <div class="col-md-6">
-                {% if med|get_item:'url' %}
-                <img style="width: inherit;" src="{{med|get_item:'url'}}">
-                {% endif %} 
-              </div>
-            </div>       
-            </div>
-        </div>
-      </div>
-    {% endfor %}
   
     </div>
   </div>
@@ -327,8 +198,8 @@
                        
                               
                         <div class="form-group">
-                        <input type="hidden" id="lat2" name="lat">
-                          <input type="hidden" id="lon2" name="lon">
+                        <input type="hidden" id="lat" name="lat">
+                          <input type="hidden" id="lon" name="lon">
                         </div>
                         
 
@@ -511,86 +382,144 @@
       </div>
     </section>
   </div>
-</div><script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+</div>
 
-<script>
-  //Getting the location saving it to the hidden field
-  var lat = document.getElementById("lat");
-  var lon = document.getElementById("lon");
-  var lat2 = document.getElementById("lat2");
-  var lon2 = document.getElementById("lon2");
-  getLocation()
-  function getLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(showPosition);
-    } else { 
-      x.innerHTML = "Geolocation is not supported by this browser.";
-    }
-  }
-  
-  function showPosition(position) {
-    lat.value = position.coords.latitude;
-    lon.value = position.coords.longitude;
-    lat2.value = position.coords.latitude;
-    lon2.value = position.coords.longitude;
-    console.log(position.coords.latitude, position.coords.longitude);
-  }
-          
-
-
-  // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyBybJho0cdp9_nQzX_eT3arRl2jIHNgyU4",
-    authDomain: "tra1-bfac8.firebaseapp.com",
-    databaseURL: "https://tra1-bfac8.firebaseio.com",
-    projectId: "tra1-bfac8",
-    storageBucket: "tra1-bfac8.appspot.com",
-    messagingSenderId: "404257539306",
-    appId: "1:404257539306:web:5c266442fe78892bde0393",
-    measurementId: "G-1FLRML6GY5"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
-
-
-//Uploading the Image
-function uploadimage(){
-    var storage = firebase.storage();
-    var file = document.getElementById("files").files[0];
-    console.log(file);
-    var error = document.getElementById("error")
-    if (file) {
-      var storageRef = storage.ref();
-      var thisref = storageRef.child('presciptions/' + file.name).put(file);
-      thisref.on('state_changed',function(snapshot){
-      console.log("file uploaded succesfully");
-      loading();
-      error.textContent = "Please waiting while the prescription is uploading"
-      },
-      function(error) {
-        console.log(error);
-      },
-      function() {
-      // Upload completed successfully, now we can get the download URL
-      var downloadURL = thisref.snapshot.downloadURL;
-      console.log("got url");
-      document.getElementById("url").value = downloadURL;
-      error.textContent = ""
-      document.getElementById("send").disabled = false;
-      stoploading();
-    });
-    }
-    else {
-      alert("Please upload an image")
-    }
-}
-
-
-</script>
 </div>
 
 </body>
+<script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+
+<script>
+  //Getting the location saving it to the hidden field
+      getLocation();
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(initMap);
+        } else { 
+          x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+      }
+      
+              
+      var map;
+      function initMap(position) {
+      getLocation();
+
+        //console.log(position.coords.latitude);
+        map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 9,
+          center: { lat: position.coords.latitude, lng: position.coords.longitude },
+          streetViewControl: false,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          mapTypeControl: false,
+          styles: [
+            {
+              "featureType": "road.arterial",
+              "elementType": "labels",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "road.highway",
+              "elementType": "labels",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "road.local",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            }
+          ],
+        });
+
+        // Add some markers to the map.
+        // Note: The code uses the JavaScript Array.prototype.map() method to
+        // create an array of markers based on a given "locations" array.
+        // The map() method here has nothing to do with the Google Maps API.
+        var markers = locations.map(function (location, i) {
+          return new google.maps.Marker({
+            position: location,
+          });
+        });
+
+        // Add a marker clusterer to manage the markers.
+        var markerCluster = new MarkerClusterer(map, markers, {
+          imagePath:
+            "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m",
+        });
+      }
+      var locations = [
+      {% for co in co_list %}
+      {lat: {{ co.0 }} , lng: {{ co.1 }} },
+      {% endfor %}
+      ];
+    </script>
+    <script
+      async
+      defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAo5q4Yv_NCM-Px_c11zyi9zttxj47-MFw&libraries=places&callback=initMap"
+    ></script>
+    <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
+     
+<script>
+
+      getLocation()
+      function getLocation() {
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(initMap);
+        } else { 
+          x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+      }
+function isInRadius(lat1, long1, lat2, long2) {
+  const R = 6373.0;
+  var dlon, dlat, a, distance;
+
+  lat1 = Math.radians(lat1);
+  long1 = Math.radians(long1);
+  lat2 = Math.radians(lat2);
+  long2 = Math.radians(long2);
+  dlon = long2 - long1;
+  dlat = lat2 - lat1;
+  a =
+    Math.sin(dlat / 2) ** 2 +
+    Math.cos(lat1) * Math.cos(lat2) * Math.sin(dlon / 2) ** 2;
+  c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  distance = R * c;
+  console.log(distance);
+  if (distance < 5000) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function getReports() {
+    
+    {% for med in meds %}
+    {% if med|get_item:'location' %}
+    var lat2 =  parseFloat({{med|get_co:'lat'}});
+    var lon2 = parseFloat({{med|get_co:'lon'}});
+    console.log(isInRadius(lat, lon, lat2, lon2));
+    if(isInRadius(lat, lon, lat2, lon2)) {
+        console.log("{{ med|get_item:'area' }}");
+    }
+    {% endif %}
+    {% endfor %}
+}
+
+</script>
+
 
 {% endblock body %}
 
@@ -617,5 +546,53 @@ function stoploading() {
   $("#loader").html("<i class='fa fa-check'></i>");
   $("#loader").children().css("color","#00c99b");
 }
+
+ /*<div class="card" style="text-transform: capitalize">
+        <div class="card-header" id="headingOne">
+            <div class="report-heading">
+              {{ med|get_item:'medicine' }}
+            </div>
+            {% if med|get_item:'resolved' %}
+              <div class="status resolved">
+              Resolved
+            </div>
+              {% else %}
+              <div class="status">
+              Not resolved
+            </div>
+              {% endif %}
+            
+            <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#a{{med|get_item:'id'}}" aria-expanded="false" aria-controls="a{{med|get_item:'id'}}">
+              <ion-icon name="chevron-down-outline"></ion-icon>
+            </button>
+  
+        </div>
+    
+        <div id="a{{med|get_item:'id'}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+
+                {% for key, value in med.items %}
+                {% if key != 'id' and key != 'description' and key != 'url' and key != 'location' %}
+                <div><b>{{key}}:</b> {{value}}</div>
+                {% endif %}
+                {% endfor %}  
+                {% if med|get_item:'description' %}
+                {{ med|get_item:'description' }}
+                {% else %}
+                No description provided.
+                {% endif %}      
+              </div>
+              <div class="col-md-6">
+                {% if med|get_item:'url' %}
+                <img style="width: inherit;" src="{{med|get_item:'url'}}">
+                {% endif %} 
+              </div>
+            </div>       
+            </div>
+        </div>
+      </div>*/
+
 {% endblock script %}
 

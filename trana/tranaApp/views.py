@@ -11,6 +11,8 @@ import firebase
 from firebase import firebase
 import pyrebase
 
+from .utils import *
+
 # from .utils import send_mail
 
 ###########################
@@ -85,10 +87,6 @@ def get_components(collection):
     reports_list = []
     for report in reports:
         if report.to_dict().get("resolved") != True:
-            if report.to_dict().get("location"):
-                co_list.append(
-                    [report.to_dict()["location"][0], report.to_dict()["location"][1]]
-                )
             entry = {}
             entry["id"] = report.id
             if report.to_dict().get("uId"):
@@ -97,6 +95,14 @@ def get_components(collection):
             for field in report.to_dict():
                 entry[field] = report.to_dict()[field]
             print(entry)
+            if report.to_dict().get("location"):
+                co_list.append(
+                    [report.to_dict()["location"][0], report.to_dict()["location"][1]]
+                )
+                entry["location"] = [
+                    report.to_dict()["location"][0],
+                    report.to_dict()["location"][1],
+                ]
             reports_list.append(entry)
     return co_list, reports_list
 
@@ -204,7 +210,7 @@ def reportsDashboard(request):
                 "co_list": co_list,
                 "reports": reports_list,
             }
-            return render(request, "reports.html", context)
+            return render(request, "authority_dash.html", context)
         else:
             return HttpResponseRedirect(reverse("404"))
     return HttpResponseRedirect(reverse("login"))
@@ -216,9 +222,9 @@ def medicinesDashboard(request):
             co_list, medicines_list = get_components("Medicines")
             context = {
                 "co_list": co_list,
-                "medicines": medicines_list,
+                "meds": medicines_list,
             }
-            return render(request, "medicines.html", context)
+            return render(request, "pharmacy_dash2.html", context)
         else:
             return HttpResponseRedirect(reverse("404"))
     return HttpResponseRedirect(reverse("login"))
@@ -227,6 +233,7 @@ def medicinesDashboard(request):
 def usersDashboard(request):
     # if getPosition(request) != None:
     #    return render(request, "appuser.html")
+    print(getPosition(request))
     print(getPosition(request))
     if getPosition(request) == "user":
         current_user = request.session.get("current_user")
@@ -362,10 +369,12 @@ def reportCondition(request):
                 u"country": country,
                 u"hospitalAddress": hospitalAddress,
             }
-            if (
-                type(request.POST.get(u"lat")) != str
-                and type(request.POST.get(u"lon")) != str
-            ):
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", request.POST.get(u"lat"))
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", request.POST.get(u"lon"))
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", request.POST.get(u"lat") == "")
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", request.POST.get(u"lon") == " ")
+
+            if request.POST.get(u"lat") != "" and request.POST.get(u"lon") != "":
                 location = [
                     float(request.POST.get(u"lat")),
                     float(request.POST.get(u"lon")),
@@ -418,10 +427,9 @@ def orderMedicine(request):
                 u"country": country,
                 u"hospitalAddress": hospitalAddress,
             }
-            if (
-                type(request.POST.get(u"lat")) != str
-                and type(request.POST.get(u"lon")) != str
-            ):
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", request.POST.get(u"lat"))
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", request.POST.get(u"lon"))
+            if request.POST.get(u"lat") != "" and request.POST.get(u"lon") != "":
                 location = [
                     float(request.POST.get(u"lat")),
                     float(request.POST.get(u"lon")),
