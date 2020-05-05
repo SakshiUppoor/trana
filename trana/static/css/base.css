@@ -153,27 +153,6 @@ input[type="submit"]:focus {
   margin-bottom: 15px;
   font-weight: 500;
 }
-.pharmacist-details {
-  display: none;
-  transition: 0.5s;
-  transition-timing-function: ease-in-out;
-  }
-  #pharmacist:checked ~ .pharmacist-details{
-  display: block;
-  max-height: auto;
-  overflow: visible;
-  }
-
-.authority-details {
-    display: none;
-    transition: 0.5s;
-    transition-timing-function: ease-in-out;
-    }
-    #authority:checked ~ .authority-details{
-    display: block;
-    max-height: auto;
-    overflow: visible;
-    }
 
   
 input[type="text"],

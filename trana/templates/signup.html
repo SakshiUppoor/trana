@@ -5,16 +5,20 @@
 <link rel="stylesheet" href="{% static 'css/intlTelInput.css' %}">
 {% endblock css %}
     {% block body%}
-<script src="static/js/intlTelInput.js"></script>
+<script src="{% static 'js/intlTelInput.js' %}"></script>
 <script>
   var input = document.querySelector("#contact");
   window.intlTelInput(input, {
-    // options here
+   
+// specify the path to the libphonenumber script to enable validation/formatting
+utilsScript: "{% static 'js/utils.js' %}"
+
+
 
   });
 </script>
    
-    <link rel="stylesheet" href="trana/static/css/intlTelInput.css">
+   
     <div class="elementor-widget-wrap">
     <section class="sign_in">
     <div class="container">
@@ -62,8 +66,8 @@
                             <input class="form-control"  type="text" id="pharmacy-name" name="pharmacy-name" placeholder="Enter Name of Pharmacy">
                             <label for="address" class="form-data">Address of Pharmacy</label>
                             <input  class="form-control" type="text" id="address" name="address" placeholder="Enter Address of Pharmacy">
-                            <label for="contact" class="form-data">Contact</label>
-                            <input class="form-control" type="tel" id="contact" name="contact" placeholder="Enter Contact Number">
+                            <label for="contact" class="form-data">Country Code</label>
+                            <input class="form-control" type="tel" id="contact" name="contact" placeholder="Select Country Code">
                             <label for="registration" class="form-data">Registration Number</label>
                             <input  class="form-control" type="text" id="registration" name="registration" placeholder="Enter store's Registration Number">
                         </div>
