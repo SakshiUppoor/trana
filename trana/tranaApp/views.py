@@ -138,12 +138,12 @@ def signup(request):
             phname=request.POST.get(u"phname")
             pharmacy_name = request.POST.get(u"pharmacy-name")
             address = request.POST.get(u"address")
-            contact=request.POST.get(u"contact")
+            code=request.POST.get(u"code")
             registration=request.POST.get(u"registration")
             data[u"pharmacist-name"]=phname
             data[u"pharmacy-name"]=pharmacy_name
             data[u"address"]=address
-            data[u"contact"]=contact
+            data[u"code"]=code
             data[u"registration"]=registration
 
         db.collection(u"Users").document(uid).set(data)
