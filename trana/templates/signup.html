@@ -10,12 +10,6 @@
         <div class="sign_info">
           <div class="row">
               <div class='col-lg-5'>
-                  <div class="img-signup" style="background-image: url(../static/images/signup.png);">
-                  </div>
-                  <h3 class="sub-heading">Already have an account?</h3>
-                  <p><a href="{% url 'login'%}"><button class="secondary">Sign In</button></a></p>
-              </div>
-              <div class='col-lg-7'>
                   <h2 class="heading">Hello There</h2>
                 <div class="form-wrap">
                     <form  action="{% url 'signup' %}" method='POST'>
@@ -42,6 +36,12 @@
                     </form>
                     </div>
               </div>
+              <div class='col-lg-7'>
+                <div class="img-signup" style="background-image: url(../static/images/signup.png);">
+                </div>
+                <h3 class="sub-heading">Already have an account?</h3>
+                <p><a href="{% url 'login'%}"><button class="secondary">Sign In</button></a></p>
+            </div>
           </div>  
         </div>
     </div>
