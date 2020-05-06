@@ -22,17 +22,17 @@
                                     <label for="password" class="form-data">Password</label>
                                     <input type="password" class="form-control" id="password" name="password" placeholder="******">
                                 </div>
-                                <input required type="submit" value="Login"/>
-                                <a href="{% url 'reset' %}">
-                Forgot Password
-                </a>
+                                <div style="display: flex; justify-content: space-between;">
+                                    <input required type="submit" value="Login"/>
+                                    <a style="color: #5e2ced" href="{% url 'reset' %}">
+                                        Forgot Password?
+                                    </a> 
+                                </div>
                             </form>
-                            <div class="new_account">Don't have an account?                                    <a class="signup-link" href="{% url 'signup' %}">
-                                            <a href="{% url 'signup' %}">
-                <button class="secondary">
-                Get started
-                </button>
-                </a>
+                            <div class="new_account">Don't have an account?                                    
+                                            <a style="color: #5e2ced" href="{% url 'signup' %}">
+                                                Get started
+                                            </a>
                             </div>
                         </div>
                     </div>

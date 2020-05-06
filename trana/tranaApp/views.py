@@ -128,6 +128,7 @@ def signup(request):
                 messages.info(request, "Your account already exists")
                 return redirect("login")
             except:
+                print("hiiiiiii")
                 user = firebase_admin.auth.create_user(email=email, password=password2)
                 uid = user.uid
                 data = {u"name": name, u"position": position, u"email": email}
@@ -138,33 +139,32 @@ def signup(request):
 
         if position == "pharmacist":
             phname = request.POST.get(u"phname")
+            code = request.POST.get(u"code")
+            phone = request.POST.get(u"phone")
             pharmacy_name = request.POST.get(u"pharmacy-name")
             address = request.POST.get(u"address")
-            code = request.POST.get(u"code")
             registration = request.POST.get(u"registration")
             data[u"pharmacist-name"] = phname
             data[u"pharmacy-name"] = pharmacy_name
             data[u"address"] = address
             data[u"code"] = code
+            data[u"contact-number"] = phone
             data[u"registration"] = registration
-
-        db.collection(u"Users").document(uid).set(data)
 
         if position == "authority":
             auname = request.POST.get(u"auname")
             designation = request.POST.get(u"designation")
             organisation = request.POST.get(u"organisation")
             offadd = request.POST.get(u"offadd")
-            phone = request.POST.get(u"phone")
-            offemail = request.POST.get(u"offemail")
+            phone = request.POST.get(u"offphone")
             data[u"authority-name"] = auname
             data[u"designation"] = designation
             data[u"oganisation"] = organisation
             data[u"office-address"] = offadd
             data[u"contact-number"] = phone
-            data[u"office-email"] = offemail
 
-        db.collection(u"Users").document(uid).set(data)
+        db.collection(u"Users").document(uid).set(data, merge=True)
+        print(uid)
 
         current_user = authe.sign_in_with_email_and_password(email, password2)
         # current_user_uid = current_user["localId"]
@@ -218,7 +218,7 @@ def login_view(request):
                     else:
                         return HttpResponseRedirect(reverse("users"))
                 except Exception as e:
-                    print(e)
+                    print("!!!!!!!!!!!!!", e)
                     messages.error(request, "Invalid credentials")
                     return render(request, "login.html")
         return render(request, "login.html", {"title": "login"})

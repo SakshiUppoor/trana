@@ -154,11 +154,11 @@ input[type="submit"]:focus {
   font-weight: 500;
 }
 
-  
 input[type="text"],
 input[type="email"],
 input[type="password"],
-input[type="tel"]{
+input[type="tel"],
+.form-control {
   font: 400 15px/60px "Quicksand", sans-serif;
   color: #222d39;
   height: 60px;
@@ -174,17 +174,18 @@ input[type="tel"]{
 input[type="text"]:focus,
 input[type="email"]:focus,
 input[type="password"]:focus,
-input[type="tel"]:focus {
+input[type="tel"]:focus,
+.form-control:focus {
   outline: none;
   border: none;
   box-shadow: 0 2px 4px 0 rgba(12, 0, 46, 0.04);
   transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
 }
-.form-check{
+.form-check {
   position: relative;
   display: inline;
   padding-left: 1.25rem;
-  margin-left:10px;
+  margin-left: 10px;
 }
 select {
   font: 400 15px/60px "Quicksand", sans-serif;
@@ -239,6 +240,6 @@ input[type="submit"] {
   width: 150px;
 }
 
-input[type="submit"]:hover{
-  transition: .6s;
- }
+input[type="submit"]:hover {
+  transition: 0.6s;
+}
