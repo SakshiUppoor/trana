@@ -114,6 +114,10 @@
   background: #00c99b;
 }
 
+.body {
+  padding: 12vh 0!important;
+}
+
 
 @media only screen and (max-width: 768px) {
 
@@ -145,6 +149,8 @@ body {
         <div class="col-sm-7" id="map"></div>
         <div class="table col-sm-5">
           
+          <div id="empty" style="text-align: center;
+    margin: 25vh 0;">No reports near you.</div>
   <div class="accordion" id="accordionExample">
   </div>
   <!---
@@ -330,15 +336,19 @@ body {
 }
 
 function getReports() {
+    var count = 0;
     var parent = document.getElementById("accordionExample");
+    var emp = document.getElementById("empty");
     {% for med in reports %}
     {% if med|get_item:'location' %}
+
     console.log("{{ med|get_item:'case' }}");
     var lat2 =  parseFloat({{med|get_co:'lat'}});
     var lon2 = parseFloat({{med|get_co:'lon'}});
     //console.log(isInRadius(lat, lon, lat2, lon2));
     //console.log("{{med|get_item:'address'}} {{med|get_item:'area'}}'");
     if(isInRadius(lat, lon, lat2, lon2)) {
+    emp.style.display = "none";
         parent.innerHTML += `<div class="card" style="text-transform: capitalize">
       <div class="card-header" id="headingOne">
           <div class="report-heading">
@@ -367,6 +377,44 @@ function getReports() {
         </div>
         </div>`
     }
+    {% else %}
+    count+=1;
+    {% endif %}
+    {% endfor %}
+    if(count!=0) 
+    parent.innerHTML += '<h3 style="margin-top: 10px;">Reports without location</h3>';
+    {% for med in reports %}
+    {% if med|get_item:'location' == None %}
+    emp.style.display = "none";
+
+        parent.innerHTML += `<div class="card" style="text-transform: capitalize">
+      <div class="card-header" id="headingOne">
+          <div class="report-heading">
+            {{ med|get_item:'case' }}
+          </div>          
+          <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#a{{med|get_item:'id'}}" aria-expanded="false" aria-controls="a{{med|get_item:'id'}}">
+            <ion-icon name="chevron-down-outline"></ion-icon>
+          </button>
+
+      </div>
+  
+      <div id="a{{med|get_item:'id'}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+        {% for key, value in med.items %}
+        {% if key != 'id' and key != 'description' and key != 'location' and key != 'url' and key != 'uId'%}
+        <div><b>{{key}}:</b> {{value}}</div>
+        {% endif %}
+        {% endfor %}  
+        {% if med|get_item:'description' %}
+        {{ med|get_item:'description' }}
+        {% else %}
+        No description provided.
+        {% endif %}  
+        <div>
+                <a style="margin:auto;" href="{% url 'resolve' id=med|get_item:'id' %}"><button style="margin:auto;" type="submit" class="btn btn-success" >Mark as resolved</button></a>
+        </div>
+        </div>`
+  
     {% endif %}
     {% endfor %}
 }

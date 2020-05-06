@@ -76,6 +76,8 @@ def getPharmacyDetails(uId):
     user_ref = db.collection(u"Users").document(uId)
     user = user_ref.get()
     if user.exists:
+        print(user.id)
+        print(user.to_dict())
         return user.to_dict().get("pharmacy-name"), user.to_dict().get("address")
     return None
 
@@ -86,7 +88,7 @@ def get_components(collection):
     co_list = []
     reports_list = []
     for report in reports:
-        if report.to_dict().get("resolved") != True:
+        if report.to_dict().get("resolved") != True and report.to_dict().get("uId"):
             entry = {}
             entry["id"] = report.id
             if report.to_dict().get("uId"):
@@ -138,13 +140,13 @@ def signup(request):
             phname = request.POST.get(u"phname")
             pharmacy_name = request.POST.get(u"pharmacy-name")
             address = request.POST.get(u"address")
-            code=request.POST.get(u"code")
-            registration=request.POST.get(u"registration")
-            data[u"pharmacist-name"]=phname
-            data[u"pharmacy-name"]=pharmacy_name
-            data[u"address"]=address
-            data[u"code"]=code
-            data[u"registration"]=registration
+            code = request.POST.get(u"code")
+            registration = request.POST.get(u"registration")
+            data[u"pharmacist-name"] = phname
+            data[u"pharmacy-name"] = pharmacy_name
+            data[u"address"] = address
+            data[u"code"] = code
+            data[u"registration"] = registration
 
         db.collection(u"Users").document(uid).set(data)
 
@@ -299,15 +301,18 @@ def usersDashboard(request):
 
 
 def notify(request, id):
-    current_user = request.session["current_user"]
-    med_ref = db.collection(u"Medicines").document(id)
-    med_ref.set({u"resolved": True}, merge=True)
-    medicine = med_ref.get().to_dict().get("medicine")
-    uId = med_ref.get().to_dict().get("uId")
-    user = firebase_admin.auth.get_user(uId)
-    print(user.email)
-    send_mail(user.email, getPharmacyDetails(current_user["localId"]), medicine)
-    return HttpResponseRedirect(reverse("medicines"))
+    try:
+        current_user = request.session["current_user"]
+        med_ref = db.collection(u"Medicines").document(id)
+        med_ref.set({u"resolved": True}, merge=True)
+        medicine = med_ref.get().to_dict().get("medicine")
+        uId = med_ref.get().to_dict().get("uId")
+        user = firebase_admin.auth.get_user(uId)
+        print(user.email)
+        send_mail(user.email, getPharmacyDetails(current_user["localId"]), medicine)
+        return HttpResponseRedirect(reverse("medicines"))
+    except:
+        return redirect("404")
 
 
 def resolve(request, id):
@@ -362,7 +367,11 @@ def getmedicine(request):
 
 
 def page404(request):
-    return render(request, "404.html")
+    user = getPosition(request)
+    context = {
+        "user": user,
+    }
+    return render(request, "404.html", context)
 
 
 def reportCondition(request):

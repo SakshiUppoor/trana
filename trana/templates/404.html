@@ -21,7 +21,13 @@
     </div>
   <h3 style="color:#5e2ced">Oops!</h3>
   <h6>Something went wrong while processing your request!</h6>
+  
+  {% if user == 'authority' %}
+  <a href="{% url 'reports' %}"><button class="primary"> Go back </button></a>
+  {% elif user == 'pharmacist' %}
+  <a href="{% url 'medicines' %}"><button class="primary"> Go back </button></a>
+  {% else %}
   <a href="{% url 'users' %}"><button class="primary"> Go to home </button></a>
-
+  {% endif %}
 </div>
 {% endblock body %}
