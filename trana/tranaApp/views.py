@@ -136,14 +136,16 @@ def signup(request):
 
         if position == "pharmacist":
             phname = request.POST.get(u"phname")
+            code=request.POST.get(u"code")
+            phone = request.POST.get(u"phone")
             pharmacy_name = request.POST.get(u"pharmacy-name")
             address = request.POST.get(u"address")
-            code=request.POST.get(u"code")
             registration=request.POST.get(u"registration")
             data[u"pharmacist-name"]=phname
             data[u"pharmacy-name"]=pharmacy_name
             data[u"address"]=address
             data[u"code"]=code
+            data[u"contact-number"] = phone
             data[u"registration"]=registration
 
         db.collection(u"Users").document(uid).set(data)
@@ -153,7 +155,7 @@ def signup(request):
             designation = request.POST.get(u"designation")
             organisation = request.POST.get(u"organisation")
             offadd = request.POST.get(u"offadd")
-            phone = request.POST.get(u"phone")
+            phone = request.POST.get(u"offphone")
             offemail = request.POST.get(u"offemail")
             data[u"authority-name"] = auname
             data[u"designation"] = designation
