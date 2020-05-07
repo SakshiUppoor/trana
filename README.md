@@ -1,6 +1,6 @@
 <br />
 <p align="center">
-  <img src="https://github.com/SakshiUppoor/trana/blob/master/trana/static/images/logo.png" alt="Logo" height="80">
+  <img src="https://raw.githubusercontent.com/SakshiUppoor/trana/master/assets/images/logo2.png" alt="Logo" height="80">
 <h3 align="center">Trana (त्राण)</h3>
   <p align="center">
     A mobile responsive website built to reach out people during medical emergencies and resolve their requests!
@@ -27,7 +27,7 @@
   <br>
   <br>
   <br>
-<img style="margin:1em"  src="https://github.com/SakshiUppoor/trana/blob/master/trana/static/images/output_q4PQAg.gif?raw=true"/><br>
+<img style="margin:1em"  src="https://raw.githubusercontent.com/SakshiUppoor/trana/master/assets/images/output_q4PQAg.gif"/><br>
   <i>Mobile</i>
 </p>
 
