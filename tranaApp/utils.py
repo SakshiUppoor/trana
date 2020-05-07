@@ -5,7 +5,7 @@ from email.mime.text import MIMEText
 from .email_credentials import email, pwd
 
 from django.contrib.sites.shortcuts import get_current_site
-
+from django.template.loader import render_to_string
 
 def send_mail(email_id, subject, message):
     me = email
@@ -36,7 +36,9 @@ def medicine_available(email_id, details, medicines):
     )
     send_mail(email_id, subject, message)
 
-def send_verification_mail(details):
+def send_verification_mail(request, details):
+    current_site = get_current_site(request)
+
     super_admin_email_list = [
         "sakshiuppoor@gmail.com",
         #"shahsaakshi25@gmail.com",
@@ -44,38 +46,29 @@ def send_verification_mail(details):
         #"",
         #"",
     ]
-
+    print("~~~~~~~~~~~~",type(details["uId"]), type('True'))
     subject = "New Authority Sign-Up"
-    message = """
-    <html>
-        <body>
-            <p>Hi, {} just registered for the position of authority at Trana</p> 
-            Details:
-            """.format(details.get('name'))
-
-    for detail in details:
-        message += """
-        <br>
-        <b> {}: </b> {}""".format(detail, details[detail])
-
-    message += """
-        <br>
-        </body>
-    </html>"""
+    message = render_to_string("verification_mail.html",
+    {
+        "domain":current_site.domain, 
+        "details":details,
+    })
     
     for mail in super_admin_email_list:
         send_mail(mail, subject, message)
 
 def send_result(email_id, user, accepted):
+    print(user)
+    #print(user.to_dict())
+    print(user.__dict__)
     if accepted == 'True':
         subject = "Authority Account Application Verified"
         message = """<html><body>You can now log in to your authority dashboard.
         <br>
         <b>Email ID:</b> {}
         <br>
-        <b>Password:</b> {}
-        
-        <html><body>""".format(user.get("email"), user.get("password"))
+        <html><body>""".format(user.__dict__["_data"].get("email"))
+        print(message)
         send_mail(email_id, subject, message)
 
     else:

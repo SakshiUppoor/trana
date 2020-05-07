@@ -127,8 +127,8 @@ def signup(request):
                 email_ref = firebase_admin.auth.get_user_by_email(email)
                 messages.info(request, "Your account already exists")
                 return redirect("login")
-            except:
-                print("hiiiiiii")
+            except Exception as e:
+                print("hiiiiiii",e)
                 user = firebase_admin.auth.create_user(email=email, password=password2)
                 uid = user.uid
                 data = {u"name": name, u"position": position, u"email": email}
@@ -175,7 +175,7 @@ def signup(request):
         if position == "authority":
             print("hello")
             data["uId"] = uid
-            send_verification_mail(data)
+            send_verification_mail(request, data)
             return HttpResponseRedirect(reverse("details"))
         elif position == "pharmacist":
             return HttpResponseRedirect(reverse("medicines"))
@@ -236,17 +236,26 @@ def login_view(request):
 
 
 def verify(request, uId, accepted):
-    user_ref = db.collection(u"Users").document("fgfgh")
-    user = user_ref.get()
-    email = user.to_dict().get("email")
-    user_instance = firebase_admin.auth.get_user_by_email(email)
-    print(user_instance)
-    send_result(email, user_instance, accepted)
-    if accepted == 'True':
-        db.collection(u"Users").document(uId).set({'approved':True}, merge=True)
-    else:
-        db.collection(u"Users").document(uId).delete()
-        firebase_admin.auth.delete_user(uId)
+    try:
+        user_ref = db.collection(u"Users").document(uId)
+        user = user_ref.get()
+        email = user.to_dict().get("email")
+        user_instance = firebase_admin.auth.get_user_by_email(email)
+        print(user_instance)
+        send_result(email, user_instance, accepted)
+        if user.to_dict().get("approved") == True:
+            accepted = "done"
+            return render(request,'verify.html',{"title":"verify", "accepted":accepted})
+ 
+        if accepted == 'True':
+            db.collection(u"Users").document(uId).set({'approved':True}, merge=True)
+        else:
+            db.collection(u"Users").document(uId).delete()
+            firebase_admin.auth.delete_user(uId)
+            context={"title":verify,"acc":accepted}
+    except:
+        accepted = "done"
+    return render(request,'verify.html',{"title":"verify", "accepted":accepted})
 
 def reset_password(request):
     return render(request, "forgot_password.html", {'title':'reset'})

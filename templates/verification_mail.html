@@ -1,0 +1,18 @@
+{% autoescape off %}
+{% load static %}
+<html>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}"
+    <body>
+        <p>Hi, {{ details|get_item:'name' }} just registered for the position of authority at Trana</p> 
+            Details:
+            {% for detail in details %}
+            <br>
+            <b> {{ detail }}: </b> {{ details|get_item:detail }}
+            {% endfor %}
+            <br>
+            <br>
+        <a href="http://{{ domain }}{% url 'verify' uId=details|get_item:'uId' accepted='True' %}"><button class="green-sec">Approve</button></a>
+        <a href="http://{{ domain }}{% url 'verify' uId=details|get_item:'uId' accepted='False' %}"><button class="green-sec">Reject</button></a>
+    </body>
+</html>
+{% endautoescape %}

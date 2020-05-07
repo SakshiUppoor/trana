@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title%}Details{% endblock title %}<div class="modal-body">
+    .body {
+        padding: 23vh 5vw;
+      }
+    {% block body%}
+    <div class="container">
+    {% if accepted == 'True'%}
+        <h3>Application request for authority is accepted</h3>
+    {% elif accepted == 'done'%}
+        <h3>Application already reviewed</h3>
+    {% else %}
+    <h3>Application request for authority is rejected</h3>
+    {%endif%}
+    </div>
+    {% endblock body%}
