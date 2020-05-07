@@ -208,7 +208,7 @@ def login_view(request):
                     print(position)
                     if position == "authority":
                         print("hello")
-                        auth_ref = db.collection(u"Users").document(id)
+                        auth_ref = db.collection(u"Users").document(current_user["localId"])
                         approved = auth_ref.get().to_dict().get("approved")
                         if approved==True:
                             return HttpResponseRedirect(reverse("reports"))
