@@ -16,6 +16,7 @@ from .views import (
     getmedicine,
     reset_password,
     verify,
+    details,
 )
 
 urlpatterns = [
@@ -35,5 +36,9 @@ urlpatterns = [
     path("404/", page404, name="404"),
     path("getreport/", getreport, name="getreport"),
     path("getmedicine/", getmedicine, name="getmedicine"),
+<<<<<<< HEAD
     path("verify/<str:uId>/<str:accepted>", verify, name="verify"),
+=======
+    path("details/",details,name="details"),
+>>>>>>> a0c1692daa161ef0660bc9cdc40c76dcb21620db
 ]
