@@ -58,6 +58,8 @@ def send_verification_mail(authority_details):
 
     message += """
         <br>
+        <a href="{% url 'verify' %}"><button class="green-sec">Approve</button></a>
+        <a href="{% url 'verify' %}"><button class="green-sec">Reject</button></a>
         </body>
     </html>"""
     

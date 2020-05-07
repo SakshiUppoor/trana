@@ -210,11 +210,7 @@ def login_view(request):
                     print(position)
                     if position == "authority":
                         print("hello")
-<<<<<<< HEAD
                         auth_ref = db.collection(u"Users").document(current_user["localId"])
-=======
-                        auth_ref = db.collection(u"Users").document(current_user['localId'])
->>>>>>> a8632a9e636374e2559eb4976dd544ced282d08e
                         approved = auth_ref.get().to_dict().get("approved")
                         if approved==True:
                             return HttpResponseRedirect(reverse("reports"))
@@ -246,6 +242,7 @@ def verify(request, uId, accepted):
     else:
         db.collection(u"Users").document(uId).delete()
         firebase_admin.auth.delete_user(uId)
+    return render(request,'verify.html',{'title':verify})
 
 def reset_password(request):
     return render(request, "forgot_password.html", {'title':'reset'})
@@ -276,7 +273,7 @@ def reportsDashboard(request):
     return HttpResponseRedirect(reverse("login"))
 
 def details(request):
-    return render(request,"details.html")
+    return render(request,"details.html",{'title':details})
 
 def medicinesDashboard(request):
     if getPosition(request) != None:
