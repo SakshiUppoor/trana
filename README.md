@@ -58,4 +58,5 @@ Accessible only to the concerned pharmacist who can view the medicine requests a
 * [Django](https://docs.djangoproject.com/en/2.2/) - The framework used
 * [Google JavaScript Map](https://cloud.google.com/maps-platform) - API used for maps
 * [Google Firebase](https://firebase.google.com/) - Database System
+* [GoDaddy](https://godaddy.com/) - Domain & Hosting
 
