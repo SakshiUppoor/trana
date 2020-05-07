@@ -124,7 +124,7 @@ def signup(request):
 
         if password1 == password2:
             try:
-                email_ref = firebase_admin.auth.get_user_by_email(email, app=None)
+                email_ref = firebase_admin.auth.get_user_by_email(email)
                 messages.info(request, "Your account already exists")
                 return redirect("login")
             except:
@@ -167,10 +167,9 @@ def signup(request):
         print(uid)
 
         current_user = authe.sign_in_with_email_and_password(email, password2)
-        # current_user_uid = current_user["localId"]
+        request.session["current_user"] = current_user
         session_id = current_user["idToken"]
         request.session["uid"] = str(session_id)
-
         position = getPosition(request)
         print(position)
         if position == "authority":
@@ -202,7 +201,6 @@ def login_view(request):
                         email, password
                     )
                     request.session["current_user"] = current_user
-                    # current_user_uid = current_user["localId"]
                     session_id = current_user["idToken"]
                     request.session["uid"] = str(session_id)
                     print(request.__dict__)
@@ -225,6 +223,20 @@ def login_view(request):
     return redirect("users")
 
 
+def verify(request, uId, accepted):
+    user_ref = db.collection(u"Users").document(uId)
+    user = user_ref.get()
+    email = user.to_dict().get("email")
+    user_instance = firebase_admin.auth.get_user_by_email(email)
+    print(user_instance)
+    send_result(email, user_instance, accepted)
+    return None
+    if accepted == 'True':
+        db.collection(u"Users").document(uId).set({'approved':False}, merge=True)
+    else:
+        db.collection(u"Users").document(uId).delete()
+        firebase_admin.auth.delete_user(uId)
+
 def reset_password(request):
     return render(request, "forgot_password.html")
 
@@ -240,6 +252,7 @@ def logout_view(request):
 
 
 def reportsDashboard(request):
+    print("Reports~~~~~~~~~", request.session.get("uid"))
     if getPosition(request) != None:
         if getPosition(request) == "authority":
             co_list, reports_list = get_components("Reports")

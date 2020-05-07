@@ -5,19 +5,17 @@ from email.mime.text import MIMEText
 from .email_credentials import email, pwd
 
 
-def send_mail(email_id, details, medicine):
+def send_mail(email_id, subject, message):
     me = email
     my_password = pwd
     you = email_id
 
     msg = MIMEMultipart("alternative")
-    msg["Subject"] = "Alert"
+    msg["Subject"] = subject
     msg["From"] = me
     msg["To"] = you
 
-    html = "<html><body><p>Hi, I have the following alerts for you!</p> The medicine {} you requested is available at the pharmacy {} located in {}.</body></html>".format(
-        medicine, details[0], details[1]
-    )
+    html = message
     part2 = MIMEText(html, "html")
 
     msg.attach(part2)
@@ -29,23 +27,58 @@ def send_mail(email_id, details, medicine):
     s.quit()
 
 
-def isInRadius(lat1, long1, lat2, long2):
-    R = 6373.0
-    lat1 = math.radians(lat1)
-    long1 = math.radians(long1)
-    lat2 = math.radians(lat2)
-    long2 = math.radians(long2)
-
-    dlon = long2 - long1
-    dlat = lat2 - lat1
-
-    a = (
-        math.sin(dlat / 2) ** 2
-        + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
+def medicine_available(email_id, details, medicines):
+    subject = "Request for medicine {}".format(medicine)
+    message = "<html><body>The medicine {} you requested is available at the pharmacy {} located in {}.</body></html>".format(
+        medicine, details[0], details[1]
     )
-    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
-    distance = R * c
-    if distance < 10000:
-        return True
+    send_mail(email_id, subject, message)
+
+def send_verification_mail(authority_details):
+    super_admin_email_list = [
+        "sakshiuppor@gmail.com",
+        #"shahsaakshi25@gmail.com",
+        #"sanketyou8@gmail.com",
+        #"",
+        #"",
+    ]
+
+    subject = "New Authority Sign-Up"
+    message = """
+    <html>
+        <body>
+            <p>Hi, {} just registered for the position of authority at Trana</p> 
+            Details:
+            """.format(details.get('name'))
+
+    for detail in details:
+        message += """
+        <br>
+        <b> {}: </b> {}""".format(detail, details[detail])
+
+    message += """
+        <br>
+        </body>
+    </html>"""
+    
+    for mail in super_admin_email_list:
+        send_mail(mail, subject, message)
+
+def send_result(email_id, user, accepted):
+    if accepted == 'True':
+        subject = "Authority Account Application Verified"
+        message = """<html><body>You can now log in to your authority dashboard.
+        <br>
+        <b>Email ID:</b> {}
+        <br>
+        <b>Password:</b> {}
+        
+        <html><body>""".format(user.get("email"), user.get("password"))
+        send_mail(email_id, subject, message)
+
     else:
-        return False
+        subject = "Authority Account Application Rejected"
+        message = """<html><body>Your application for the position of authority at Trana has been rejected.
+        <html><body>"""
+        send_mail(email_id, subject, message)
+    
