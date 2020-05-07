@@ -231,7 +231,7 @@ def login_view(request):
 
 
 def reset_password(request):
-    return render(request, "forgot_password.html")
+    return render(request, "forgot_password.html", {'title':'reset'})
 
 
 def logout_view(request):

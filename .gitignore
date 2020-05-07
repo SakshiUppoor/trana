@@ -4,3 +4,4 @@ venv/
 **/db.sqlite3
 **/email_credentials.py 
 **/cred.txt
+trana/settings.py

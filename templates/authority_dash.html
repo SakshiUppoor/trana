@@ -122,7 +122,8 @@
 @media only screen and (max-width: 768px) {
 
 #map {
-    display:none;
+  margin: 20px;
+  border-radius: 15px;
 }
 
 }
@@ -363,7 +364,7 @@ function getReports() {
       <div id="a{{med|get_item:'id'}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
         <div class="card-body">
         {% for key, value in med.items %}
-        {% if key != 'id' and key != 'description' and key != 'location' and key != 'url' and key != 'uId'%}
+        {% if key != 'id' and key != 'description' and key != 'location' and key != 'url' and key != 'uId' and key != 'name'%}
         <div><b>{{key}}:</b> {{value}}</div>
         {% endif %}
         {% endfor %}  
@@ -401,7 +402,7 @@ function getReports() {
       <div id="a{{med|get_item:'id'}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
         <div class="card-body">
         {% for key, value in med.items %}
-        {% if key != 'id' and key != 'description' and key != 'location' and key != 'url' and key != 'uId'%}
+        {% if key != 'id' and key != 'description' and key != 'location' and key != 'url' and key != 'uId' and key != 'name'%}
         <div><b>{{key}}:</b> {{value}}</div>
         {% endif %}
         {% endfor %}  
