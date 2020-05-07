@@ -15,6 +15,7 @@ from .views import (
     getreport,
     getmedicine,
     reset_password,
+    details,
 )
 
 urlpatterns = [
@@ -34,4 +35,5 @@ urlpatterns = [
     path("404/", page404, name="404"),
     path("getreport/", getreport, name="getreport"),
     path("getmedicine/", getmedicine, name="getmedicine"),
+    path("details/",details,name="details"),
 ]

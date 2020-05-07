@@ -175,7 +175,7 @@ def signup(request):
         print(position)
         if position == "authority":
             print("hello")
-            return HttpResponseRedirect(reverse("reports"))
+            return HttpResponseRedirect(reverse("details"))
         elif position == "pharmacist":
             return HttpResponseRedirect(reverse("medicines"))
         elif position == "user":
@@ -210,7 +210,12 @@ def login_view(request):
                     print(position)
                     if position == "authority":
                         print("hello")
-                        return HttpResponseRedirect(reverse("reports"))
+                        auth_ref = db.collection(u"Users").document(id)
+                        approved = auth_ref.get().to_dict().get("approved")
+                        if approved==True:
+                            return HttpResponseRedirect(reverse("reports"))
+                        else:
+                            messages.error(request,'Your account is not yet verified')
                     elif position == "pharmacist":
                         return HttpResponseRedirect(reverse("medicines"))
                     elif position == "user":
@@ -252,6 +257,8 @@ def reportsDashboard(request):
             return HttpResponseRedirect(reverse("404"))
     return HttpResponseRedirect(reverse("login"))
 
+def details(request):
+    return render(request,"details.html")
 
 def medicinesDashboard(request):
     if getPosition(request) != None:
