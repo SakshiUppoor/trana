@@ -37,7 +37,7 @@ def medicine_available(email_id, details, medicines):
 def send_verification_mail(authority_details):
     super_admin_email_list = [
         "sakshiuppor@gmail.com",
-        #"shahsaakshi25@gmail.com",
+        "shahsaakshi25@gmail.com",
         #"sanketyou8@gmail.com",
         #"",
         #"",
