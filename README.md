@@ -24,7 +24,10 @@
 <p align="center">
 <img style="margin:1em" src="https://imgur.com/dkGR2Pz.gif" width="100%"/>
   <i>Desktop</i>
-<!--<img style="margin:1em" src="https://imgur.com/enrQmYU.gif" width="100%"/>-->
+  <br>
+  <br>
+  <br>
+<img style="margin:1em"  src="https://github.com/SakshiUppoor/trana/blob/master/trana/static/images/output_q4PQAg.gif?raw=true"/><br>
   <i>Mobile</i>
 </p>
 
