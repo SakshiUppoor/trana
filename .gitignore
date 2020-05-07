@@ -1,6 +1,7 @@
-venv/
+**/env/
 **/ServiceAccountKey.json
 **/__pycache__/
 **/db.sqlite3
 **/email_credentials.py 
 **/cred.txt
+**/.vscode
