@@ -7,6 +7,7 @@
 }
 body {
   background: #f7fdfd;
+  overflow-x: hidden;
 }
 .appname {
   height: 35px;
@@ -129,7 +130,7 @@ input[type="submit"]:focus {
   color: #222d39;
   padding-left: 30px;
   font-weight: 600;
-  font-size: 24px;
+  font-size: 35px;
 }
 .row {
   display: flex;
@@ -242,4 +243,50 @@ input[type="submit"] {
 
 input[type="submit"]:hover {
   transition: 0.6s;
+}
+
+.form-check br {
+  display: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .login-container {
+    display: block !important;
+    text-align: center;
+  }
+  .form-wrap {
+    padding: 0;
+  }
+  .forgot {
+    display: block;
+  }
+  .img-login,
+  img-signup {
+    display: none;
+  }
+  .sign_in {
+    padding: 12vh 0 0 0;
+  }
+  .sign_info {
+    padding: 30px 10px 10px 10px;
+  }
+  .login {
+    margin-bottom: 10px;
+  }
+  .form-check br {
+    display: block;
+  }
+  .checkboxes {
+    margin-bottom: 0;
+  }
+  .register,
+  .second {
+    text-align: center !important;
+  }
+  .img-signup {
+    display: none;
+  }
+  .second {
+    margin-top: 20px;
+  }
 }

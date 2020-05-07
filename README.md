@@ -1,14 +1,14 @@
 <br />
 <p align="center">
   <img src="https://github.com/SakshiUppoor/trana/blob/master/trana/static/images/logo.png" alt="Logo" height="80">
-
+<h3 align="center">Trana (त्राण)</h3>
   <p align="center">
     A mobile responsive website built to reach out people during medical emergencies and resolve their requests!
     <br />
     <a href="https://github.com/SakshiUppoor/trana"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    View Demo
+    <a href="https://trana.live">View</a>
     ·
     <a href="https://github.com/SakshiUppoor/trana/issues">Report Bug</a>
     ·
@@ -22,7 +22,13 @@
 * <a href="https://github.com/sanket1703"><b>Sanket Shah</b></a> - Project Manager
 ## About the Project
 <p align="center">
-<img style="margin:1em" src="" width="100%"/>
+<img style="margin:1em" src="https://imgur.com/dkGR2Pz.gif" width="100%"/>
+  <i>Desktop</i>
+  <br>
+  <br>
+  <br>
+<img style="margin:1em"  src="https://github.com/SakshiUppoor/trana/blob/master/trana/static/images/output_q4PQAg.gif?raw=true"/><br>
+  <i>Mobile</i>
 </p>
 
 ### Pages
@@ -52,4 +58,5 @@ Accessible only to the concerned pharmacist who can view the medicine requests a
 * [Django](https://docs.djangoproject.com/en/2.2/) - The framework used
 * [Google JavaScript Map](https://cloud.google.com/maps-platform) - API used for maps
 * [Google Firebase](https://firebase.google.com/) - Database System
+* [GoDaddy](https://godaddy.com/) - Domain & Hosting
 

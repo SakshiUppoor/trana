@@ -22,9 +22,9 @@
                                     <label for="password" class="form-data">Password</label>
                                     <input type="password" class="form-control" id="password" name="password" placeholder="******">
                                 </div>
-                                <div style="display: flex; justify-content: space-between;">
-                                    <input required type="submit" value="Login"/>
-                                    <a style="color: #5e2ced" href="{% url 'reset' %}">
+                                <div class="login-container" style="display: flex; justify-content: space-between;">
+                                    <input class="login" required type="submit" value="Login"/>
+                                    <a class="forgot" style="color: #5e2ced" href="{% url 'reset' %}">
                                         Forgot Password?
                                     </a> 
                                 </div>
