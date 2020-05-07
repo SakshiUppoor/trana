@@ -34,10 +34,10 @@ def medicine_available(email_id, details, medicines):
     )
     send_mail(email_id, subject, message)
 
-def send_verification_mail(authority_details):
+def send_verification_mail(details):
     super_admin_email_list = [
-        "sakshiuppor@gmail.com",
-        "shahsaakshi25@gmail.com",
+        "sakshiuppoor@gmail.com",
+        #"shahsaakshi25@gmail.com",
         #"sanketyou8@gmail.com",
         #"",
         #"",

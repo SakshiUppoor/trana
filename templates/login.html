@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block title%}Signup{% endblock title %}<div class="modal-body">
+{% block title%}Login{% endblock title %}<div class="modal-body">
     
     {% block body%}
 
@@ -16,15 +16,18 @@
                             {% csrf_token %}
                                 <div required class="form-group text_box">
                                     <label for="email" class="form-data">Email</label>
-                                    <input required type="email" class="form-control is-invalid" id="email" name="email" placeholder="trana@gmail.com">
+                                    <input type="email" required type="email" class="form-control {% if messages %}is-invalid{% endif %}" oninput="myFunction()" id="email" name="email" placeholder="trana@gmail.com">
                                 </div>
                                 <div required class="form-group text_box">
                                     <label for="password" class="form-data">Password</label>
-                                    <input type="password" class="form-control is-invalid" id="password" name="password" placeholder="******">
+                                    <input type="password" class="form-control {% if messages %}is-invalid{% endif %}" oninput="myFunction()" id="password" name="password" placeholder="******">
                                 </div>
+                                
+                                {% for message in messages %}                                
                                 <p id="passwordHelp" class="text-danger">
-              Please check your email & password.
-            </p>   
+                                    {{message}}
+                                </p>        
+                                {% endfor %}
                                 <div class="login-container" style="display: flex; justify-content: space-between;">
                                     <input class="login" required type="submit" value="Login"/>
                                     <a class="forgot" style="color: #5e2ced" href="{% url 'reset' %}">
@@ -50,6 +53,14 @@
         </div>
     </section>
     </div>
+    <script>
+        function myFunction() {
+            var x = document.getElementById("email");
+            var y = document.getElementById("password");
+            x.classList.remove("is-invalid");
+            y.classList.remove("is-invalid");
+        }
+    </script>
     {% endblock body %}
 
    
