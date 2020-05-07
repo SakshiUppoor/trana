@@ -13,7 +13,7 @@
         <div class="sign_info">
           <div class="row">
               <div class='col-lg-5'>
-                  <h2 class="heading">Hello There</h2>
+                  <h2 class="heading">Hello There! </h2>
                 <div class="form-wrap">
                     <form  action="{% url 'signup' %}" id="signup" method='POST'>
                       {% csrf_token %}
@@ -33,19 +33,23 @@
                             <label for="password2" class="form-data">Confirm Password</label>
                             <input required type="password" class="form-control" id="password2" name="password2" placeholder="******" required>
                         </div>
-                        <div class="form-group text-box">
+                        <div class="form-group checkboxes text-box">
                             <label for="position" class="form-data">Position*</label>
+                            <br>
                         <div class="form-check">
                             <input type="radio" class="form-check-input" id="user" name="position" value="user" onclick="javascript:accountCheck();"/>
                             <label for="user" class="form-data">User</label>
+                            <br>
                         </div>
                         <div class="form-check">
                             <input type="radio" class="form-check-input" id="authority" name="position" value="authority" onclick="javascript:accountCheck();"/>
                             <label for="authority" class="form-data">Authority</label>
+                            <br>
                         </div>
                         <div class="form-check">
                             <input type="radio" class="form-check-input" id="pharmacist" name="position" value="pharmacist" onclick="javascript:accountCheck();"/>
                             <label for="pharmacist" class="form-data">Pharmacist</label>
+                            <br>
                         </div>
                         <div id="pharmacist-details">
                             <label for="phname" class="form-data">Pharmacist Name</label>
@@ -309,14 +313,15 @@
                            </div>
                         <br>
                         </div>
-                          
-                          <input type="submit" value="Register" />
+                          <div class="register">
+                            <input type="submit" value="Register" />
+                          </div>
                        
                          
                     </form>
                     </div>
               </div>
-              <div style="text-align:end;" class='col-lg-7'>
+              <div style="text-align:end;" class='second col-lg-7'>
                 <div class="img-signup" style="background-image: url(../static/images/signup.png);">
                 </div>
                 <h3 class="sub-heading">Already have an account?</h3>
