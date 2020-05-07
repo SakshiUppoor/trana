@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 
 {% block title%}Details{% endblock title %}<div class="modal-body">
-
+    .body {
+        padding: 23vh 5vw;
+      }
     {% block body%}
     <style>
         .content {
-            display: none;
+            display:block;
+            margin-top: 100px;
             padding: 6px 12px;
+            margin-left:25px;
             /*border: 1px solid #ccc;
             border-top: none;*/
             width: 100%;
@@ -14,8 +18,8 @@
             padding-bottom: 2em;
           }
     </style>
-    <div class="body content">
-        <h3>Your details have been submitted successfully</h3>
-        <p>Approval of applications may take 24 hours</p>
+    <div class="content">
+        <h3>Your details have been submitted successfully!</h3>
+        <p>Approval of applications may take 24 hours.</p>
     </div>
     {% endblock body%}
