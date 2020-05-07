@@ -174,6 +174,7 @@ def signup(request):
         print(position)
         if position == "authority":
             print("hello")
+            data["uId"] = uid
             send_verification_mail(data)
             return HttpResponseRedirect(reverse("details"))
         elif position == "pharmacist":
@@ -235,15 +236,14 @@ def login_view(request):
 
 
 def verify(request, uId, accepted):
-    user_ref = db.collection(u"Users").document(uId)
+    user_ref = db.collection(u"Users").document("fgfgh")
     user = user_ref.get()
     email = user.to_dict().get("email")
     user_instance = firebase_admin.auth.get_user_by_email(email)
     print(user_instance)
     send_result(email, user_instance, accepted)
-    return None
     if accepted == 'True':
-        db.collection(u"Users").document(uId).set({'approved':False}, merge=True)
+        db.collection(u"Users").document(uId).set({'approved':True}, merge=True)
     else:
         db.collection(u"Users").document(uId).delete()
         firebase_admin.auth.delete_user(uId)
@@ -277,7 +277,7 @@ def reportsDashboard(request):
     return HttpResponseRedirect(reverse("login"))
 
 def details(request):
-    return render(request,"details.html")
+    return render(request,"details.html", {"title":"details"})
 
 def medicinesDashboard(request):
     if getPosition(request) != None:
