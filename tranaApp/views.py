@@ -174,6 +174,7 @@ def signup(request):
         print(position)
         if position == "authority":
             print("hello")
+            send_verification_mail(data)
             return HttpResponseRedirect(reverse("details"))
         elif position == "pharmacist":
             return HttpResponseRedirect(reverse("medicines"))
@@ -200,15 +201,20 @@ def login_view(request):
                     current_user = authe.sign_in_with_email_and_password(
                         email, password
                     )
+                    print("~~~~~~~~~~~",current_user['localId'])
                     request.session["current_user"] = current_user
                     session_id = current_user["idToken"]
                     request.session["uid"] = str(session_id)
-                    print(request.__dict__)
+                    #print(request.__dict__)
                     position = getPosition(request)
                     print(position)
                     if position == "authority":
                         print("hello")
+<<<<<<< HEAD
                         auth_ref = db.collection(u"Users").document(current_user["localId"])
+=======
+                        auth_ref = db.collection(u"Users").document(current_user['localId'])
+>>>>>>> a8632a9e636374e2559eb4976dd544ced282d08e
                         approved = auth_ref.get().to_dict().get("approved")
                         if approved==True:
                             return HttpResponseRedirect(reverse("reports"))
@@ -223,7 +229,6 @@ def login_view(request):
                 except Exception as e:
                     print("!!!!!!!!!!!!!", e)
                     messages.error(request, "Invalid credentials")
-                    return render(request, "login.html")
         return render(request, "login.html", {"title": "login"})
     return redirect("users")
 
