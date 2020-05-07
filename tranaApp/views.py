@@ -190,14 +190,15 @@ def login_view(request):
     if getPosition(request) != "user":
         if request.method == "POST":
             if "reset" in request.POST:
-                messages.error(
-                    request, "Password reset linked has been sent to your mail."
-                )
+                #messages.error(
+                #    request, "Password reset linked has been sent to your mail."
+                #)
                 return render(request, "login.html")
             else:
                 email = request.POST["email"]
                 password = request.POST["password"]
                 try:
+                    firebase_admin.auth.get_user_by_email(email)
                     current_user = authe.sign_in_with_email_and_password(
                         email, password
                     )
@@ -224,7 +225,11 @@ def login_view(request):
                         return HttpResponseRedirect(reverse("users"))
                 except Exception as e:
                     print("!!!!!!!!!!!!!", e)
-                    messages.error(request, "Invalid credentials")
+                    if type(e) == firebase_admin.auth.UserNotFoundError:
+                        message = "Account doesn't exist."
+                    else:
+                        message = "Please check your password."
+                    messages.error(request, message)
         return render(request, "login.html", {"title": "login"})
     return redirect("users")
 
