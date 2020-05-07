@@ -41,6 +41,8 @@ def send_verification_mail(request, details):
 
     super_admin_email_list = [
         "sakshiuppoor@gmail.com",
+        "phani.lav@gmail.com",
+        "medtrana2020@gmail.com",
         #"shahsaakshi25@gmail.com",
         #"sanketyou8@gmail.com",
         #"",
@@ -67,7 +69,7 @@ def send_result(email_id, user, accepted):
         <br>
         <b>Email ID:</b> {}
         <br>
-        <html><body>""".format(user.__dict__["_data"].get("email"))
+        <html><body>""".format(email_id)
         print(message)
         send_mail(email_id, subject, message)
 
