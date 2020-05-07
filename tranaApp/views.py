@@ -127,8 +127,8 @@ def signup(request):
                 email_ref = firebase_admin.auth.get_user_by_email(email)
                 messages.info(request, "Your account already exists")
                 return redirect("login")
-            except:
-                print("hiiiiiii")
+            except Exception as e:
+                print("hiiiiiii",e)
                 user = firebase_admin.auth.create_user(email=email, password=password2)
                 uid = user.uid
                 data = {u"name": name, u"position": position, u"email": email}
@@ -174,6 +174,7 @@ def signup(request):
         print(position)
         if position == "authority":
             print("hello")
+            data["uid"]=uid
             send_verification_mail(data)
             return HttpResponseRedirect(reverse("details"))
         elif position == "pharmacist":
@@ -241,13 +242,14 @@ def verify(request, uId, accepted):
     user_instance = firebase_admin.auth.get_user_by_email(email)
     print(user_instance)
     send_result(email, user_instance, accepted)
-    return None
+   
     if accepted == 'True':
-        db.collection(u"Users").document(uId).set({'approved':False}, merge=True)
+        db.collection(u"Users").document(uId).set({'approved':True}, merge=True)
     else:
         db.collection(u"Users").document(uId).delete()
         firebase_admin.auth.delete_user(uId)
-    return render(request,'verify.html',{'title':verify})
+        context={"title":verify,"acc":accepted}
+    return render(request,'verify.html',context)
 
 def reset_password(request):
     return render(request, "forgot_password.html", {'title':'reset'})

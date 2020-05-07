@@ -58,10 +58,10 @@ def send_verification_mail(details):
 
     message += """
         <br>
-        <a href="{% url 'verify' %}"><button class="green-sec">Approve</button></a>
-        <a href="{% url 'verify' %}"><button class="green-sec">Reject</button></a>
+        <a href="{{% url 'verify' uid={} accepted={} %}}"><button class="green-sec">Approve</button></a>
+        <a href="{{% url 'verify' uid={} accepted={} %}}"><button class="green-sec">Reject</button></a>
         </body>
-    </html>"""
+    </html>""".format(details["uid"],'True',details["uid"],'False')
     
     for mail in super_admin_email_list:
         send_mail(mail, subject, message)

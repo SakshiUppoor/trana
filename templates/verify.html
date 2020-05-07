@@ -5,5 +5,11 @@
         padding: 23vh 5vw;
       }
     {% block body%}
-    
+    <div class="container">
+    {%if acc =='True'%}
+        <h3>Application request for authority is accepted</h3>
+    {%endif%}
+    {%else%}
+    <h3>Application request for authority is rejected</h3>
+    </div>
     {% endblock body%}
