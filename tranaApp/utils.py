@@ -4,6 +4,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from .email_credentials import email, pwd
 
+from django.contrib.sites.shortcuts import get_current_site
+
 
 def send_mail(email_id, subject, message):
     me = email

@@ -17,6 +17,12 @@
                 <div class="form-wrap">
                     <form  action="{% url 'signup' %}" id="signup" method='POST'>
                       {% csrf_token %}
+                      
+                        {% for message in messages %}                                
+                        <p id="passwordHelp" class="text-danger">
+                            {{message}}
+                        </p>        
+                        {% endfor %}
                         <div required class="form-group text_box">
                             <label for="name" class="form-data">Name</label>
                             <input required type="text" class="form-control" id="name" name="name" placeholder="UserName" required>
@@ -27,11 +33,11 @@
                          </div>
                         <div required class="form-group text_box">
                             <label for="password1" class="form-data">Password</label>
-                            <input required type="password" class="form-control" id="password1" name="password1" placeholder="******" required>
+                            <input minlength="6" required type="password" class="form-control" id="password1" name="password1" placeholder="******" required>
                         </div>
                         <div required class="form-group text_box">
                             <label for="password2" class="form-data">Confirm Password</label>
-                            <input required type="password" class="form-control" id="password2" name="password2" placeholder="******" required>
+                            <input minlength="6" required type="password" class="form-control" id="password2" name="password2" placeholder="******" required>
                         </div>
                         <div class="form-group checkboxes text-box">
                             <label for="position" class="form-data">Position*</label>
