@@ -245,7 +245,7 @@ def verify(request, uId, accepted):
         if user.to_dict().get("approved") == True:
             accepted = "done"
             return render(request,'verify.html',{"title":"verify", "accepted":accepted})
- 
+
         send_result(email, user_instance, accepted)
         if accepted == 'True':
             db.collection(u"Users").document(uId).set({'approved':True}, merge=True)
@@ -336,19 +336,15 @@ def usersDashboard(request):
 
 
 def notify(request, id):
-    try:
-        current_user = request.session["current_user"]
-        med_ref = db.collection(u"Medicines").document(id)
-        med_ref.set({u"resolved": True}, merge=True)
-        medicine = med_ref.get().to_dict().get("medicine")
-        uId = med_ref.get().to_dict().get("uId")
-        user = firebase_admin.auth.get_user(uId)
-        print(user.email)
-        send_mail(user.email, getPharmacyDetails(current_user["localId"]), medicine)
-        return HttpResponseRedirect(reverse("medicines"))
-    except:
-        return redirect("404")
-
+    current_user = request.session["current_user"]
+    med_ref = db.collection(u"Medicines").document(id)
+    medicine = med_ref.get().to_dict().get("medicine")
+    uId = med_ref.get().to_dict().get("uId")
+    user = firebase_admin.auth.get_user(uId)
+    print(user.email)
+    medicine_available(user.email, getPharmacyDetails(current_user["localId"]), medicine)
+    med_ref.set({u"resolved": True}, merge=True)
+    return HttpResponseRedirect(reverse("medicines"))
 
 def resolve(request, id):
     report_ref = db.collection(u"Reports").document(id)
