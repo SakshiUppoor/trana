@@ -242,11 +242,11 @@ def verify(request, uId, accepted):
         email = user.to_dict().get("email")
         user_instance = firebase_admin.auth.get_user_by_email(email)
         print(user_instance)
-        send_result(email, user_instance, accepted)
         if user.to_dict().get("approved") == True:
             accepted = "done"
             return render(request,'verify.html',{"title":"verify", "accepted":accepted})
  
+        send_result(email, user_instance, accepted)
         if accepted == 'True':
             db.collection(u"Users").document(uId).set({'approved':True}, merge=True)
         else:
