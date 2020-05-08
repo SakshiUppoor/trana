@@ -346,7 +346,8 @@ def notify(request, id):
         print(user.email)
         send_mail(user.email, getPharmacyDetails(current_user["localId"]), medicine)
         return HttpResponseRedirect(reverse("medicines"))
-    except:
+    except Exception as e:
+        print(e)
         return redirect("404")
 
 

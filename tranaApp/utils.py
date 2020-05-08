@@ -34,7 +34,7 @@ def send_mail(to, subject, message):
     yag.send(to = to, subject = subject, contents = message)
 
 
-def medicine_available(email_id, details, medicines):
+def medicine_available(email_id, details, medicine):
     subject = "Request for medicine {}".format(medicine)
     message = "<html><body>The medicine {} you requested is available at the pharmacy {} located in {}.</body></html>".format(
         medicine, details[0], details[1]
