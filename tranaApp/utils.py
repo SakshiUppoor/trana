@@ -1,5 +1,6 @@
 import smtplib
 import math
+import yagmail
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from .email_credentials import email, pwd
@@ -7,8 +8,8 @@ from .email_credentials import email, pwd
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 
-def send_mail(email_id, subject, message):
-    me = email
+def send_mail(to, subject, message):
+    """me = email
     my_password = pwd
     you = email_id
 
@@ -27,7 +28,10 @@ def send_mail(email_id, subject, message):
     server.login(me, my_password)
 
     server.sendmail(me, you, msg.as_string())
-    server.quit()
+    server.quit()"""
+
+    yag = yagmail.SMTP('medtrana2020')
+    yag.send(to = to, subject = subject, contents = message)
 
 
 def medicine_available(email_id, details, medicines):
@@ -57,8 +61,7 @@ def send_verification_mail(request, details):
         "details":details,
     })
     
-    for mail in super_admin_email_list:
-        send_mail(mail, subject, message)
+    send_mail(super_admin_email_list, subject, message)
 
 def send_result(email_id, user, accepted):
     print(user)
