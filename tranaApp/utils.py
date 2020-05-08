@@ -21,12 +21,13 @@ def send_mail(email_id, subject, message):
     part2 = MIMEText(html, "html")
 
     msg.attach(part2)
+    server = smtplib.SMTP('smtp.gmail.com: 587')
 
-    s = smtplib.SMTP_SSL("smtp.gmail.com")
-    s.login(me, my_password)
+    server.starttls()
+    server.login(me, my_password)
 
-    s.sendmail(me, you, msg.as_string())
-    s.quit()
+    server.sendmail(me, you, msg.as_string())
+    server.quit()
 
 
 def medicine_available(email_id, details, medicines):
@@ -41,8 +42,8 @@ def send_verification_mail(request, details):
 
     super_admin_email_list = [
         "sakshiuppoor@gmail.com",
-        "phani.lav@gmail.com",
-        "medtrana2020@gmail.com",
+        #"phani.lav@gmail.com",
+        #"medtrana2020@gmail.com",
         #"shahsaakshi25@gmail.com",
         #"sanketyou8@gmail.com",
         #"",
