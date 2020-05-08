@@ -174,8 +174,8 @@ def signup(request):
         print(position)
         if position == "authority":
             print("hello")
-            data["uid"]=uid
-            send_verification_mail(data)
+            data["uId"] = uid
+            send_verification_mail(request, data)
             return HttpResponseRedirect(reverse("details"))
         elif position == "pharmacist":
             return HttpResponseRedirect(reverse("medicines"))
@@ -236,20 +236,26 @@ def login_view(request):
 
 
 def verify(request, uId, accepted):
-    user_ref = db.collection(u"Users").document(uId)
-    user = user_ref.get()
-    email = user.to_dict().get("email")
-    user_instance = firebase_admin.auth.get_user_by_email(email)
-    print(user_instance)
-    send_result(email, user_instance, accepted)
-   
-    if accepted == 'True':
-        db.collection(u"Users").document(uId).set({'approved':True}, merge=True)
-    else:
-        db.collection(u"Users").document(uId).delete()
-        firebase_admin.auth.delete_user(uId)
-        context={"title":verify,"acc":accepted}
-    return render(request,'verify.html',context)
+    try:
+        user_ref = db.collection(u"Users").document(uId)
+        user = user_ref.get()
+        email = user.to_dict().get("email")
+        user_instance = firebase_admin.auth.get_user_by_email(email)
+        print(user_instance)
+        send_result(email, user_instance, accepted)
+        if user.to_dict().get("approved") == True:
+            accepted = "done"
+            return render(request,'verify.html',{"title":"verify", "accepted":accepted})
+ 
+        if accepted == 'True':
+            db.collection(u"Users").document(uId).set({'approved':True}, merge=True)
+        else:
+            db.collection(u"Users").document(uId).delete()
+            firebase_admin.auth.delete_user(uId)
+            context={"title":verify,"acc":accepted}
+    except:
+        accepted = "done"
+    return render(request,'verify.html',{"title":"verify", "accepted":accepted})
 
 def reset_password(request):
     return render(request, "forgot_password.html", {'title':'reset'})
@@ -280,7 +286,7 @@ def reportsDashboard(request):
     return HttpResponseRedirect(reverse("login"))
 
 def details(request):
-    return render(request,"details.html",{'title':details})
+    return render(request,"details.html", {"title":"details"})
 
 def medicinesDashboard(request):
     if getPosition(request) != None:

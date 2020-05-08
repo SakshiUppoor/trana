@@ -4,6 +4,8 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from .email_credentials import email, pwd
 
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
 
 def send_mail(email_id, subject, message):
     me = email
@@ -19,12 +21,13 @@ def send_mail(email_id, subject, message):
     part2 = MIMEText(html, "html")
 
     msg.attach(part2)
+    server = smtplib.SMTP('smtp.gmail.com: 587')
 
-    s = smtplib.SMTP_SSL("smtp.gmail.com")
-    s.login(me, my_password)
+    server.starttls()
+    server.login(me, my_password)
 
-    s.sendmail(me, you, msg.as_string())
-    s.quit()
+    server.sendmail(me, you, msg.as_string())
+    server.quit()
 
 
 def medicine_available(email_id, details, medicines):
@@ -34,48 +37,41 @@ def medicine_available(email_id, details, medicines):
     )
     send_mail(email_id, subject, message)
 
-def send_verification_mail(details):
+def send_verification_mail(request, details):
+    current_site = get_current_site(request)
+
     super_admin_email_list = [
         "sakshiuppoor@gmail.com",
+        #"phani.lav@gmail.com",
+        #"medtrana2020@gmail.com",
         #"shahsaakshi25@gmail.com",
         #"sanketyou8@gmail.com",
         #"",
         #"",
     ]
-
+    print("~~~~~~~~~~~~",type(details["uId"]), type('True'))
     subject = "New Authority Sign-Up"
-    message = """
-    <html>
-        <body>
-            <p>Hi, {} just registered for the position of authority at Trana</p> 
-            Details:
-            """.format(details.get('name'))
-
-    for detail in details:
-        message += """
-        <br>
-        <b> {}: </b> {}""".format(detail, details[detail])
-
-    message += """
-        <br>
-        <a href="{{% url 'verify' uid={} accepted={} %}}"><button class="green-sec">Approve</button></a>
-        <a href="{{% url 'verify' uid={} accepted={} %}}"><button class="green-sec">Reject</button></a>
-        </body>
-    </html>""".format(details["uid"],'True',details["uid"],'False')
+    message = render_to_string("verification_mail.html",
+    {
+        "domain":current_site.domain, 
+        "details":details,
+    })
     
     for mail in super_admin_email_list:
         send_mail(mail, subject, message)
 
 def send_result(email_id, user, accepted):
+    print(user)
+    #print(user.to_dict())
+    print(user.__dict__)
     if accepted == 'True':
         subject = "Authority Account Application Verified"
         message = """<html><body>You can now log in to your authority dashboard.
         <br>
         <b>Email ID:</b> {}
         <br>
-        <b>Password:</b> {}
-        
-        <html><body>""".format(user.get("email"), user.get("password"))
+        <html><body>""".format(email_id)
+        print(message)
         send_mail(email_id, subject, message)
 
     else:
