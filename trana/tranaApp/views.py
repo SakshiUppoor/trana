@@ -11,6 +11,8 @@ import firebase
 from firebase import firebase
 import pyrebase
 
+from .utils import *
+
 # from .utils import send_mail
 
 ###########################
@@ -74,6 +76,8 @@ def getPharmacyDetails(uId):
     user_ref = db.collection(u"Users").document(uId)
     user = user_ref.get()
     if user.exists:
+        print(user.id)
+        print(user.to_dict())
         return user.to_dict().get("pharmacy-name"), user.to_dict().get("address")
     return None
 
@@ -84,11 +88,7 @@ def get_components(collection):
     co_list = []
     reports_list = []
     for report in reports:
-        if report.to_dict().get("resolved") != True:
-            if report.to_dict().get("location"):
-                co_list.append(
-                    [report.to_dict()["location"][0], report.to_dict()["location"][1]]
-                )
+        if report.to_dict().get("resolved") != True and report.to_dict().get("uId"):
             entry = {}
             entry["id"] = report.id
             if report.to_dict().get("uId"):
@@ -97,6 +97,14 @@ def get_components(collection):
             for field in report.to_dict():
                 entry[field] = report.to_dict()[field]
             print(entry)
+            if report.to_dict().get("location"):
+                co_list.append(
+                    [report.to_dict()["location"][0], report.to_dict()["location"][1]]
+                )
+                entry["location"] = [
+                    report.to_dict()["location"][0],
+                    report.to_dict()["location"][1],
+                ]
             reports_list.append(entry)
     return co_list, reports_list
 
@@ -110,7 +118,7 @@ def signup(request):
     if request.method == "POST":
         name = request.POST.get(u"name")
         email = request.POST.get(u"email")
-        position = "user"
+        position = request.POST.get(u"position")
         password1 = request.POST.get(u"password1")
         password2 = request.POST.get(u"password2")
 
@@ -120,6 +128,7 @@ def signup(request):
                 messages.info(request, "Your account already exists")
                 return redirect("login")
             except:
+                print("hiiiiiii")
                 user = firebase_admin.auth.create_user(email=email, password=password2)
                 uid = user.uid
                 data = {u"name": name, u"position": position, u"email": email}
@@ -129,11 +138,33 @@ def signup(request):
             return redirect("signup")
 
         if position == "pharmacist":
+            phname = request.POST.get(u"phname")
+            code = request.POST.get(u"code")
+            phone = request.POST.get(u"phone")
             pharmacy_name = request.POST.get(u"pharmacy-name")
             address = request.POST.get(u"address")
+            registration = request.POST.get(u"registration")
+            data[u"pharmacist-name"] = phname
             data[u"pharmacy-name"] = pharmacy_name
             data[u"address"] = address
-        db.collection(u"Users").document(uid).set(data)
+            data[u"code"] = code
+            data[u"contact-number"] = phone
+            data[u"registration"] = registration
+
+        if position == "authority":
+            auname = request.POST.get(u"auname")
+            designation = request.POST.get(u"designation")
+            organisation = request.POST.get(u"organisation")
+            offadd = request.POST.get(u"offadd")
+            phone = request.POST.get(u"offphone")
+            data[u"authority-name"] = auname
+            data[u"designation"] = designation
+            data[u"oganisation"] = organisation
+            data[u"office-address"] = offadd
+            data[u"contact-number"] = phone
+
+        db.collection(u"Users").document(uid).set(data, merge=True)
+        print(uid)
 
         current_user = authe.sign_in_with_email_and_password(email, password2)
         # current_user_uid = current_user["localId"]
@@ -158,32 +189,44 @@ def signup(request):
 def login_view(request):
     if getPosition(request) != "user":
         if request.method == "POST":
-            email = request.POST["email"]
-            password = request.POST["password"]
-            try:
-                current_user = authe.sign_in_with_email_and_password(email, password)
-                request.session["current_user"] = current_user
-                # current_user_uid = current_user["localId"]
-                session_id = current_user["idToken"]
-                request.session["uid"] = str(session_id)
-                print(request.__dict__)
-                position = getPosition(request)
-                print(position)
-                if position == "authority":
-                    print("hello")
-                    return HttpResponseRedirect(reverse("reports"))
-                elif position == "pharmacist":
-                    return HttpResponseRedirect(reverse("medicines"))
-                elif position == "user":
-                    return HttpResponseRedirect(reverse("users"))
-                else:
-                    return HttpResponseRedirect(reverse("users"))
-            except Exception as e:
-                print(e)
-                messages.error(request, "Invalid credentials")
+            if "reset" in request.POST:
+                messages.error(
+                    request, "Password reset linked has been sent to your mail."
+                )
                 return render(request, "login.html")
+            else:
+                email = request.POST["email"]
+                password = request.POST["password"]
+                try:
+                    current_user = authe.sign_in_with_email_and_password(
+                        email, password
+                    )
+                    request.session["current_user"] = current_user
+                    # current_user_uid = current_user["localId"]
+                    session_id = current_user["idToken"]
+                    request.session["uid"] = str(session_id)
+                    print(request.__dict__)
+                    position = getPosition(request)
+                    print(position)
+                    if position == "authority":
+                        print("hello")
+                        return HttpResponseRedirect(reverse("reports"))
+                    elif position == "pharmacist":
+                        return HttpResponseRedirect(reverse("medicines"))
+                    elif position == "user":
+                        return HttpResponseRedirect(reverse("users"))
+                    else:
+                        return HttpResponseRedirect(reverse("users"))
+                except Exception as e:
+                    print("!!!!!!!!!!!!!", e)
+                    messages.error(request, "Invalid credentials")
+                    return render(request, "login.html")
         return render(request, "login.html", {"title": "login"})
     return redirect("users")
+
+
+def reset_password(request):
+    return render(request, "forgot_password.html")
 
 
 def logout_view(request):
@@ -204,7 +247,7 @@ def reportsDashboard(request):
                 "co_list": co_list,
                 "reports": reports_list,
             }
-            return render(request, "reports.html", context)
+            return render(request, "authority_dash.html", context)
         else:
             return HttpResponseRedirect(reverse("404"))
     return HttpResponseRedirect(reverse("login"))
@@ -216,9 +259,9 @@ def medicinesDashboard(request):
             co_list, medicines_list = get_components("Medicines")
             context = {
                 "co_list": co_list,
-                "medicines": medicines_list,
+                "meds": medicines_list,
             }
-            return render(request, "medicines.html", context)
+            return render(request, "pharmacy_dash2.html", context)
         else:
             return HttpResponseRedirect(reverse("404"))
     return HttpResponseRedirect(reverse("login"))
@@ -227,6 +270,7 @@ def medicinesDashboard(request):
 def usersDashboard(request):
     # if getPosition(request) != None:
     #    return render(request, "appuser.html")
+    print(getPosition(request))
     print(getPosition(request))
     if getPosition(request) == "user":
         current_user = request.session.get("current_user")
@@ -257,15 +301,18 @@ def usersDashboard(request):
 
 
 def notify(request, id):
-    current_user = request.session["current_user"]
-    med_ref = db.collection(u"Medicines").document(id)
-    med_ref.set({u"resolved": True}, merge=True)
-    medicine = med_ref.get().to_dict().get("medicine")
-    uId = med_ref.get().to_dict().get("uId")
-    user = firebase_admin.auth.get_user(uId)
-    print(user.email)
-    send_mail(user.email, getPharmacyDetails(current_user["localId"]), medicine)
-    return HttpResponseRedirect(reverse("medicines"))
+    try:
+        current_user = request.session["current_user"]
+        med_ref = db.collection(u"Medicines").document(id)
+        med_ref.set({u"resolved": True}, merge=True)
+        medicine = med_ref.get().to_dict().get("medicine")
+        uId = med_ref.get().to_dict().get("uId")
+        user = firebase_admin.auth.get_user(uId)
+        print(user.email)
+        send_mail(user.email, getPharmacyDetails(current_user["localId"]), medicine)
+        return HttpResponseRedirect(reverse("medicines"))
+    except:
+        return redirect("404")
 
 
 def resolve(request, id):
@@ -320,7 +367,11 @@ def getmedicine(request):
 
 
 def page404(request):
-    return render(request, "404.html")
+    user = getPosition(request)
+    context = {
+        "user": user,
+    }
+    return render(request, "404.html", context)
 
 
 def reportCondition(request):
@@ -362,10 +413,12 @@ def reportCondition(request):
                 u"country": country,
                 u"hospitalAddress": hospitalAddress,
             }
-            if (
-                type(request.POST.get(u"lat")) != str
-                and type(request.POST.get(u"lon")) != str
-            ):
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", request.POST.get(u"lat"))
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", request.POST.get(u"lon"))
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", request.POST.get(u"lat") == "")
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", request.POST.get(u"lon") == " ")
+
+            if request.POST.get(u"lat") != "" and request.POST.get(u"lon") != "":
                 location = [
                     float(request.POST.get(u"lat")),
                     float(request.POST.get(u"lon")),
@@ -418,10 +471,9 @@ def orderMedicine(request):
                 u"country": country,
                 u"hospitalAddress": hospitalAddress,
             }
-            if (
-                type(request.POST.get(u"lat")) != str
-                and type(request.POST.get(u"lon")) != str
-            ):
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", request.POST.get(u"lat"))
+            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", request.POST.get(u"lon"))
+            if request.POST.get(u"lat") != "" and request.POST.get(u"lon") != "":
                 location = [
                     float(request.POST.get(u"lat")),
                     float(request.POST.get(u"lon")),

@@ -31,6 +31,8 @@
     <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>-->
     <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
+
+    
     
     <title>{% block title%}{% endblock title %} Trana - Help us to help you</title>
     {% block css %}
@@ -46,9 +48,11 @@
       {% endblock style %}
     </style>
     <script src="{% static 'js/base.js' %}"></script>
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
   </head>
-  <body>
+  <body onload="getReports()" >
     <nav class="nav navbar fixed-top navbar-expand-lg navbar-light">
       <div class="container">
         <div class="nav-left">
@@ -94,7 +98,7 @@
         </ul>
         <div class="controls">
           
-      {% if title == "login" or title == "signup" or title == "landing" %}
+      {% if title == "login" or title == "signup" or title == "landing" or title == "adminSignup" %}
             <a href="{% url 'login' %}">
             <button class="secondary">
             Login

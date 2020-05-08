@@ -327,8 +327,8 @@
                        
                               
                         <div class="form-group">
-                        <input type="hidden" id="lat" name="lat">
-                          <input type="hidden" id="lon" name="lon">
+                        <input type="hidden" id="lat2" name="lat">
+                          <input type="hidden" id="lon2" name="lon">
                         </div>
                         
 
@@ -517,6 +517,8 @@
   //Getting the location saving it to the hidden field
   var lat = document.getElementById("lat");
   var lon = document.getElementById("lon");
+  var lat2 = document.getElementById("lat2");
+  var lon2 = document.getElementById("lon2");
   getLocation()
   function getLocation() {
     if (navigator.geolocation) {
@@ -529,6 +531,8 @@
   function showPosition(position) {
     lat.value = position.coords.latitude;
     lon.value = position.coords.longitude;
+    lat2.value = position.coords.latitude;
+    lon2.value = position.coords.longitude;
     console.log(position.coords.latitude, position.coords.longitude);
   }
           
