@@ -1,0 +1,1 @@
+from trana.wsgi import application

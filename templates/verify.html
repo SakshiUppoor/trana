@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title%}Details{% endblock title %}
+    .body {
+        padding: 23vh 5vw;
+      }
+    {% block body%}
+    <style>
+      .content {
+          display:block;
+          margin-top: 100px;
+          padding: 6px 12px;
+          margin-left:25px;
+          /*border: 1px solid #ccc;
+          border-top: none;*/
+          width: 100%;
+          height: 100%;
+          padding-bottom: 2em;
+        }
+    </style>
+    <div class="content">
+    {% if accepted == 'True' %}
+        <h3>Application request for authority is accepted</h3>
+    {% elif accepted == 'False' %}
+        <h3>Application request for authority is accepted</h3>
+    {% else %}
+        <h3>Application request is already reviewed</h3>
+    {% endif %}
+    </div>
+    {% endblock body %}
