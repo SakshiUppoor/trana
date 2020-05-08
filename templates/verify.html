@@ -5,11 +5,24 @@
         padding: 23vh 5vw;
       }
     {% block body%}
-    <div class="container">
+    <style>
+      .content {
+          display:block;
+          margin-top: 100px;
+          padding: 6px 12px;
+          margin-left:25px;
+          /*border: 1px solid #ccc;
+          border-top: none;*/
+          width: 100%;
+          height: 100%;
+          padding-bottom: 2em;
+        }
+    </style>
+    <div class="content">
     {%if acc =='True'%}
         <h3>Application request for authority is accepted</h3>
     {%endif%}
     {%else%}
-    <h3>Application request for authority is rejected</h3>
+        <h3>Application request for authority is rejected</h3>
     </div>
     {% endblock body%}
