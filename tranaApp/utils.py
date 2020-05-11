@@ -30,7 +30,7 @@ def send_mail(to, subject, message):
     server.sendmail(me, you, msg.as_string())
     server.quit()"""
 
-    yag = yagmail.SMTP('medtrana2020')
+    yag = yagmail.SMTP('medtrana2020',pwd)
     yag.send(to = to, subject = subject, contents = message)
 
 
@@ -57,10 +57,10 @@ def send_verification_mail(request, details):
     subject = "New Authority Sign-Up"
     message = render_to_string("verification_mail.html",
     {
-        "domain":current_site.domain, 
+        "domain":current_site.domain,
         "details":details,
     })
-    
+
     send_mail(super_admin_email_list, subject, message)
 
 def send_result(email_id, user, accepted):
@@ -82,4 +82,3 @@ def send_result(email_id, user, accepted):
         message = """<html><body>Your application for the position of authority at Trana has been rejected.
         <html><body>"""
         send_mail(email_id, subject, message)
-    

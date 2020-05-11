@@ -90,7 +90,8 @@ button:focus {
 }
 
 button:focus,
-input[type="submit"]:focus {
+input[type="submit"]:focus,
+input[type="button"]:focus {
   outline: none;
 }
 
@@ -120,7 +121,7 @@ input[type="submit"]:focus {
 }
 .sign_info {
   border: 20px solid #fff;
-  background: #f1f1f14a;
+  background: #f1f1f1ad;
   padding: 80px 50px;
   height: 100%;
   margin-bottom: 25px;
@@ -231,7 +232,8 @@ select:focus {
   margin-left: 6px;
 }
 
-input[type="submit"] {
+input[type="submit"],
+input[type="button"] {
   font: 500 14px "Quicksand", sans-serif;
   background: #5e2ced;
   color: #fff;

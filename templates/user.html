@@ -8,6 +8,7 @@
 
 {% endblock style %}
 .body {
+  background: #fbfbfd;
   padding: 23vh 5vw;
 }
 {% block body %}
@@ -26,7 +27,7 @@
   <div class="homebutton">
     <button id="home" class="tablinks active" onclick="openTab(event, 'Home')"><i class="fa fa-home" aria-hidden="true"></i></button>
   </div>
-  <div class="notifbutton">
+  <div style="display: none;" class="notifbutton">
     <button id="notif" class="tablinks" onclick="openTab(event, 'Notifications')"><i class="fa fa-bell-o" aria-hidden="true"></i></button>
   </div>
   <div class="reportsbutton">
@@ -270,13 +271,6 @@
                               </div>
                             </div>
                             <div class="col-md-4">
-                              <div class="form-group text_box">
-                              <button type="button" class="form-data secondary" onclick="uploadimage()">Upload</button>
-                              
-                              </div>
-                            </div>
-                            <div class="col-md-1 hide" id="loader">
-                              <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
                             </div>
 
                             <input type="hidden" name="url" id="url">
@@ -333,8 +327,11 @@
                         
 
                         <div style="text-align:center">
-                        <input id="send" disabled type="submit" value="Send">
-                        <p id="error" class="text-danger">Please upload prescription</p>
+                        
+                        <div class="form-group text_box">
+                        <input type="button" class="primary" onclick="uploadimage()" value="Send">
+                        </div>
+                        <input id="send" disabled style="display: none;" type="submit" value="Send">
                         </div>
                         </div>
                       </form>
@@ -576,9 +573,10 @@ function uploadimage(){
       var downloadURL = thisref.snapshot.downloadURL;
       console.log("got url");
       document.getElementById("url").value = downloadURL;
-      error.textContent = ""
       document.getElementById("send").disabled = false;
       stoploading();
+      //document.getElementById("medicine").submit();
+      $("#send").click();
     });
     }
     else {

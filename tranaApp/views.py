@@ -336,19 +336,19 @@ def usersDashboard(request):
 
 
 def notify(request, id):
-    try:
-        current_user = request.session["current_user"]
-        med_ref = db.collection(u"Medicines").document(id)
-        med_ref.set({u"resolved": True}, merge=True)
-        medicine = med_ref.get().to_dict().get("medicine")
-        uId = med_ref.get().to_dict().get("uId")
-        user = firebase_admin.auth.get_user(uId)
-        print(user.email)
-        send_mail(user.email, getPharmacyDetails(current_user["localId"]), medicine)
-        return HttpResponseRedirect(reverse("medicines"))
-    except Exception as e:
-        print(e)
-        return redirect("404")
+    # try:
+    current_user = request.session["current_user"]
+    med_ref = db.collection(u"Medicines").document(id)
+    med_ref.set({u"resolved": True}, merge=True)
+    medicine = med_ref.get().to_dict().get("medicine")
+    uId = med_ref.get().to_dict().get("uId")
+    user = firebase_admin.auth.get_user(uId)
+    print(user.email)
+    send_mail(user.email, getPharmacyDetails(current_user["localId"]), medicine)
+    return HttpResponseRedirect(reverse("medicines"))
+    #except Exception as e:
+    #    print(e)
+    #    return redirect("404")
 
 
 def resolve(request, id):

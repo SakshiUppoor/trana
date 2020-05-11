@@ -150,6 +150,7 @@ select:focus {
   }
   .body {
     padding: 10vw !important;
+    background: #fbfbfd;
   }
   .appname {
     margin-left: 10vw !important;
