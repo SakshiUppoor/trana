@@ -1,6 +1,6 @@
 <br />
 <p align="center">
-  <img src="https://raw.githubusercontent.com/SakshiUppoor/trana/master/assets/images/logo2.png" alt="Logo" height="80">
+  <img src="https://raw.githubusercontent.com/SakshiUppoor/trana/master/assets/images/purple-logo2.png" alt="Logo" height="80">
 <h3 align="center">Trana (त्राण)</h3>
   <p align="center">
     A mobile responsive website built to reach out people during medical emergencies and resolve their requests!
@@ -15,6 +15,28 @@
     <a href="https://github.com/SakshiUppoor/trana/issues">Request Feature</a>
   </p>
 </p>
+
+## Install
+
+Creating and activating virtual environment
+
+    virtualenv venv
+    cd Scripts
+    activate
+    
+Create email_credentials.py and ServiceAccountKey.json in tranaApp
+
+    email = "youremail@email.com"
+    pwd = "yourpassword"
+    
+ServiceAccountKey can be downloaded from your Firebase database
+  
+Navigate back to the main folder. Installing requirements and making migrations
+
+    pip install -r requirements.txt
+    python manage.py migrate
+    python manage.py runserver
+
 
 ## Team
 * <a href="https://github.com/SakshiUppoor"><b>Sakshi Uppoor</b></a> - Full Stack & Design
@@ -56,7 +78,8 @@ Accessible only to the concerned pharmacist who can view the medicine requests a
 
 ### Built With
 * [Django](https://docs.djangoproject.com/en/2.2/) - The framework used
-* [Google JavaScript Map](https://cloud.google.com/maps-platform) - API used for maps
 * [Google Firebase](https://firebase.google.com/) - Database System
-* [GoDaddy](https://godaddy.com/) - Domain & Hosting
+* [PythonAnywhere](https://www.pythonanywhere.com/) - Hosting
+* [GoDaddy](https://godaddy.com/) - Domain
+* [Google JavaScript Map](https://cloud.google.com/maps-platform) - API used for maps
 

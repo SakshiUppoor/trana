@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta content="width=device-width, initial-scale=1" name="viewport" />
-    
+
 <link rel='icon' href="{% static 'images/fav2.png' %}" type='image/x-icon'/ >
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
@@ -32,8 +32,8 @@
     <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'></script>
 
-    
-    
+
+
     <title>{% block title%}{% endblock title %} Trana - Help us to help you</title>
     {% block css %}
     {% endblock css %}
@@ -58,7 +58,7 @@
         <div class="nav-left">
           <a href="{% url 'users' %}">
           <div>
-            <img class="appname" src="../static/images/logo.png" alt="" />
+            <img class="appname" src="{% static 'images/purple-logo2.png' %}" alt="" />
           </div>
           </a>
         </div>
@@ -77,28 +77,28 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto pages">
               <li class="nav-item">
-            <a class="page 
+            <a class="page
             {% if title == "landing" %}
             current
             {% endif %}
             " href="{% url 'landing' %}">Home</a>
               </li>
-          
+
           <li class="nav-item">
-            <a class="page" href="https://tranalive.wordpress.com/" target="blank">Blog</a>
+            <a class="page" href="https://blog.trana.live/" target="blank">Blog</a>
           </li>
-          
+
           <!--<li class="nav-item">
             <a class="page" href="">About</a>
           </li>
-          
+
           <li class="nav-item">
             <a class="page" href="">Contact</a>
           </li>-->
         </ul>
         <div class="controls">
-          
-      {% if title == "login" or title == "signup" or title == "landing" or title == "reset" or title == "verify" or title == "details" %}         
+
+      {% if title == "login" or title == "signup" or title == "landing" or title == "reset" or title == "verify" or title == "details" %}
             <a href="{% url 'login' %}">
             <button class="secondary">
             Login
@@ -117,10 +117,10 @@
         </div>
       </div>
     </nav>
-        
+
     {% block body%}{% endblock body%}
         </div>
-     
+
     </div>
   </body>
   <script>
@@ -129,11 +129,11 @@
   </script>
 </html>
 
-  
-  
 
-    
+
+
+
 
   </body>
-  
+
 </html>

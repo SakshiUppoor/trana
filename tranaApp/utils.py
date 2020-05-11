@@ -46,10 +46,10 @@ def send_verification_mail(request, details):
 
     super_admin_email_list = [
         "sakshiuppoor@gmail.com",
-        #"phani.lav@gmail.com",
-        #"medtrana2020@gmail.com",
-        #"shahsaakshi25@gmail.com",
-        #"sanketyou8@gmail.com",
+        "phani.lav@gmail.com",
+        "medtrana2020@gmail.com",
+        "shahsaakshi25@gmail.com",
+        "sanketyou8@gmail.com",
         #"",
         #"",
     ]
