@@ -240,11 +240,11 @@ body {
  
 
 
-    console.log(lat, lon);
+    //console.log(lat, lon);
       var map;
       function initMap() {
       getLocation();
-        console.log(window.lat, window.lon)
+        //console.log(window.lat, window.lon)
         //console.log(position.coords.latitude);
         map = new google.maps.Map(document.getElementById("map"), {
           zoom: 13,
@@ -303,10 +303,10 @@ body {
       {lat: {{ co.0 }} , lng: {{ co.1 }} },
       {% endfor %}
       ];
-      console.log(
+      /*console.log(
       {% for co in co_list %}
       {{ co.0 }},{{ co.1 }},
-      {% endfor %})
+      {% endfor %})*/
       function isInRadius(lat1, lon1, lat2, lon2) {
 	if ((lat1 == lat2) && (lon1 == lon2)) {
 		dist= 0;
@@ -327,7 +327,7 @@ body {
         //console.log(dist);
         //console.log(lat1, lon1, lat2, lon2);
 	}
-        console.log(dist);
+        //console.log(dist);
 		if(dist<=10) {
             return true;
         }
@@ -342,7 +342,7 @@ function getReports() {
     var emp = document.getElementById("empty");
     {% for med in meds %}
     {% if med|get_item:'location' %}
-    console.log("{{ med|get_item:'medicine' }}");
+    //console.log("{{ med|get_item:'medicine' }}");
     var lat2 =  parseFloat({{med|get_co:'lat'}});
     var lon2 = parseFloat({{med|get_co:'lon'}});
     //console.log(isInRadius(lat, lon, lat2, lon2));

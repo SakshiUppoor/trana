@@ -218,7 +218,7 @@ body {
     <script
       async
       defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAo5q4Yv_NCM-Px_c11zyi9zttxj47-MFw&libraries=places&callback=initMap"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAo5q4Yv_NCM-Px_c11zyi9zttxj47-MFw&libraries=places"
     ></script>
     <script src="https://unpkg.com/@google/markerclustererplus@4.0.1/dist/markerclustererplus.min.js"></script>
     <script>
@@ -228,6 +228,7 @@ body {
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(showPosition);
           navigator.geolocation.getCurrentPosition(initMap);
+          getReports();
         } else { 
           x.innerHTML = "Geolocation is not supported by this browser.";
         }
@@ -241,11 +242,11 @@ body {
  
 
 
-    console.log(lat, lon);
+    //console.log(lat, lon);
       var map;
       function initMap() {
       getLocation();
-        console.log(window.lat, window.lon)
+        //console.log(window.lat, window.lon)
         //console.log(position.coords.latitude);
         map = new google.maps.Map(document.getElementById("map"), {
           zoom: 13,
@@ -304,10 +305,10 @@ body {
       {lat: {{ co.0 }} , lng: {{ co.1 }} },
       {% endfor %}
       ];
-      console.log(
+      /*console.log(
       {% for co in co_list %}
       {{ co.0 }},{{ co.1 }},
-      {% endfor %})
+      {% endfor %})*/
       function isInRadius(lat1, lon1, lat2, lon2) {
 	if ((lat1 == lat2) && (lon1 == lon2)) {
 		dist= 0;
@@ -328,7 +329,7 @@ body {
         //console.log(dist);
         //console.log(lat1, lon1, lat2, lon2);
 	}
-        console.log(dist);
+        //console.log(dist);
 		if(dist<=10) {
             return true;
         }
@@ -339,11 +340,12 @@ body {
 function getReports() {
     var count = 0;
     var parent = document.getElementById("accordionExample");
+    parent.innerHTML = "";
     var emp = document.getElementById("empty");
     {% for med in reports %}
     {% if med|get_item:'location' %}
 
-    console.log("{{ med|get_item:'case' }}");
+    //console.log("{{ med|get_item:'case' }}");
     var lat2 =  parseFloat({{med|get_co:'lat'}});
     var lon2 = parseFloat({{med|get_co:'lon'}});
     //console.log(isInRadius(lat, lon, lat2, lon2));
