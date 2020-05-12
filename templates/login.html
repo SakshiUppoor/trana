@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title%}Login{% endblock title %}<div class="modal-body">
-    
+
     {% block body%}
 
     <div class="elementor-widget-wrap">
@@ -22,20 +22,20 @@
                                     <label for="password" class="form-data">Password</label>
                                     <input type="password" class="form-control {% if messages %}is-invalid{% endif %}" oninput="myFunction()" id="password" name="password" placeholder="******">
                                 </div>
-                                
-                                {% for message in messages %}                                
+
+                                {% for message in messages %}
                                 <p id="passwordHelp" class="text-danger">
                                     {{message}}
-                                </p>        
+                                </p>
                                 {% endfor %}
                                 <div class="login-container" style="display: flex; justify-content: space-between;">
                                     <input class="login" required type="submit" value="Login"/>
                                     <a class="forgot" style="color: #5e2ced" href="{% url 'reset' %}">
                                         Forgot Password?
-                                    </a> 
+                                    </a>
                                 </div>
                             </form>
-                            <div class="new_account">Don't have an account?                                    
+                            <div class="new_account">Don't have an account?
                                             <a style="color: #5e2ced" href="{% url 'signup' %}">
                                                 Get started
                                             </a>
@@ -43,13 +43,13 @@
                         </div>
                     </div>
                     <div class='col-lg-5'>
-                        <div class="img-login"  style="background-image: url(../static/images/login.png);">
-                         
-                    </div>   
+                        <div class="img-login"  style="background-image: url({% static '/images/docs.svg' %});">
+
+                    </div>
                 </div>
-                
-            </div> 
-            
+
+            </div>
+
         </div>
     </section>
     </div>
@@ -63,4 +63,3 @@
     </script>
     {% endblock body %}
 
-   
