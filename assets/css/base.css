@@ -292,3 +292,59 @@ input[type="submit"]:hover {
     margin-top: 20px;
   }
 }
+.new_footer{
+  
+  margin-top:100px;
+  background: #5e2ced;
+  overflow: hidden;
+}
+.new_footer_top{
+  height:150px;
+  padding: 120px 0 270px;
+  position: relative;
+  box-sizing: border-box;
+}
+.container_new{
+  box-sizing: border-box;
+  width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+.row_nav{
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+#text_1{
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+
+}
+#col-id-1{
+ 
+  flex: 0 0 25%;
+  max-width: 25%;
+}
+.title{
+  font: 600 24px "Quicksand", sans-serif;
+  margin-bottom: 30px;
+  color: #FFFFFF;
+ 
+}
+.nav_1{
+  margin-bottom: 0;
+  margin-left: 0;
+  list-style: none;
+}
+#list_item{
+  font: 400 16px "Quicksand", sans-serif;
+  margin-bottom: 6px;
+  color: #FFFFFF;
+  padding:8px 16px 8px 0;
+}

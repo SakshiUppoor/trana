@@ -117,12 +117,57 @@
         </div>
       </div>
     </nav>
+    
 
     {% block body%}{% endblock body%}
         </div>
 
     </div>
+    <footer class="new_footer">
+      <div class="new_footer_top">
+        <div class="container_new">
+          <div class="row_nav">
+            <div id="text_1" class="col-lg-3">
+              <img class="bg_image" src="{% static 'images/rocket.png' %}" alt="" />
+            </div>
+            <div id="col_id_1" class="col-lg-3">
+              <h3 class="title">User Guide</h3>
+              <ul class="nav_1">
+
+                <li id="list_item">FAQ</li>
+                
+              </ul>
+            </div> 
+            <div id="col_id_1" class="col-lg-3">
+              <h3 class="title">Team Members</h3>
+              <ul class="nav_1">
+                <li id="list_item">Engineering</li>
+                <li id="list_item">Developers</li>
+                <li id="list_item">Designers</li>
+              </ul>
+            </div> 
+            <div id="col_id_1" class="col-lg-3">
+              <h3 class="title">Contact Us</h3>
+              <ul class="nav_1">
+
+                <li id="list_item">Form</li>
+              </ul>
+            </div> 
+          </div>
+        </div>
+        
+      </div> 
+      <div class="row" style="margin-top:0px;">
+        <div class="col-lg-4">
+          <img src="{% static 'images/hill.png' %}" alt="" />
+        </div>
+        <div class="col-lg-8">
+          <img src="{% static 'images/building.png' %}" alt="" />
+        </div>
+      </div>  
+    </footer>
   </body>
+ 
   <script>
   {% block script %}
   {% endblock script %}
