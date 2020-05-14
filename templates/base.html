@@ -44,6 +44,23 @@
     .img-login {
       background-image:url("{% static 'images/login.png' %}");
     }
+    {% if title == "users" %}
+    @media only screen and (max-width: 768px) {
+      #text_1 {
+        bottom: 50px !important;
+      }
+    }
+    
+    @media only screen and (min-width: 768px) {
+      #text_1 {
+        left: 70px !important;
+      }
+      .bg_image {
+        width: auto!important;
+        height: 200px;
+      }
+    }
+    {% endif %}
       {% block style %}
       {% endblock style %}
     </style>
@@ -122,7 +139,7 @@
         </ul>
         <div class="controls">
 
-      {% if title == "login" or title == "signup" or title == "landing" or title == "reset" or title == "verify" or title == "details" or title == "services" or title == "about" or title == "motivation" or title == "faq"%}
+      {% if title == "login" or title == "signup" or title == "landing" or title == "reset" or title == "verify" or title == "details" or title == "services" or title == "about" or title == "motivation" or title == "faq" or title == "contact" %}
             <a href="{% url 'login' %}">
             <button class="secondary">
             Login
@@ -158,8 +175,7 @@
             <div id="col_id_1" class="col-lg-3">
               <h3 class="title">User Guide</h3>
               <ul class="nav_1">
-
-                <li id="list_item"><a>FAQ</a></li>
+                <a href="{% url 'faq' %}"><li id="list_item">FAQ</li></a>
                 
               </ul>
             </div> 
@@ -174,7 +190,7 @@
             <div id="col_id_1" class="col-lg-3">
               <h3 class="title">Contact Us</h3>
               <ul class="nav_1">
-                <li id="list_item">Form</li>
+                <a href="{% url 'contact' %}"><li id="list_item">Form</li></a>
               </ul>
             </div> 
           </div>

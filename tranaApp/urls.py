@@ -22,6 +22,7 @@ from .views import (
     about,
     services,
     faq,
+    contact,
 )
 
 urlpatterns = [
@@ -49,4 +50,5 @@ urlpatterns = [
     path("about/",about,name="about"),
     path("services/",services,name="services"),
     path("FAQ/",faq,name="faq"),
+    path("contact/",contact,name="contact"),
 ]

@@ -297,7 +297,7 @@ input[type="submit"]:hover {
   }
 
   .bg_image {
-    width: 90% !important;
+    width: 85% !important;
   }
   .new_footer_top {
     height: auto !important;
@@ -366,4 +366,9 @@ input[type="submit"]:hover {
 
 .col-lg-3 {
   text-align: end;
+}
+
+a:hover {
+  color: #fff;
+  text-decoration: none;
 }

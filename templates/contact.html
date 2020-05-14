@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title%}Contact Us{% endblock title %}<div class="modal-body">
+    
+
+    {% block css %}
+    <link rel="Stylesheet" href="{% static 'css/user.css' %}">
+    {% endblock css %}
+    {% block body%}
+
+
+
+    <div class="elementor-widget-wrap">
+
+    <section class="sign_in">
+    <div class="container">
+        <div class="sign_info">
+          <div class="row">
+            <div class='col-lg-2'></div>
+            <div class='col-lg-8'>
+              <h2 class="heading">Contact Us</h2>
+                <div class="form-wrap" style="padding: 0px;">
+                    <form  action="{% url 'contact' %}" method='POST' id="contact">
+                      {% csrf_token %}
+                      <div class="row">
+                        <div class="col-md-6">
+                          <div class="form-group text_box">
+                            <input required type="text" class="form-control" id="name" name="name" placeholder="Your Name">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group text_box">
+                              <input required type="email" class="form-control" id="email" name="email" placeholder="Your Email">
+                            </div>
+                        </div>
+                       </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group text_box">
+                                <input required type="text" class="form-control" id="subject" name="subject" placeholder="Subject">
+                              </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                            <div class="form-group text_box">
+                              <textarea rows="4" cols="72" name="message" placeholder="Enter Your Message..."></textarea>
+                            </div>
+                            </div>
+                        </div> 
+                        <div style="text-align:center">
+                            <input type="submit" id="send_message" value="Send Message">
+                        </div>
+                    </form>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    </section>
+    </div>
+    {% endblock body %}

@@ -330,6 +330,7 @@ def usersDashboard(request):
         context = {
             "meds": meds_list,
             "reports": reports_list,
+            "title":"users"
         }
         return render(request, "user.html", context)
     return HttpResponseRedirect(reverse("login"))
@@ -543,3 +544,15 @@ def services(request):
     
 def faq(request):
     return render(request, "faq.html", {"title": "faq"})
+
+def contact(request):
+    if request.method == "POST":
+        name = request.POST.get(u"name")
+        email = request.POST.get(u"email")
+        subject = request.POST.get(u"subject")
+        message = request.POST.get(u"message")
+        data = {u"name": name, u"email": email, u"subject":subject,u"message":message}
+        db.collection(u"Contact").document().set(data)
+        send_contact_mail(request, data)
+       
+    return render(request, "contact.html", {"title": "contact"})
