@@ -1,0 +1,190 @@
+{% extends 'base.html' %} {% load static %} {% block css %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}" />
+{% endblock css %} {% block body %}
+<style>
+  .body {
+    margin: 15vh 15vw;
+    margin-bottom: 5vh;
+    padding-bottom: 0;
+    text-align: center;
+  }
+
+  h2 {
+    text-align: center;
+    font-style: italic;
+    font-size: smaller;
+  }
+  p {
+    font-size: 19px;
+    word-spacing: 3px;
+    margin-bottom: 2rem;
+  }
+  blockquote {
+    border: none;
+    font-family: Georgia, serif;
+    margin-bottom: -30px;
+    quotes: "\201C""\201D""\2018""\2019";
+  }
+
+  blockquote h3 {
+    text-align: end;
+    font-weight: 700;
+    font-style: italic;
+  }
+
+  blockquote:before {
+    content: open-quote;
+    font-weight: bold;
+    font-size: 100px;
+    color: #5e2ced;
+    font-family: none;
+  }
+  blockquote h3:after {
+    content: close-quote;
+    font-weight: bold;
+    font-size: 100px;
+    color: #5e2ced;
+    font-family: none;
+  }
+  .content {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 3em;
+  }
+  h1 {
+    text-align: center;
+    margin: 0 0 1em 0;
+  }
+  .pri {
+    color: #5e2ced;
+    font-weight: 700;
+    display: inline-block;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+  .buttons {
+    text-align: center;
+    margin: 0 0 2.5em 0;
+  }
+  .poster {
+    width: 90%;
+  }
+  .img {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  @media only screen and (min-width: 768px) {
+    .poster {
+      width: auto;
+      height: 500px;
+    }
+  }
+</style>
+<div class="body">
+  <h1>
+    User Manual
+  </h1>
+
+  <p align="center">
+    <b>
+      Below is the description of how the solution serves you
+    </b>
+  </p>
+  <p>
+    A mobile web platform which can be accessed from both mobile device and
+    computers.
+  </p>
+  <p>
+    This is how the homepage appears.
+  </p>
+
+  <div class="img">
+    <img class="poster" src="{% static 'images/f1.png' %}" alt="" />
+  </div>
+  <p>
+    Next, you click on get started in order to request help you will see the
+    following form:
+  </p>
+  <p>
+    The Sign Up screen
+  </p>
+  <div class="img">
+    <img class="poster" src="{% static 'images/f2.png' %}" alt="" />
+    <img class="poster" src="{% static 'images/f3.png' %}" alt="" />
+  </div>
+  <p>
+    Once you’re done putting your entries in, you will then see three options as
+    under user, authority and pharmacist.
+  </p>
+  <ol align="left">
+    <li>
+      If you’re a user, that is a patient who needs to request for medications
+      or clinical help; click on the user and you’re good to get registered.
+    </li>
+    <li>
+      If you’re an authority then you will be verified by our team personally
+      and then the login credentials will be allowed.
+    </li>
+    <li>
+      If you are a pharmacist, then choose the last option to get the medication
+      requests from the patients or the users.
+    </li>
+  </ol>
+  <p>
+    After you’ve logged in as a user you can enter how you seek help by choosing
+    the respective options.
+  </p>
+  <div class="img">
+    <img class="poster" src="{% static 'images/f4.png' %}" alt="" />
+  </div>
+  <p>
+    Once you’ve chosen the means of help, you then have to fill a few details
+    regarding the same.
+  </p>
+  <p align="center">
+    <b>
+      How does the User side work?
+    </b>
+  </p>
+  <div class="img">
+    <img class="poster" src="{% static 'images/f5.png' %}" alt="" />
+  </div>
+  <p>
+    The user enters what kind of help is needed, the medicine prescription or
+    name of the medicine and the clinical details. Those details reach our
+    server and then it reaches the registered pharmacy stores or registered
+    medical authority within 10kms area of the user.
+  </p>
+  <p>Report Condition & Request for Medical consultation from Authority</p>
+  <div class="img">
+    <img class="poster" src="{% static 'images/f6.png' %}" alt="" />
+  </div>
+  <p>Request for medicines</p>
+  <p>
+    The authority or pharmacy shops then responds to the request respectively
+    and the user receives an email notification with message and details of the
+    Pharmacy store in case of request for medicine or acknowledgement of the
+    consultation with authority.
+  </p>
+  <p align="center">
+    <b>
+      What Pharmacists see?
+    </b>
+  </p>
+  <p>
+    The user’s medicine request is visible to all the registered pharmacists in
+    the vicinity of 10 km of the users. Any pharmacy who has the availability of
+    the medicine can respond and the user gets an email notification.
+  </p>
+  <div class="img">
+    <img class="poster" src="{% static 'images/f7.png' %}" alt="" />
+  </div>
+  <p>
+    On the home screen of your accessed page you will be able to see the details
+    about the medication needed. If you can make those available to the user,
+    click available so that the user can reach out to you to obtain the same.
+  </p>
+</div>
+{% endblock body %}

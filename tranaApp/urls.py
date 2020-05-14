@@ -17,6 +17,11 @@ from .views import (
     reset_password,
     verify,
     details,
+
+    motivation,
+    about,
+    services,
+    faq,
 )
 
 urlpatterns = [
@@ -38,4 +43,10 @@ urlpatterns = [
     path("getmedicine/", getmedicine, name="getmedicine"),
     path("verify/<str:uId>/<str:accepted>", verify, name="verify"),
     path("details/",details,name="details"),
+
+    # Static pages
+    path("motivation/",motivation,name="motivation"),
+    path("about/",about,name="about"),
+    path("services/",services,name="services"),
+    path("FAQ/",faq,name="faq"),
 ]

@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="{% static 'css/landing.css' %}">
 {% endblock css %}
 {% block body %}
+  <div cass="body">
           <div class="hero">
             <div class="message">
               <div class="heading">Protecting Non-Covid Patients too</div>
@@ -21,7 +22,7 @@
               -->
             </div>
             <a href="{% url 'signup' %}"><button class="purple-sec">Get Started</button></a>
-            <button class="green-sec">Learn More</button>
+            <a href="{% url 'about' %}"><button class="green-sec">Learn More</button></a>
           </div>
 
         <div class="hero">
@@ -31,75 +32,9 @@
                     Tell us if you need any medicines! We will try an arrange everything for you. We understand how important it is to be
                     heard in such times. We are here for you!
             </div>
-          </div>
-
-          <!--<div class="content">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Urna
-            cursus eget nunc scelerisque. Vel facilisis volutpat est velit
-            egestas. Nec dui nunc mattis enim ut tellus. Tellus elementum
-            sagittis vitae et. Eget mi proin sed libero enim sed faucibus turpis
-            in. Morbi non arcu risus quis varius quam quisque id. Tristique
-            nulla aliquet enim tortor at auctor urna nunc. Turpis egestas
-            maecenas pharetra convallis posuere. Nisl purus in mollis nunc sed
-            id semper. Viverra justo nec ultrices dui. Nunc sed velit dignissim
-            sodales ut. Lobortis scelerisque fermentum dui faucibus in. Nulla
-            facilisi nullam vehicula ipsum a arcu cursus vitae. Integer feugiat
-            scelerisque varius morbi enim. Aliquet lectus proin nibh nisl
-            condimentum. Praesent elementum facilisis leo vel fringilla est
-            ullamcorper eget nulla. Quis varius quam quisque id diam vel quam
-            elementum. Faucibus ornare suspendisse sed nisi lacus sed. A
-            scelerisque purus semper eget duis at. Diam phasellus vestibulum
-            lorem sed risus ultricies tristique. Eget aliquet nibh praesent
-            tristique magna sit amet. Tincidunt eget nullam non nisi est sit
-            amet. Ultrices sagittis orci a scelerisque purus semper eget duis
-            at. Fringilla est ullamcorper eget nulla facilisi. Egestas sed sed
-            risus pretium quam vulputate dignissim suspendisse in. Volutpat est
-            velit egestas dui id ornare arcu odio. Ut morbi tincidunt augue
-            interdum velit euismod in pellentesque. Nisi quis eleifend quam
-            adipiscing vitae proin sagittis. Faucibus pulvinar elementum integer
-            enim neque. Sed tempus urna et pharetra pharetra massa massa. Dolor
-            sit amet consectetur adipiscing elit ut aliquam purus. Ac orci
-            phasellus egestas tellus rutrum tellus pellentesque eu tincidunt.
-            Aenean euismod elementum nisi quis eleifend. Vitae tortor
-            condimentum lacinia quis vel eros donec ac. Pellentesque eu
-            tincidunt tortor aliquam nulla. Vitae nunc sed velit dignissim.
-            Ornare quam viverra orci sagittis. Volutpat consequat mauris nunc
-            congue nisi. Tellus elementum sagittis vitae et leo. Natoque
-            penatibus et magnis dis parturient montes. Fames ac turpis egestas
-            sed tempus urna. Ipsum dolor sit amet consectetur adipiscing. Neque
-            laoreet suspendisse interdum consectetur libero. Id eu nisl nunc mi
-            ipsum faucibus. Urna et pharetra pharetra massa massa ultricies mi
-            quis. Massa tincidunt nunc pulvinar sapien et ligula ullamcorper
-            malesuada proin. Ut morbi tincidunt augue interdum velit euismod in.
-            Nisl nisi scelerisque eu ultrices vitae auctor eu augue ut. Fusce ut
-            placerat orci nulla pellentesque. Facilisis mauris sit amet massa
-            vitae. Pulvinar mattis nunc sed blandit libero volutpat sed cras
-            ornare. Nulla facilisi cras fermentum odio eu feugiat pretium nibh.
-            Dictumst vestibulum rhoncus est pellentesque elit. At varius vel
-            pharetra vel turpis nunc eget. Aenean vel elit scelerisque mauris
-            pellentesque pulvinar pellentesque. Feugiat nibh sed pulvinar proin
-            gravida hendrerit lectus. Duis ut diam quam nulla porttitor.
-            Ullamcorper dignissim cras tincidunt lobortis feugiat vivamus at.
-            Sodales ut etiam sit amet nisl purus. Id cursus metus aliquam
-            eleifend mi in nulla. Consequat nisl vel pretium lectus. Feugiat sed
-            lectus vestibulum mattis ullamcorper. Convallis aenean et tortor at
-            risus viverra adipiscing at in. Interdum posuere lorem ipsum dolor
-            sit amet consectetur. Pretium quam vulputate dignissim suspendisse
-            in est ante in nibh. Pretium quam vulputate dignissim suspendisse
-            in. Dignissim enim sit amet venenatis urna cursus eget nunc
-            scelerisque. Cras pulvinar mattis nunc sed blandit libero. Dolor
-            magna eget est lorem ipsum dolor. Donec adipiscing tristique risus
-            nec feugiat in fermentum posuere urna. Euismod lacinia at quis risus
-            sed vulputate. Dignissim sodales ut eu sem integer vitae justo.
-            Integer feugiat scelerisque varius morbi enim nunc faucibus. Commodo
-            elit at imperdiet dui accumsan sit amet nulla facilisi. Lorem sed
-            risus ultricies tristique nulla aliquet.
-          </div>-->
         </div>
-      </div>
+
       <div class="col-md-2"></div>
-    </div>
     <div class="cards-container" style="text-align: center">
       <div class="cards row">
         <div class="card col-lg-3">
@@ -134,4 +69,7 @@
         <!--  You can chat with our registered doctors who will help you to diagnose the problem.-->
         <!--  </div>-->
         <!--</div>-->
+        </div>
+        </div>
+
         {% endblock body %}

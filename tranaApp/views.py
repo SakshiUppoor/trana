@@ -531,3 +531,15 @@ def orderMedicine(request):
 
 def landing(request):
     return render(request, "landing.html", {"title": "landing"})
+
+def motivation(request):
+    return render(request, "motivation.html", {"title": "motivation"})
+
+def about(request):
+    return render(request, "about.html", {"title": "about"})
+    
+def services(request):
+    return render(request, "services.html", {"title": "services"})
+    
+def faq(request):
+    return render(request, "faq.html", {"title": "faq"})
