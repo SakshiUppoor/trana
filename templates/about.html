@@ -1,0 +1,92 @@
+{% extends 'base.html' %} {% block body %}
+<style>
+  .body {
+    margin: 15vh 15vw;
+    margin-bottom: 5vh;
+    padding-bottom: 0;
+  }
+
+  h2 {
+    text-align: center;
+    font-style: italic;
+    font-size: smaller;
+  }
+  p {
+    font-size: 19px;
+    word-spacing: 3px;
+    margin-bottom: 2rem;
+  }
+  blockquote {
+    border: none;
+    font-family: Georgia, serif;
+    margin-bottom: -30px;
+    quotes: "\201C""\201D""\2018""\2019";
+  }
+
+  blockquote h3 {
+    text-align: end;
+    font-weight: 700;
+    font-style: italic;
+  }
+
+  blockquote:before {
+    content: open-quote;
+    font-weight: bold;
+    font-size: 100px;
+    color: #5e2ced;
+    font-family: none;
+  }
+  blockquote h3:after {
+    content: close-quote;
+    font-weight: bold;
+    font-size: 100px;
+    color: #5e2ced;
+    font-family: none;
+  }
+  .content {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 3em;
+  }
+  h1 {
+    text-align: center;
+    margin: 0 0 2em 0;
+  }
+  .pri {
+    color: #5e2ced;
+    font-weight: 700;
+    display: inline;
+  }
+</style>
+<div class="body">
+  <h1>About Us</h1>
+
+  <p>
+  <div class="pri">Trana.live</div>
+    is an initiative of helping those who are in need of help. With the belief
+    in helping you we’ve come about with this web solution that does not only
+    keep a continuous check on one’s medical condition but also provides
+    precautionary medical attention and consultation.
+  </p>
+  <p>
+    In a situation like world pandemic we realised that not only those who’re
+    suffering from this fatal disease need medical attention but those who have
+    their existing situations or those who develop some non-emergency health
+    issues whilst all these also need equal attention.
+  </p>
+  <p>
+    Considering all the possible problems we, a bunch of students came across
+    with the idea of developing a mobile web solution for providing the virtual
+    help to those health conditions that need some attention but are deprived of
+    the same.
+  </p>
+  <blockquote>
+    <h3>
+      <div style="display: inline-block;" class="content">
+        It’s the integrated effort that makes help possible. We’re whole
+        heartedly ready to help. Just HELP US HELP YOU.
+      </div>
+    </h3>
+  </blockquote>
+</div>
+{% endblock body %}

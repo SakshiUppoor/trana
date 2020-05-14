@@ -83,10 +83,40 @@
             {% endif %}
             " href="{% url 'landing' %}">Home</a>
               </li>
-
+              <li class="nav-item">
+            <a class="page
+            {% if title == "motivation" %}
+            current
+            {% endif %}
+            " href="{% url 'motivation' %}">Motivation</a>
+              </li>
+              
+              <li class="nav-item">
+            <a class="page
+            {% if title == "services" %}
+            current
+            {% endif %}
+            " href="{% url 'services' %}">Services</a>
+              </li>
+              
           <li class="nav-item">
             <a class="page" href="https://blog.trana.live/" target="blank">Blog</a>
           </li>
+              <li class="nav-item">
+            <a class="page
+            {% if title == "about" %}
+            current
+            {% endif %}
+            " href="{% url 'about' %}">About</a>
+              </li>
+              
+              <li class="nav-item">
+            <a class="page
+            {% if title == "faq" %}
+            current
+            {% endif %}
+            " href="{% url 'faq' %}">FAQs</a>
+              </li>
 
           <!--<li class="nav-item">
             <a class="page" href="">About</a>
@@ -98,7 +128,7 @@
         </ul>
         <div class="controls">
 
-      {% if title == "login" or title == "signup" or title == "landing" or title == "reset" or title == "verify" or title == "details" %}
+      {% if title == "login" or title == "signup" or title == "landing" or title == "reset" or title == "verify" or title == "details" or title == "services" or title == "about" or title == "motivation" or title == "faq"%}
             <a href="{% url 'login' %}">
             <button class="secondary">
             Login

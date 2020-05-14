@@ -1,0 +1,141 @@
+{% extends 'base.html' %} {% load static %} {% block css %}
+<link rel="stylesheet" href="{% static 'css/landing.css' %}" />
+{% endblock css %} {% block body %}
+<style>
+  .body {
+    margin: 15vh 15vw;
+    margin-bottom: 5vh;
+    padding-bottom: 0;
+  }
+
+  h2 {
+    text-align: center;
+    font-style: italic;
+    font-size: smaller;
+  }
+  p {
+    font-size: 19px;
+    word-spacing: 3px;
+    margin-bottom: 2rem;
+  }
+  blockquote {
+    border: none;
+    font-family: Georgia, serif;
+    margin-bottom: -30px;
+    quotes: "\201C""\201D""\2018""\2019";
+  }
+
+  blockquote h3 {
+    text-align: end;
+    font-weight: 700;
+    font-style: italic;
+  }
+
+  blockquote:before {
+    content: open-quote;
+    font-weight: bold;
+    font-size: 100px;
+    color: #5e2ced;
+    font-family: none;
+  }
+  blockquote h3:after {
+    content: close-quote;
+    font-weight: bold;
+    font-size: 100px;
+    color: #5e2ced;
+    font-family: none;
+  }
+  .content {
+    text-align: center;
+    font-size: 30px;
+    margin-bottom: 3em;
+  }
+  h1 {
+    text-align: center;
+    margin: 0 0 1em 0;
+  }
+  .pri {
+    color: #5e2ced;
+    font-weight: 700;
+    display: inline-block;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+  .buttons {
+    text-align: center;
+    margin: 0 0 2.5em 0;
+  }
+  .poster {
+    width: 90%;
+  }
+  .img {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+</style>
+<div class="body">
+  <h1>
+    Services
+  </h1>
+
+  <div class="buttons">
+    <a href="{% url 'signup' %}">
+      <button class="purple-sec">Get Started</button>
+    </a>
+    <a href="{% url 'about' %}">
+      <button class="green-sec">Learn More</button>
+    </a>
+  </div>
+  <h3>About</h3>
+  <p>
+    During the difficult situation around the world when the medical resources
+    are mainly directed to the pandemic,
+    <span class="pri">trana.live</span> aims at helping the people stuck at
+    homes who’re in need of medication, clinical help or wanting to request
+    help, but because they are non-covid19 and are non-emergency, they are given
+    less priority.
+  </p>
+  <h3>How it works</h3>
+  <p>
+    Once registered a user can easily enter the medical issues or request the
+    medication on the platform. When we receive the respective request, get a
+    consultation from the medical authorities regarding the same, & post the
+    medicine request which is visible to all the registered pharmacy stores in
+    the geo fenced area of 10 km around the user’s house. As the requests are
+    addressed a notification is generated to the user via an email.
+  </p>
+  <div class="img">
+    <img class="poster" src="{% static 'images/1.jpg' %}" alt="" />
+  </div>
+  <p>
+    On the part of the pharmacist, once the required prescription being uploaded
+    on the website the respective pharmacies that lie in the range of the 10kms
+    from the problem being raised get a notification, his work is then to look
+    for the availability of those medicines and update about the same. Once it’s
+    checked that there’s the availability of the same prescribed medicine the
+    user gets to purchase it to the told shop rather than wandering to a number
+    of them.
+  </p>
+  <div class="img">
+    <img class="poster" src="{% static 'images/2.jpg' %}" alt="" />
+  </div>
+  <p>
+    In case a patient needs help beyond the need of medication he/she just have
+    to report the health from the respective logged in account, the authority
+    then looks for the necessary solution like acknowledging the issues,
+    providing medical consultation or precautionary need for an ambulance.
+  </p>
+  <div class="img">
+    <img class="poster" src="{% static 'images/3.jpg' %}" alt="" />
+  </div>
+  <div class="img">
+    <img class="poster" src="{% static 'images/4.jpg' %}" alt="" />
+  </div>
+  <p>
+    All that’s needed in this effort that is solved by the trana.live solution
+    to help you, we need your help in return. We will provide help readily once
+    you’ve made us aware about your need of help.
+  </p>
+</div>
+{% endblock body %}
