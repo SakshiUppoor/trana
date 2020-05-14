@@ -255,6 +255,12 @@ input[type="submit"]:hover {
   display: none;
 }
 
+@media only screen and (max-height: 450px) {
+  .row_nav {
+    margin-bottom: 100px;
+  }
+}
+
 @media only screen and (max-width: 768px) {
   .login-container {
     display: block !important;
@@ -304,7 +310,7 @@ input[type="submit"]:hover {
     padding: 120px 0 30vh 0 !important;
   }
 
-  .col-lg-3 {
+  #col_id_1 {
     text-align: center !important;
     margin-bottom: 1em;
   }
@@ -316,7 +322,7 @@ input[type="submit"]:hover {
   width: 100vw;
 }
 .new_footer_top {
-  height: 400px;
+  min-height: 400px;
   padding: 120px 120px 0 0;
   position: relative;
   box-sizing: border-box;
@@ -364,7 +370,7 @@ input[type="submit"]:hover {
   width: 500px;
 }
 
-.col-lg-3 {
+#col_id_1 {
   text-align: end;
 }
 
