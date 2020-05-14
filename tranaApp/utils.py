@@ -82,3 +82,25 @@ def send_result(email_id, user, accepted):
         message = """<html><body>Your application for the position of authority at Trana has been rejected.
         <html><body>"""
         send_mail(email_id, subject, message)
+
+def send_contact_mail(request, details):
+    current_site = get_current_site(request)
+
+    super_admin_email_list = [
+        "sakshiuppoor@gmail.com",
+        "phani.lav@gmail.com",
+        "medtrana2020@gmail.com",
+        "shahsaakshi25@gmail.com",
+        "sanketyou8@gmail.com",
+        #"",
+        #"",
+    ]
+   
+    subject = "Contact Form Submission"
+    message = render_to_string("contact_mail.html",
+    {
+        "domain":current_site.domain,
+        "details":details,
+    })
+
+    send_mail(super_admin_email_list, subject, message)

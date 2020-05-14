@@ -1,0 +1,17 @@
+{% autoescape off %}
+{% load static %}
+<html>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}"
+    <body>
+        <p>Hi, {{ details|get_item:'name' }} just submitted a message through contact form on Trana</p> 
+            Details:
+            {% for detail in details %}
+            <br>
+            <b> {{ detail }}: </b> {{ details|get_item:detail }}
+            {% endfor %}
+            <br>
+            <br>
+        
+    </body>
+</html>
+{% endautoescape %}
