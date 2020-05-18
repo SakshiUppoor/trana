@@ -296,15 +296,13 @@ def medicinesDashboard(request):
                 "co_list": co_list,
                 "meds": medicines_list,
             }
-            return render(request, "pharmacy_dash2.html", context)
+            return render(request, "pharmacy_dash.html", context)
         else:
             return HttpResponseRedirect(reverse("404"))
     return HttpResponseRedirect(reverse("login"))
 
 
 def usersDashboard(request):
-    # if getPosition(request) != None:
-    #    return render(request, "appuser.html")
     print(getPosition(request))
     print(getPosition(request))
     if getPosition(request) == "user":
