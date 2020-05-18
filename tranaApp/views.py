@@ -252,7 +252,7 @@ def verify(request, uId, accepted):
         else:
             db.collection(u"Users").document(uId).delete()
             firebase_admin.auth.delete_user(uId)
-            context={"title":verify,"acc":accepted}
+            context={"title":verify,"accepted":accepted}
     except:
         accepted = "done"
     return render(request,'verify.html',{"title":"verify", "accepted":accepted})
