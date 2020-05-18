@@ -54,6 +54,13 @@
     </section>
     </div>
     <script>
+    {% if position == "user" %}
+    location.replace("https://www.trana.live/users");
+    {% elif position == "pharmacist" %}
+    location.replace("https://www.trana.live/medicines");
+    {% elif position == "authority" %}
+    location.replace("https://www.trana.live/reports");
+    {% endif %}
         function myFunction() {
             var x = document.getElementById("email");
             var y = document.getElementById("password");

@@ -231,7 +231,7 @@ def login_view(request):
                     else:
                         message = "Please check your password."
                     messages.error(request, message)
-        return render(request, "login.html", {"title": "login"})
+        return render(request, "login.html", {"title": "login", "position":getPosition(request)})
     return redirect("users")
 
 
@@ -245,7 +245,7 @@ def verify(request, uId, accepted):
         if user.to_dict().get("approved") == True:
             accepted = "done"
             return render(request,'verify.html',{"title":"verify", "accepted":accepted})
- 
+
         send_result(email, user_instance, accepted)
         if accepted == 'True':
             db.collection(u"Users").document(uId).set({'approved':True}, merge=True)
@@ -538,10 +538,10 @@ def motivation(request):
 
 def about(request):
     return render(request, "about.html", {"title": "about"})
-    
+
 def services(request):
     return render(request, "services.html", {"title": "services"})
-    
+
 def faq(request):
     return render(request, "faq.html", {"title": "faq"})
 
@@ -554,5 +554,5 @@ def contact(request):
         data = {u"name": name, u"email": email, u"subject":subject,u"message":message}
         db.collection(u"Contact").document().set(data)
         send_contact_mail(request, data)
-       
+
     return render(request, "contact.html", {"title": "contact"})
