@@ -15,6 +15,9 @@ from .utils import *
 
 # from .utils import send_mail
 
+import socket
+socket.getaddrinfo('127.0.0.1', 8080)
+
 ###########################
 # FIRESTORE CONFIGURATION #
 ###########################
@@ -159,9 +162,29 @@ def signup(request):
             phone = request.POST.get(u"offphone")
             data[u"authority-name"] = auname
             data[u"designation"] = designation
-            data[u"oganisation"] = organisation
+            data[u"organisation"] = organisation
             data[u"office-address"] = offadd
             data[u"contact-number"] = phone
+
+        if position == "doctor":
+            drname = request.POST.get(u"drname")
+            drtype = request.POST.get(u"drtype")
+            drworkplace = request.POST.get(u"drworkplace")
+            drwpadd = request.POST.get(u"drwpadd")
+            drwpphone = request.POST.get(u"drwpphone")
+            data[u"doctor-name"] = drname
+            data[u"doctor-type"] = drtype
+            data[u"dr-workplace"] = drworkplace
+            data[u"dr-workplace-address"] = drwpadd
+            data[u"dr-workplace-phone"] = drwpphone
+            if request.POST.get(u"lat") != "" and request.POST.get(u"lon") != "":
+                location = [
+                    float(request.POST.get(u"lat")),
+                    float(request.POST.get(u"lon")),
+                ]
+                data[u"location"] = location
+            db.collection(u"Users").document().set(data)
+            # return render(request,'doctor.html')
 
         db.collection(u"Users").document(uid).set(data, merge=True)
         print(uid)
@@ -176,6 +199,11 @@ def signup(request):
             print("hello")
             data["uId"] = uid
             send_verification_mail(request, data)
+            return HttpResponseRedirect(reverse("details"))
+        elif position == "doctor":
+            print("doctor")
+            data["uId"] = uid
+            dr_send_verification_mail(request, data)
             return HttpResponseRedirect(reverse("details"))
         elif position == "pharmacist":
             return HttpResponseRedirect(reverse("medicines"))
@@ -218,6 +246,14 @@ def login_view(request):
                             return HttpResponseRedirect(reverse("reports"))
                         else:
                             messages.error(request,'Your account is not yet verified')
+                    elif position == "doctor":
+                        print("doctor")
+                        auth_ref = db.collection(u"Users").document(current_user["localId"])
+                        approved = auth_ref.get().to_dict().get("approved")
+                        if approved==True:
+                            return redirect('doctor/')
+                        else:
+                            messages.error(request,'Your account is not yet verified')
                     elif position == "pharmacist":
                         return HttpResponseRedirect(reverse("medicines"))
                     elif position == "user":
@@ -240,13 +276,14 @@ def verify(request, uId, accepted):
         user_ref = db.collection(u"Users").document(uId)
         user = user_ref.get()
         email = user.to_dict().get("email")
+        position = user.to_dict().get("position")
         user_instance = firebase_admin.auth.get_user_by_email(email)
         print(user_instance)
         if user.to_dict().get("approved") == True:
             accepted = "done"
-            return render(request,'verify.html',{"title":"verify", "accepted":accepted})
+            return render(request,'verify.html',{"title":"verify", "accepted":accepted,"position":position})
 
-        send_result(email, user_instance, accepted)
+        send_result(email, user_instance, accepted,position)
         if accepted == 'True':
             db.collection(u"Users").document(uId).set({'approved':True}, merge=True)
         else:
@@ -255,7 +292,7 @@ def verify(request, uId, accepted):
             context={"title":verify,"accepted":accepted}
     except:
         accepted = "done"
-    return render(request,'verify.html',{"title":"verify", "accepted":accepted})
+    return render(request,'verify.html',{"title":"verify", "accepted":accepted, "position":position})
 
 def reset_password(request):
     return render(request, "forgot_password.html", {'title':'reset'})
@@ -554,3 +591,6 @@ def contact(request):
         send_contact_mail(request, data)
 
     return render(request, "contact.html", {"title": "contact"})
+
+def doctor(request):
+    return render(request,'doctor.html')

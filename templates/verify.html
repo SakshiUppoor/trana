@@ -20,9 +20,9 @@
     </style>
     <div class="content">
     {% if accepted == 'True' %}
-        <h3>Application request for authority is accepted</h3>
+        <h3>Application request for {{position}} is accepted</h3>
     {% elif accepted == 'False' %}
-        <h3>Application request for authority is rejected</h3>
+        <h3>Application request for {{position}} is rejected</h3>
     {% else %}
         <h3>Application request is already reviewed</h3>
     {% endif %}

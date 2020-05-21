@@ -45,12 +45,12 @@ def send_verification_mail(request, details):
     current_site = get_current_site(request)
 
     super_admin_email_list = [
-        "sakshiuppoor@gmail.com",
-        "phani.lav@gmail.com",
-        "medtrana2020@gmail.com",
-        "shahsaakshi25@gmail.com",
-        "sanketyou8@gmail.com",
-        #"",
+        #"sakshiuppoor@gmail.com",
+        #"phani.lav@gmail.com",
+        #"medtrana2020@gmail.com",
+        #"shahsaakshi25@gmail.com",
+        #"sanketyou8@gmail.com",
+        "siddhi2000jhun@gmail.com",
         #"",
     ]
     print("~~~~~~~~~~~~",type(details["uId"]), type('True'))
@@ -63,25 +63,48 @@ def send_verification_mail(request, details):
 
     send_mail(super_admin_email_list, subject, message)
 
-def send_result(email_id, user, accepted):
+def dr_send_verification_mail(request, details):
+    current_site = get_current_site(request)
+
+    super_admin_email_list = [
+        #"sakshiuppoor@gmail.com",
+        #"phani.lav@gmail.com",
+        #"medtrana2020@gmail.com",
+        #"shahsaakshi25@gmail.com",
+        #"sanketyou8@gmail.com",
+        "siddhi2000jhun@gmail.com",
+        #"",
+    ]
+    print("~~~~~~~~~~~~",type(details["uId"]), type('True'))
+    subject = "New Doctor Sign-Up"
+    message = render_to_string("dr_verification_mail.html",
+    {
+        "domain":current_site.domain,
+        "details":details,
+    })
+
+    send_mail(super_admin_email_list, subject, message)
+
+def send_result(email_id, user, accepted, position):
     print(user)
     #print(user.to_dict())
     print(user.__dict__)
     if accepted == 'True':
-        subject = "Authority Account Application Verified"
-        message = """<html><body>You can now log in to your authority dashboard.
+        subject = position + " Account Application Verified"
+        message = """<html><body>You can now log in to your {} account.
         <br>
         <b>Email ID:</b> {}
         <br>
-        <html><body>""".format(email_id)
+        <html><body>""".format(position,email_id)
         print(message)
         send_mail(email_id, subject, message)
 
     else:
-        subject = "Authority Account Application Rejected"
-        message = """<html><body>Your application for the position of authority at Trana has been rejected.
-        <html><body>"""
+        subject = position + " Account Application Rejected"
+        message = """<html><body>Your application for the position of {} at Trana has been rejected.
+        <html><body>""".format(position)
         send_mail(email_id, subject, message)
+
 
 def send_contact_mail(request, details):
     current_site = get_current_site(request)
@@ -92,7 +115,7 @@ def send_contact_mail(request, details):
         "medtrana2020@gmail.com",
         "shahsaakshi25@gmail.com",
         "sanketyou8@gmail.com",
-        #"",
+        "siddhi2000jhun@gmail.com",
         #"",
     ]
    
