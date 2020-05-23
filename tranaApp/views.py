@@ -566,23 +566,23 @@ def consult(request):
         current_user = request.session.get("current_user")                           
         uid = current_user["localId"]                                                                
         frm = db.collection(u"Users").document(uid).get().to_dict()                   
-        sub = "Trana user " + frm.get(u"name") + " wants to contact you"               
+        sub = "Trana user " + frm.get(u"name") + " wants to contact you"        
+        d_msg = request.POST['message'] 
         msg = """{} . To reply, mail on {}""".format(request.POST['message'], frm.get(u"email")) 
+        data = {u"sender":frm.get(u"email"),u"message":d_msg}
+        location = [
+                request.POST.get(u"lat"),
+                request.POST.get(u"lon")
+        ]
+        data[u"location"] = location
         mail_to =[] 
-                              #################
-        ##################### WORKS  TILL HERE ###################
-                              #################
+        dr_email = []
         doctors = db.collection(u"Users").where(u"position", u"==", "doctor").stream()
-        ##################### ANOTHER APPROACH FOR ACCESSING DOCTORS ###########
-                #########################
-        #      CONDITIONS (PS: ifInRadius and Sendmail functions are tested n they work correctly) 
-                #############################
         if request.POST.get(u"lat") != "" and request.POST.get(u"lon") != "":
             lat = float(request.POST.get(u"lat"))
             lon = float(request.POST.get(u"lon"))
             for dr in doctors:
                 dr = dr.to_dict()
-                # print(dr)
                 if dr.get("location"):
                     lat2 = dr["location"][0]
                     lon2 = dr["location"][1]
@@ -590,13 +590,14 @@ def consult(request):
                         mail_to.append(dr.get(u"email"))
                         print(dr.get(u"email"))
             if len(mail_to)>0 :
-                # print(mail_to)
                 send_mail(mail_to, sub, msg)
         else:
             for dr in doctors :
                 mail_to.append(dr.get(u"email"))
-            send_mail(mail_to, sub, msg)  
-        # return redirect("consult")  
+            send_mail(mail_to, sub, msg)
+        data[u"doctors"] = mail_to
+        db.collection(u"Consultations").document().set(data)
+        return redirect("consult")  
     return render(request,'doctor_consultation.html')
 
 
