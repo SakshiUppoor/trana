@@ -15,6 +15,9 @@ from .utils import *
 
 # from .utils import send_mail
 
+import socket
+socket.getaddrinfo('127.0.0.1', 8080)
+
 ###########################
 # FIRESTORE CONFIGURATION #
 ###########################
@@ -81,7 +84,7 @@ def getPharmacyDetails(uId):
         return user.to_dict().get("pharmacy-name"), user.to_dict().get("address")
     return None
 
-
+    
 def get_components(collection):
     reports_ref = db.collection(collection)
     reports = reports_ref.stream()
@@ -163,6 +166,26 @@ def signup(request):
             data[u"office-address"] = offadd
             data[u"contact-number"] = phone
 
+        if position == "doctor":
+            drname = request.POST.get(u"drname")
+            drtype = request.POST.get(u"drtype")
+            drworkplace = request.POST.get(u"drworkplace")
+            drwpadd = request.POST.get(u"drwpadd")
+            drwpphone = request.POST.get(u"drwpphone")
+            data[u"doctor-name"] = drname
+            data[u"doctor-type"] = drtype
+            data[u"dr-workplace"] = drworkplace
+            data[u"dr-workplace-address"] = drwpadd
+            data[u"dr-workplace-phone"] = drwpphone
+            if request.POST.get(u"lat") != "" and request.POST.get(u"lon") != "":
+                location = [
+                    float(request.POST.get(u"lat")),
+                    float(request.POST.get(u"lon")),
+                ]
+                data[u"location"] = location
+            db.collection(u"Users").document().set(data)
+            # return render(request,'doctor.html')
+
         db.collection(u"Users").document(uid).set(data, merge=True)
         print(uid)
 
@@ -176,6 +199,11 @@ def signup(request):
             print("hello")
             data["uId"] = uid
             send_verification_mail(request, data)
+            return HttpResponseRedirect(reverse("details"))
+        elif position == "doctor":
+            print("doctor")
+            data["uId"] = uid
+            dr_send_verification_mail(request, data)
             return HttpResponseRedirect(reverse("details"))
         elif position == "pharmacist":
             return HttpResponseRedirect(reverse("medicines"))
@@ -218,6 +246,14 @@ def login_view(request):
                             return HttpResponseRedirect(reverse("reports"))
                         else:
                             messages.error(request,'Your account is not yet verified')
+                    elif position == "doctor":
+                        print("doctor")
+                        auth_ref = db.collection(u"Users").document(current_user["localId"])
+                        approved = auth_ref.get().to_dict().get("approved")
+                        if approved==True:
+                            return redirect('doctor/')
+                        else:
+                            messages.error(request,'Your account is not yet verified')
                     elif position == "pharmacist":
                         return HttpResponseRedirect(reverse("medicines"))
                     elif position == "user":
@@ -240,13 +276,14 @@ def verify(request, uId, accepted):
         user_ref = db.collection(u"Users").document(uId)
         user = user_ref.get()
         email = user.to_dict().get("email")
+        position = user.to_dict().get("position")
         user_instance = firebase_admin.auth.get_user_by_email(email)
         print(user_instance)
         if user.to_dict().get("approved") == True:
             accepted = "done"
-            return render(request,'verify.html',{"title":"verify", "accepted":accepted})
+            return render(request,'verify.html',{"title":"verify", "accepted":accepted,"position":position})
 
-        send_result(email, user_instance, accepted)
+        send_result(email, user_instance, accepted,position)
         if accepted == 'True':
             db.collection(u"Users").document(uId).set({'approved':True}, merge=True)
         else:
@@ -255,7 +292,7 @@ def verify(request, uId, accepted):
             context={"title":verify,"accepted":accepted}
     except:
         accepted = "done"
-    return render(request,'verify.html',{"title":"verify", "accepted":accepted})
+    return render(request,'verify.html',{"title":"verify", "accepted":accepted, "position":position})
 
 def reset_password(request):
     return render(request, "forgot_password.html", {'title':'reset'})
@@ -522,6 +559,48 @@ def orderMedicine(request):
         print(e)
         return redirect("404")
 
+def consult(request):
+    if request.method=='POST':
+        current_user = request.session.get("current_user")                           
+        uid = current_user["localId"]                                                                
+        frm = db.collection(u"Users").document(uid).get().to_dict()                   
+        sub = "Trana user " + frm.get(u"name") + " wants to contact you"               
+        msg = """{} . To reply, mail on {}""".format(request.POST['message'], frm.get(u"email")) 
+        mail_to =[] 
+                              #################
+        ##################### WORKS  TILL HERE ###################
+                              #################
+        # doctors = db.collection(u"users").where(u"position", u"==", "doctor").stream()
+        ##################### ANOTHER APPROACH FOR ACCESSING DOCTORS ###########
+        # doctors=[]
+        # ppl = db.collection(u"users").stream()
+        # for p in ppl:
+        #     p = p.to_dict()
+        #     if p.get(u"position")=='doctor' :
+        #         doctors.append(p)
+        # print(doctors)
+                #########################
+        #      CONDITIONS (PS: ifInRadius and Sendmail functions are tested n they work correctly) 
+                #############################
+    #     if request.POST.get(u"lat") != "" and request.POST.get(u"lon") != "":
+    #         lat = float(request.POST.get(u"lat"))
+    #         lon = float(request.POST.get(u"lon"))
+    #         for dr in doctors:
+    #             dr = dr.to_dict()
+    #             lat2 = dr["location"][0]
+    #             lon2 = dr["location"][1]
+    #             if lat2!="" and lon2!="" and isInRadius(lat,lon,float(lat2), float(lon2)):
+    #                 mail_to.append(dr.get(u"email"))
+    #                 print(mail_to)
+    #         if len(mail_to)>0 :
+    #             print(mail_to)
+    #             send_mail(mail_to, sub, msg)
+    #     else:
+    #         for dr in doctors :
+    #             mail_to.append(dr.get(u"email"))
+    #         send_mail(mail_to, sub, msg)    
+    return render(request,'doctor_consultation.html')
+
 
 #####################
 #       HOME        #
@@ -554,3 +633,7 @@ def contact(request):
         send_contact_mail(request, data)
 
     return render(request, "contact.html", {"title": "contact"})
+
+def doctor(request):
+    return render(request,'doctor.html')
+
