@@ -159,7 +159,7 @@ def signup(request):
             phone = request.POST.get(u"offphone")
             data[u"authority-name"] = auname
             data[u"designation"] = designation
-            data[u"oganisation"] = organisation
+            data[u"organisation"] = organisation
             data[u"office-address"] = offadd
             data[u"contact-number"] = phone
 
