@@ -47,6 +47,7 @@ urlpatterns = [
     path("verify/<str:uId>/<str:accepted>", verify, name="verify"),
     path("details/",details,name="details"),
     path('consult/',consult,name="consult"),
+    path('doctor/',doctor,name="doctor"),
 
 
     # Static pages
@@ -55,5 +56,4 @@ urlpatterns = [
     path("services/",services,name="services"),
     path("FAQ/",faq,name="faq"),
     path("contact/",contact,name="contact"),
-    path('doctor/',doctor,name="doctor"),
 ]

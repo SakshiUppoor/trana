@@ -67,11 +67,11 @@ def dr_send_verification_mail(request, details):
 
     super_admin_email_list = [
         "sakshiuppoor@gmail.com",
-        "phani.lav@gmail.com",
-        "medtrana2020@gmail.com",
-        "shahsaakshi25@gmail.com",
-        "sanketyou8@gmail.com",
-        "siddhi2000jhun@gmail.com",
+        # "phani.lav@gmail.com",
+        # "medtrana2020@gmail.com",
+        # "shahsaakshi25@gmail.com",
+        # "sanketyou8@gmail.com",
+        # "siddhi2000jhun@gmail.com",
         #"",
     ]
     print("~~~~~~~~~~~~",type(details["uId"]), type('True'))
@@ -139,7 +139,8 @@ def isInRadius(lat,lon,lat2,lon2):
     a = math.sin(dlat / 2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2)**2
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
     distance = R * c
-    if distance<5000:
+    print(distance)
+    if distance<10000:
         return True
     else:
         return False

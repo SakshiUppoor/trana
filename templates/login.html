@@ -55,13 +55,13 @@
     </div>
     <script>
     {% if position == "user" %}
-    location.replace("https://www.trana.live/users");
+    location.replace("{% url 'users' %}");
     {% elif position == "pharmacist" %}
-    location.replace("https://www.trana.live/medicines");
+    location.replace("{% url 'medicines' %}");
     {% elif position == "authority" %}
-    location.replace("https://www.trana.live/reports");
+    location.replace("{% url 'reports' %}");
     {% elif position == "doctor" %}
-    location.replace("https://www.trana.live/reports");
+    location.replace("{% url 'doctor' %}");
     {% endif %}
         function myFunction() {
             var x = document.getElementById("email");
