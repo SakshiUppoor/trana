@@ -67,11 +67,11 @@ def dr_send_verification_mail(request, details):
 
     super_admin_email_list = [
         "sakshiuppoor@gmail.com",
-        # "phani.lav@gmail.com",
-        # "medtrana2020@gmail.com",
-        # "shahsaakshi25@gmail.com",
-        # "sanketyou8@gmail.com",
-        # "siddhi2000jhun@gmail.com",
+        "phani.lav@gmail.com",
+        "medtrana2020@gmail.com",
+        "shahsaakshi25@gmail.com",
+        "sanketyou8@gmail.com",
+        "siddhi2000jhun@gmail.com",
         #"",
     ]
     print("~~~~~~~~~~~~",type(details["uId"]), type('True'))
