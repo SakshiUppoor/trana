@@ -24,6 +24,7 @@ from .views import (
     faq,
     contact,
     doctor,
+    consult,
 )
 
 urlpatterns = [
@@ -45,6 +46,8 @@ urlpatterns = [
     path("getmedicine/", getmedicine, name="getmedicine"),
     path("verify/<str:uId>/<str:accepted>", verify, name="verify"),
     path("details/",details,name="details"),
+    path('consult/',consult,name="consult"),
+
 
     # Static pages
     path("motivation/",motivation,name="motivation"),
@@ -52,7 +55,5 @@ urlpatterns = [
     path("services/",services,name="services"),
     path("FAQ/",faq,name="faq"),
     path("contact/",contact,name="contact"),
-
-
-    path('doctor/',doctor,name="doctor")
+    path('doctor/',doctor,name="doctor"),
 ]

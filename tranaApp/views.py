@@ -84,7 +84,7 @@ def getPharmacyDetails(uId):
         return user.to_dict().get("pharmacy-name"), user.to_dict().get("address")
     return None
 
-
+    
 def get_components(collection):
     reports_ref = db.collection(collection)
     reports = reports_ref.stream()
@@ -559,6 +559,48 @@ def orderMedicine(request):
         print(e)
         return redirect("404")
 
+def consult(request):
+    if request.method=='POST':
+        current_user = request.session.get("current_user")                           
+        uid = current_user["localId"]                                                                
+        frm = db.collection(u"Users").document(uid).get().to_dict()                   
+        sub = "Trana user " + frm.get(u"name") + " wants to contact you"               
+        msg = """{} . To reply, mail on {}""".format(request.POST['message'], frm.get(u"email")) 
+        mail_to =[] 
+                              #################
+        ##################### WORKS  TILL HERE ###################
+                              #################
+        # doctors = db.collection(u"users").where(u"position", u"==", "doctor").stream()
+        ##################### ANOTHER APPROACH FOR ACCESSING DOCTORS ###########
+        # doctors=[]
+        # ppl = db.collection(u"users").stream()
+        # for p in ppl:
+        #     p = p.to_dict()
+        #     if p.get(u"position")=='doctor' :
+        #         doctors.append(p)
+        # print(doctors)
+                #########################
+        #      CONDITIONS (PS: ifInRadius and Sendmail functions are tested n they work correctly) 
+                #############################
+    #     if request.POST.get(u"lat") != "" and request.POST.get(u"lon") != "":
+    #         lat = float(request.POST.get(u"lat"))
+    #         lon = float(request.POST.get(u"lon"))
+    #         for dr in doctors:
+    #             dr = dr.to_dict()
+    #             lat2 = dr["location"][0]
+    #             lon2 = dr["location"][1]
+    #             if lat2!="" and lon2!="" and isInRadius(lat,lon,float(lat2), float(lon2)):
+    #                 mail_to.append(dr.get(u"email"))
+    #                 print(mail_to)
+    #         if len(mail_to)>0 :
+    #             print(mail_to)
+    #             send_mail(mail_to, sub, msg)
+    #     else:
+    #         for dr in doctors :
+    #             mail_to.append(dr.get(u"email"))
+    #         send_mail(mail_to, sub, msg)    
+    return render(request,'doctor_consultation.html')
+
 
 #####################
 #       HOME        #
@@ -594,3 +636,4 @@ def contact(request):
 
 def doctor(request):
     return render(request,'doctor.html')
+

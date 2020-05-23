@@ -33,7 +33,6 @@ def send_mail(to, subject, message):
     yag = yagmail.SMTP('medtrana2020',pwd)
     yag.send(to = to, subject = subject, contents = message)
 
-
 def medicine_available(email_id, details, medicine):
     subject = "Request for medicine {}".format(medicine)
     message = "<html><body>The medicine {} you requested is available at the pharmacy {} located in {}.</body></html>".format(
@@ -127,3 +126,20 @@ def send_contact_mail(request, details):
     })
 
     send_mail(super_admin_email_list, subject, message)
+
+
+def isInRadius(lat,lon,lat2,lon2):
+    R = 6373.0
+    lat1 = math.radians(lat)
+    long1 = math.radians(lon)
+    lat2 = math.radians(lat2)
+    long2 = math.radians(lon2)
+    dlon = long2 - long1
+    dlat = lat2 - lat1
+    a = math.sin(dlat / 2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+    distance = R * c
+    if distance<5000:
+        return True
+    else:
+        return False
