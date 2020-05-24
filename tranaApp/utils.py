@@ -140,7 +140,7 @@ def isInRadius(lat,lon,lat2,lon2):
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
     distance = R * c
     print(distance)
-    if distance<10000:
+    if distance<10:
         return True
     else:
         return False

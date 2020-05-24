@@ -597,7 +597,7 @@ def consult(request):
             send_mail(mail_to, sub, msg)
         data[u"doctors"] = mail_to
         db.collection(u"Consultations").document().set(data)
-        return redirect("consult")  
+        return redirect("users/")  
     return render(request,'doctor_consultation.html')
 
 
