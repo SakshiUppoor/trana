@@ -66,11 +66,11 @@ def dr_send_verification_mail(request, details):
     current_site = get_current_site(request)
 
     super_admin_email_list = [
-        "sakshiuppoor@gmail.com",
-        "phani.lav@gmail.com",
-        "medtrana2020@gmail.com",
-        "shahsaakshi25@gmail.com",
-        "sanketyou8@gmail.com",
+        # "sakshiuppoor@gmail.com",
+        # "phani.lav@gmail.com",
+        # "medtrana2020@gmail.com",
+        # "shahsaakshi25@gmail.com",
+        # "sanketyou8@gmail.com",
         "siddhi2000jhun@gmail.com",
         #"",
     ]
@@ -109,11 +109,11 @@ def send_contact_mail(request, details):
     current_site = get_current_site(request)
 
     super_admin_email_list = [
-        "sakshiuppoor@gmail.com",
-        "phani.lav@gmail.com",
-        "medtrana2020@gmail.com",
-        "shahsaakshi25@gmail.com",
-        "sanketyou8@gmail.com",
+        # "sakshiuppoor@gmail.com",
+        # "phani.lav@gmail.com",
+        # "medtrana2020@gmail.com",
+        # "shahsaakshi25@gmail.com",
+        # "sanketyou8@gmail.com",
         "siddhi2000jhun@gmail.com",
         #"",
     ]

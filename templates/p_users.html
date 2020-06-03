@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="Stylesheet" href="{% static 'css/user.css' %}">
+{% endblock css %}
+{% block style %}
+
+{% endblock style %}
+.body {
+  background: #fbfbfd;
+  padding: 23vh 5vw;
+}
+{% block body %}
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+    <div class="tab">
+        <div class="homebutton">
+          <a href=""><button id="home"class="tablinks"><i class="fa fa-home" aria-hidden="true"></i></button></a>
+        </div>
+        <div class="pending">
+            <a href="{% url 'pending' %}"><button id="home"class="tablinks"><i class="zmdi zmdi-assignment-alert"></i></button></a>
+        </div>
+        <div class="approved">
+            <a href="{% url 'approved' %}"><button id="reports" class="tablinks"><i class="zmdi zmdi-assignment-account"></i></button></a>
+        </div>
+        <div class="statistics">
+            <a href="{% url 'statistics' %}"><button id="medicines" class="tablinks"><i class="zmdi zmdi-chart"></i></button></a>
+        </div>
+    </div>
+        <div class="body">
+            <div id="Doctors">
+                <h3>Doctors <span style="font-size: 85%;"> ( {{doctors|length}} )</span></h3>
+                <div class="accordion" id="accordionExample">
+                
+                {% for dr in doctors %}
+                <div class="card" style="text-transform: capitalize">
+                    <div class="card-header" id="headingOne">
+                        <div class="report-heading">
+                        {{ dr|get_item:'email' }}
+                        </div>
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#a{{dr|get_item:'id'}}" aria-expanded="false" aria-controls="a{{dr|get_item:'id'}}">
+                        <ion-icon name="chevron-down-outline"></ion-icon>
+                        </button>
+                    </div>
+                
+                    <div id="a{{dr|get_item:'id'}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                    {% for key, value in dr.items %}
+                    {% if key != 'id' %}
+                    <div><b>{{key}}:</b> {{value}}</div>
+                    {% endif %}
+                    {% endfor %}
+                    <a href="{% url 'verify' uId=dr|get_item:'id' accepted='True' %}"><button class="green-sec">Approve</button></a>
+                    <a href="{% url 'verify' uId=dr|get_item:'id' accepted='False' %}"><button>Reject</button></a>
+                    </div>
+                    </div>
+                </div>
+                {% endfor %}
+                </div>
+            </div>
+            <div id="Authys" class="mt-5">
+                <h3>Authorites <span style="font-size: 85%;"> ( {{authys|length}} )</span></h3>
+                <div class="accordion" id="accordionEx">
+                
+                {% for a in authys %}
+                <div class="card" style="text-transform: capitalize">
+                    <div class="card-header" id="headingOne">
+                        <div class="report-heading">
+                        {{ a|get_item:'email' }}
+                        </div> 
+                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#a{{a|get_item:'id'}}" aria-expanded="false" aria-controls="a{{a|get_item:'id'}}">
+                        <ion-icon name="chevron-down-outline"></ion-icon>
+                        </button>
+            
+                    </div>
+                
+                    <div id="a{{a|get_item:'id'}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionEx">
+                    <div class="card-body">
+                    {% for key, value in a.items %}
+                    {% if key != 'id' %}
+                    <div><b>{{key}}:</b> {{value}}</div>
+                    {% endif %}
+                    {% endfor %}  
+                    </div>
+                    </div>
+                </div>
+                {% endfor %}
+            
+                </div>
+            </div>
+        </div>
+    
+{% endblock body %}

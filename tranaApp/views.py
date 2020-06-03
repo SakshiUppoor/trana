@@ -636,3 +636,53 @@ def contact(request):
 def doctor(request):
     return render(request,'doctor.html')
 
+def pending(request):
+        doc = []
+        authy =[]
+        users = db.collection(u"Users").stream()
+        for user in users:
+            # print("""!!!!!!!!!!!!!!!!!!!!! {}""".format(user.to_dict()))
+            approved = user.to_dict().get("approved")
+            if approved != True :
+                id = user.id
+                user = user.to_dict()
+                user['id'] = id
+                # print(user)
+                if user.get("position") == 'doctor' :
+                    doc.append(user)
+                elif user.get("position") == 'authority' :
+                    authy.append(user)
+        print(doc)
+        return render(request, 'p_users.html' , {'doctors':doc , 'authys' :authy})
+
+def approved(request):
+    doc = []
+    authy =[]
+    pharma =[]
+    u =[]
+    admin =[]
+    users = db.collection(u"Users").stream()
+    for user in users:
+        approved = user.to_dict().get("approved")
+        if approved == True :
+            id = user.id
+            user = user.to_dict()
+            user['id'] = id
+            if user.get("position") == 'doctor' :
+                doc.append(user)
+            elif user.get("position") == 'authority' :
+                authy.append(user) 
+        else :
+            id = user.id
+            user = user.to_dict()
+            user['id'] = id
+            if user.get("position") == 'pharmacist':
+                pharma.append(user)
+            elif user.get("position") == 'user':
+                u.append(user)
+            elif user.get("position") == 'admin':
+                admin.append(user) 
+    return render(request, 'ap_user.html' , {'doctors':doc , 'authys' :authy, 'users':u , 'pharmas':pharma, 'admins':admin})
+
+def statistics(request):
+    pass

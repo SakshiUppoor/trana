@@ -17,6 +17,9 @@ from .views import (
     reset_password,
     verify,
     details,
+    pending,
+    approved,
+    statistics,
 
     motivation,
     about,
@@ -48,7 +51,9 @@ urlpatterns = [
     path("details/",details,name="details"),
     path('consult/',consult,name="consult"),
     path('doctor/',doctor,name="doctor"),
-
+    path('pending/', pending, name="pending"),
+    path('approved/',approved, name="approved"),
+    path('statistics/',statistics,name="statistics"),
 
     # Static pages
     path("motivation/",motivation,name="motivation"),
