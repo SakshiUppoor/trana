@@ -259,6 +259,8 @@ def login_view(request):
                         return HttpResponseRedirect(reverse("medicines"))
                     elif position == "user":
                         return HttpResponseRedirect(reverse("users"))
+                    elif position == "admin":
+                        return HttpResponseRedirect(reverse("pending"))
                     else:
                         return HttpResponseRedirect(reverse("users"))
                 except Exception as e:
@@ -637,6 +639,7 @@ def doctor(request):
     return render(request,'doctor.html')
 
 def pending(request):
+    if getPosition(request) == 'admin':
         doc = []
         authy =[]
         users = db.collection(u"Users").stream()
@@ -654,35 +657,145 @@ def pending(request):
                     authy.append(user)
         print(doc)
         return render(request, 'p_users.html' , {'doctors':doc , 'authys' :authy})
+    else:
+        return redirect('login/')
 
 def approved(request):
-    doc = []
-    authy =[]
-    pharma =[]
-    u =[]
-    admin =[]
-    users = db.collection(u"Users").stream()
-    for user in users:
-        approved = user.to_dict().get("approved")
-        if approved == True :
-            id = user.id
-            user = user.to_dict()
-            user['id'] = id
-            if user.get("position") == 'doctor' :
-                doc.append(user)
-            elif user.get("position") == 'authority' :
-                authy.append(user) 
-        else :
-            id = user.id
-            user = user.to_dict()
-            user['id'] = id
-            if user.get("position") == 'pharmacist':
-                pharma.append(user)
-            elif user.get("position") == 'user':
-                u.append(user)
-            elif user.get("position") == 'admin':
-                admin.append(user) 
-    return render(request, 'ap_user.html' , {'doctors':doc , 'authys' :authy, 'users':u , 'pharmas':pharma, 'admins':admin})
+    if getPosition(request) == 'admin':
+        doc = []
+        authy =[]
+        pharma =[]
+        u =[]
+        admin =[]
+        users = db.collection(u"Users").stream()
+        for user in users:
+            approved = user.to_dict().get("approved")
+            if approved == True :
+                id = user.id
+                user = user.to_dict()
+                user['id'] = id
+                if user.get("position") == 'doctor' :
+                    doc.append(user)
+                elif user.get("position") == 'authority' :
+                    authy.append(user) 
+            else :
+                id = user.id
+                user = user.to_dict()
+                user['id'] = id
+                if user.get("position") == 'pharmacist':
+                    pharma.append(user)
+                elif user.get("position") == 'user':
+                    u.append(user)
+                elif user.get("position") == 'admin':
+                    admin.append(user) 
+        return render(request, 'ap_user.html' , {'doctors':doc , 'authys' :authy, 'users':u , 'pharmas':pharma, 'admins':admin})
+    else:
+        return redirect('login')
 
 def statistics(request):
-    pass
+    if getPosition(request) == 'admin':
+        user_ref = db.collection('Users').stream()
+        reports = db.collection('Reports').stream()
+        meds = db.collection('Medicines').stream()
+        users = []
+        pharmas =[]
+        authys =[]
+        drs =[]
+        admins = []
+        rep_resolved = []
+        accidents1 =[]
+        pregnancy1 = []
+        terminal_illness1 = []
+        post_operation1 = []
+        accident_rec1 =[]
+        child1 = []
+        other1 = []
+        rep_unresolved = []
+        accidents2 =[]
+        pregnancy2 = []
+        terminal_illness2 = []
+        post_operation2 = []
+        accident_rec2 =[]
+        child2= []
+        other2 = []
+        med_res =[]
+        med_unres = []
+        for u in user_ref:
+            u = u.to_dict()
+            if u.get('position') == 'user':
+                users.append(u)
+            elif u.get('position') == 'pharmacist':
+                pharmas.append(u)
+            elif u.get('position') == 'doctor' and u.get('approved') == True:
+                drs.append(u)
+            elif u.get('position') == 'authority' and u.get('approved') == True:
+                authys.append(u)
+            elif u.get('position') == 'admin':
+                admins.append(u)
+        for r in reports :
+            r = r.to_dict()
+            if r.get('resolved') == True:
+                rep_resolved.append(r)
+            else:
+                rep_unresolved.append(r)
+            for report in rep_resolved:
+                if report.get('case') == 'Accident':
+                    accidents1.append(report)
+                elif report.get('case') == 'Pregnancy':
+                    pregnancy1.append(report)
+                elif report.get('case') == 'Terminal Illness':
+                    terminal_illness1.append(report)
+                elif report.get('case') == 'Post Operation':
+                    post_operation1.append(report)
+                elif report.get('case') == 'Accident Recovery':
+                    accident_rec1.append(report)
+                elif report.get('case') == 'Child':
+                    child1.append(report)
+                elif report.get('case') == 'Other':
+                    other1.append(report)
+            for report in rep_unresolved:
+                if report.get('case') == 'Accident':
+                    accidents2.append(report)
+                elif report.get('case') == 'Pregnancy':
+                    pregnancy2.append(report)
+                elif report.get('case') == 'Terminal Illness':
+                    terminal_illness2.append(report)
+                elif report.get('case') == 'Post Operation':
+                    post_operation2.append(report)
+                elif report.get('case') == 'Accident Recovery':
+                    accident_rec2.append(report)
+                elif report.get('case') == 'Child':
+                    child2.append(report)
+                elif report.get('case') == 'Other':
+                    other2.append(report)
+        for med in meds:
+            med = med.to_dict()
+            if med.get('resolved') == True :
+                med_res.append(med)
+            else:
+                med_unres.append(med)
+        return render(request,'stats.html',{
+            'users':users,
+            'pharmas':pharmas,
+            'authys':authys ,
+            'drs':drs,
+            'admins':admins,
+            'accident1':accidents1,
+            'pregnancy1':pregnancy1 ,
+            'terminal_illness1':terminal_illness1,
+            'post_operation1':post_operation1,
+            'accident_rec1':accident_rec1,
+            'child1':child1 ,
+            'other1':other1 ,
+            'accident2':accidents2,
+            'pregnancy2':pregnancy2 ,
+            'terminal_illness2':terminal_illness2,
+            'post_operation2':post_operation2,
+            'accident_rec2':accident_rec2,
+            'child2':child2,
+            'other2':other2 ,
+            'med_res':med_res,
+            'med_unres' :med_unres
+        })
+    else:
+        return redirect('login/')

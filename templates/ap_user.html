@@ -21,17 +21,14 @@
         https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
     <div class="tab">
-        <div class="homebutton">
-          <a href=""><button id="home"class="tablinks"><i class="fa fa-home" aria-hidden="true"></i></button></a>
-        </div>
         <div class="pending">
-            <a href="{% url 'pending' %}"><button id="home"class="tablinks"><i class="zmdi zmdi-assignment-alert"></i></button></a>
+            <a href="{% url 'pending' %}"><button id="pending"class="tablinks"><i class="zmdi zmdi-assignment-alert"></i></button></a>
         </div>
         <div class="approved">
-            <a href="{% url 'approved' %}"><button id="reports" class="tablinks"><i class="zmdi zmdi-assignment-account"></i></button></a>
+            <a href="{% url 'approved' %}"><button id="approved" class="tablinks"><i class="zmdi zmdi-assignment-account"></i></button></a>
         </div>
         <div class="statistics">
-            <a href="{% url 'statistics' %}"><button id="medicines" class="tablinks"><i class="zmdi zmdi-chart"></i></button></a>
+            <a href="{% url 'statistics' %}"><button id="stats" class="tablinks"><i class="zmdi zmdi-chart"></i></button></a>
         </div>
     </div>
     <div class="body">
