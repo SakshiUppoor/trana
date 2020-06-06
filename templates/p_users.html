@@ -21,17 +21,18 @@
     <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
     <div class="tab">
         <div class="pending">
-            <a href="{% url 'pending' %}"><button id="pending"class="tablinks"><i class="zmdi zmdi-assignment-alert"></i></button></a>
+            <a href="{% url 'pending' %}"><button id="pending"class="tablinks"><i class="zmdi zmdi-hc-lg zmdi-assignment-alert"></i></button></a>
         </div>
         <div class="approved">
-            <a href="{% url 'approved' %}"><button id="approved" class="tablinks"><i class="zmdi zmdi-assignment-account"></i></button></a>
+            <a href="{% url 'approved' %}"><button id="approved" class="tablinks"><i class="zmdi zmdi-hc-lg zmdi-accounts"></i></button></a>
         </div>
         <div class="statistics">
-            <a href="{% url 'statistics' %}"><button id="stats" class="tablinks"><i class="zmdi zmdi-chart"></i></button></a>
+            <a href="{% url 'statistics' %}"><button id="stats" class="tablinks"><i class="zmdi zmdi-hc-lg zmdi-chart"></i></button></a>
         </div>
     </div>
         <div class="body">
-            <div id="Doctors">
+            <h1 class="my-3">Pending Requests</h1>
+            <div class="my-5" id="Doctors">
                 <h3>Doctors <span style="font-size: 85%;"> ( {{doctors|length}} )</span></h3>
                 <div class="accordion" id="accordionExample">
                 
@@ -83,7 +84,9 @@
                     {% if key != 'id' %}
                     <div><b>{{key}}:</b> {{value}}</div>
                     {% endif %}
-                    {% endfor %}  
+                    {% endfor %}
+                    <a href="{% url 'verify' uId=a|get_item:'id' accepted='True' %}"><button class="green-sec">Approve</button></a>
+                    <a href="{% url 'verify' uId=a|get_item:'id' accepted='False' %}"><button>Reject</button></a>  
                     </div>
                     </div>
                 </div>

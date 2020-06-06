@@ -658,7 +658,7 @@ def pending(request):
         print(doc)
         return render(request, 'p_users.html' , {'doctors':doc , 'authys' :authy})
     else:
-        return redirect('login/')
+        return redirect('login')
 
 def approved(request):
     if getPosition(request) == 'admin':
@@ -798,4 +798,4 @@ def statistics(request):
             'med_unres' :med_unres
         })
     else:
-        return redirect('login/')
+        return redirect('login')
