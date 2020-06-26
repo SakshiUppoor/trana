@@ -65,9 +65,15 @@
       {% endblock style %}
     </style>
     <script src="{% static 'js/base.js' %}"></script>
-<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <meta property="og:site_name" content="Trana.live"/>
+    <meta property="og:title" content="Trana - Help us help you"/>
+    <meta property="og:description" content="Although we are taking immense care of the COVID-19 patients and avoid it's spread, We do not want to neglect your illness, medical issues & problems. Hence we are here for you!"/>
+    <meta property="og:image" content="{% static 'images/trana logo 2.png' %}">
+    <meta property="og:url" content="https://www.trana.live/">
   </head>
   <body>
     <nav class="nav navbar fixed-top navbar-expand-lg navbar-light">
@@ -182,9 +188,7 @@
             <div id="col_id_1" class="col-lg-3">
               <h3 class="title">Team Members</h3>
               <ul class="nav_1">
-                <li id="list_item">Engineering</li>
-                <a href="{% url 'team' %}"><li id="list_item">Developers</li></a>
-                <li id="list_item">Designers</li>
+                <a href="{% url 'team' %}"><li id="list_item">Our Team</li></a>
               </ul>
             </div> 
             <div id="col_id_1" class="col-lg-3">

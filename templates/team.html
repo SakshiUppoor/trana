@@ -1,25 +1,118 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title%}Our Team{% endblock title %}
-.body {
-    padding: 23vh 5vw;
+    .body {
+        padding: 23vh 5vw;
   }
-
-    {% block css %}
-    <link rel="Stylesheet" href="{% static 'css/user.css' %}">
-    {% endblock css %}
     {% block body%}
+    <style>
+        .heading{
+            position:absolute;
+            padding:100px 240px;
+            margin-bottom: 20px;
+            font-size: 60px;
+            line-height: 60px;
+            font-weight: 600;
+        }
+        .row{
+            position: relative;
+            height:100vh;
+            padding:120px 25px;
+        }
+        .card{
+            position:relative;
+            width:300px;
+            height:400px;
+            transition:0.3s ease-out ;
+            margin:100px 25px;
+          }
+
+
+        .face-holder{
+            position:relative;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background-size:cover;
+          }  
+        
+        .person-info{ 
+            padding: .9375rem 1.875rem;
+        }
+         
+        .person-info h3{
+            margin-bottom: 0;
+            font-size: 32px;
+            line-height: 38px;
+            font-weight: 600;
+        }
+    </style>
+    
+    <div class="heading">The trana Team</div>
+    <div class="team-wrap">
     <div class="row">
-        <div class="col-md-3">
+       
+        <div class="col-md-2"></div>
+        <div class="col-md-4">
             <div class="card">
-                <div class="person-info">
-                    <h3>Saakshi Shah</h3>
-                    <p>Full Stack Developer</p>
+                <div class="face-holder" style=" background-image: url({% static 'images/Lavanya.jpg' %});">
                 </div>
-              <div class="face-holder">
-                <img src="./images/book.jpg" class="event">
-              </div>
+                <div class="person-info">
+                    <h3>Lavanya Addepalli</h3>
+                    <p>Project Head | Innovator</p>
+                    <a href="https://www.linkedin.com/in/lavanya-addepalli-ab147440/"><i class="fa fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="face-holder" style=" background-image: url({% static 'images/Sanket.jpeg' %});">
+                </div>
+                <div class="person-info">
+                    <h3>Sanket Shah</h3>
+                    <p>Project Manager | React Native App Developer</p>
+                    <a href="https://www.linkedin.com/in/sanket0307/"><i class="fa fa-linkedin"></i></a>
+                    <a href="https://github.com/sanket1703"><i class="fa fa-github" style="margin-left:10px ;"></i></a>
+                </div>
             </div>
         </div>
     </div>
+    <div class="row" style="padding-top:0;">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="face-holder" style=" background-image: url({% static 'images/Sakshi.jpg' %});"></div>
+                <div class="person-info">
+                    <h3>Sakshi Uppoor</h3>
+                    <p>Full Stack Developer | Web Designer</p>
+                    <a href="https://www.linkedin.com/in/sakshi-uppoor/"><i class="fa fa-linkedin"></i></a>
+                    <a href="https://github.com/SakshiUppoor"><i class="fa fa-github" style="margin-left:10px ;"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="face-holder" style=" background-image: url({% static 'images/Saakshi.jpeg' %});">
+                </div>
+                <div class="person-info">
+                    <h3>Saakshi Shah</h3>
+                    <p>Full Stack Developer | Web Designer</p>
+                    <a href="https://www.linkedin.com/in/saakshi-shah-9359951a3/"><i class="fa fa-linkedin"></i></a>
+                    <a href="https://github.com/SaakshiShah25"><i class="fa fa-github" style="margin-left:10px ;"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="face-holder" style=" background-image: url({% static 'images/Siddhi.jpg' %});"></div>
+                <div class="person-info">
+                    <h3>Siddhi Jhunjhunwala</h3>
+                    <p>Full Stack Developer | Web Designer</p>
+                    <a href="https://www.linkedin.com/in/siddhi-jhunjhunwala-a94315192/"><i class="fa fa-linkedin"></i></a>
+                    <a href="https://github.com/SiddhiJhunjhunwala"><i class="fa fa-github" style="margin-left:10px ;"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     {%endblock body%}
