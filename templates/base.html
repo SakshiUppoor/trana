@@ -139,7 +139,7 @@
         </ul>
         <div class="controls">
 
-      {% if title == "login" or title == "signup" or title == "landing" or title == "reset" or title == "verify" or title == "details" or title == "services" or title == "about" or title == "motivation" or title == "faq" or title == "contact" %}
+      {% if title == "login" or title == "signup" or title == "landing" or title == "reset" or title == "verify" or title == "details" or title == "services" or title == "about" or title == "motivation" or title == "faq" or title == "contact" or title == "team" %}
             <a href="{% url 'login' %}">
             <button class="secondary">
             Login
@@ -183,7 +183,7 @@
               <h3 class="title">Team Members</h3>
               <ul class="nav_1">
                 <li id="list_item">Engineering</li>
-                <li id="list_item">Developers</li>
+                <a href="{% url 'team' %}"><li id="list_item">Developers</li></a>
                 <li id="list_item">Designers</li>
               </ul>
             </div> 

@@ -545,6 +545,9 @@ def services(request):
 def faq(request):
     return render(request, "faq.html", {"title": "faq"})
 
+def team(request):
+    return render(request, "team.html", {"title": "team"})
+    
 def contact(request):
     if request.method == "POST":
         name = request.POST.get(u"name")

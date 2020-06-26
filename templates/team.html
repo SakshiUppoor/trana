@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title%}Our Team{% endblock title %}
+    
+
+    {% block css %}
+    <link rel="Stylesheet" href="{% static 'css/user.css' %}">
+    {% endblock css %}
+    {% block body%}
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="person-info">
+                    <h3>Saakshi Shah</h3>
+                    <p>Full Stack Developer</p>
+                </div>
+              <div class="face-holder">
+                <img src="./images/book.jpg" class="event">
+              </div>
+            </div>
+        </div>
+    </div>
+    {%endblock body%}
