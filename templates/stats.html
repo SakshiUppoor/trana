@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="Stylesheet" href="{% static 'css/user.css' %}">
+{% endblock css %}
+{% block style %}
+
+{% endblock style %}
+.body {
+  background: #fbfbfd;
+  padding: 23vh 5vw;
+}
+{% block body %}
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+
+        <div class="tab">
+            <div class="pending">
+                <a href="{% url 'pending' %}"><button id="pending"class="tablinks"><i class="zmdi zmdi-hc-lg zmdi-assignment-alert"></i></button></a>
+            </div>
+            <div class="approved">
+                <a href="{% url 'approved' %}"><button id="approved" class="tablinks"><i class="zmdi zmdi-hc-lg zmdi-accounts"></i></button></a>
+            </div>
+            <div class="statistics">
+                <a href="{% url 'statistics' %}"><button id="stats" class="tablinks"><i class="zmdi zmdi-hc-lg zmdi-chart"></i></button></a>
+            </div>
+        </div>
+        <div class="body">
+            <h1 class="my-3">Statistics</h1>
+            <div class="my-5 pb-5">
+                <h3 class="my-4">Current Users</h3>
+                <canvas id="myChart" width="30%"></canvas>
+            </div>
+            <div class="my-5">
+                <h3 class="my-5">Reports</h3>
+                <canvas id="rad" width="20%"></canvas>
+            </div>
+             <div class="my-5">
+                <h3 class="my-5">Medicines</h3>
+                <canvas id="nut" width="10%"></canvas>
+            </div>
+
+        </div>
+
+<script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: ['User', 'Pharmacist', 'Doctor', 'Authority', 'Admin'],
+            datasets: [{
+                label: 'Number of Users',
+                data: [
+                    {{users|length}},
+                    {{pharmas|length}},
+                    {{drs|length}},
+                    {{authys|length}},
+                    {{admins|length}}
+                ],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+
+
+var rad = document.getElementById('rad').getContext('2d');
+var myRadarChart = new Chart(rad, {
+    type: 'radar',
+    data: {
+        labels: ['Accident', 'Pregnancy', 'Terminal Illness', 'Post Operation', 'Accident Recovery', 'Child', 'Other'],
+        datasets: [{
+        label:['Resolved Cases'],
+        data: [
+            {{accident1|length}},
+            {{pregnancy1|length}},
+            {{terminal_illness1|length}},
+            {{post_operation1|length}},
+            {{accident_rec1|length}},
+            {{child1|length}},
+            {{other1|length}},
+        ],
+        backgroundColor: [
+            'rgba(54, 162, 235, 0.2)',
+        ],
+        borderColor: [
+            'rgba(54, 162, 235, 1)',
+        ],
+        borderWidth: 2
+    },{
+        label:['Unresolved Cases'],
+        data: [
+            {{accident2|length}},
+            {{pregnancy2|length}},
+            {{terminal_illness2|length}},
+            {{post_operation2|length}},
+            {{accident_rec2|length}},
+            {{child2|length}},
+            {{other2|length}},
+        ],
+        backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        ],
+        borderColor: [
+        'rgba(255, 99, 132, 1)'   ,
+        ],
+        borderWidth: 2
+    }]
+        }
+       
+});
+
+var nut = document.getElementById('nut').getContext('2d');
+    var myDoughnutChart = new Chart(nut, {
+    type: 'doughnut',
+    data: {
+        labels: [ 'Resolved', 'Unresolved'],
+            datasets: [{
+                data: [
+                    {{med_res|length}},
+                    {{med_unres|length}}, 
+                ],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 99, 132, 0.2)',
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)',
+                ],
+                borderWidth: 1
+            }]
+    },
+    
+    })
+    </script>
+
+{% endblock body %}

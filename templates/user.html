@@ -31,10 +31,13 @@
     <button id="notif" class="tablinks" onclick="openTab(event, 'Notifications')"><i class="fa fa-bell-o" aria-hidden="true"></i></button>
   </div>
   <div class="reportsbutton">
-    <button id-"reports" class="tablinks" onclick="openTab(event, 'Reports')"><i class="fa fa-exclamation" aria-hidden="true"></i></button>
+    <button id="reports" class="tablinks" onclick="openTab(event, 'Reports')"><i class="fa fa-exclamation" aria-hidden="true"></i></button>
   </div>
   <div class="medicinesbutton">
     <button id="medicines" class="tablinks" onclick="openTab(event, 'Medicines')"><i class="fa fa-medkit" aria-hidden="true"></i></button>
+  </div>
+  <div class="consbutton">
+    <button id="consult" class="tablinks" onclick="openTab(event, 'Consultation')"><i style="font-size: 120%;" class="zmdi zmdi-disqus"></i></button>
   </div>
 </div>
 <!--        Home        -->
@@ -509,6 +512,44 @@
     </section>
   </div>
 </div><script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+<!--  
+  ---------------------------------DOCTOR CONSULTATION --------------------------------------------
+-->
+<div id="Consultation" class="tabcontent mt-0">
+  <div  class="elementor-widget-wrap">
+    <section  class="sign_in py-0">
+      <div class="container">
+          <div class="sign_info">
+            <div class="row">
+              <div class='col-lg-2'></div>
+              <div class='col-lg-8'>
+                <h2 class="heading mt-0">Doctor Consultation</h2>
+                  <div class="form-wrap" style="padding: 0px;">
+                      <form  action="{% url 'consult' %}" method='POST' id="consult">
+                        {% csrf_token %}
+                          <div class="row">
+                              <div class="col-md-12">
+                              <div class="form-group text_box">
+                                <textarea rows="4" cols="72" name="message" style="height:50vh;" placeholder="Enter Your Message..."></textarea>
+                              </div>
+                              </div>
+                          </div> 
+                          <div class="form-group">
+                              <input type="hidden" id="lat3" name="lat">
+                              <input type="hidden" id="lon3" name="lon">
+                          </div>
+                          <div style="text-align:center">
+                              <input type="submit" id="send_message" value="Send Message">
+                          </div>
+                      </form>
+                  </div>
+              </div>
+            </div>
+          </div>
+      </div>
+    </section>
+  </div>    
+</div>
 
 <script>
   //Getting the location saving it to the hidden field
@@ -516,6 +557,8 @@
   var lon = document.getElementById("lon");
   var lat2 = document.getElementById("lat2");
   var lon2 = document.getElementById("lon2");
+  var lat2 = document.getElementById("lat3");
+  var lon2 = document.getElementById("lon3");
   getLocation()
   function getLocation() {
     if (navigator.geolocation) {
@@ -530,6 +573,8 @@
     lon.value = position.coords.longitude;
     lat2.value = position.coords.latitude;
     lon2.value = position.coords.longitude;
+    lat3.value = position.coords.latitude;
+    lon3.value = position.coords.longitude;
     console.log(position.coords.latitude, position.coords.longitude);
   }
           

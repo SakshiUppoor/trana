@@ -54,6 +54,15 @@
     </section>
     </div>
     <script>
+    {% if position == "user" %}
+    location.replace("{% url 'users' %}");
+    {% elif position == "pharmacist" %}
+    location.replace("{% url 'medicines' %}");
+    {% elif position == "authority" %}
+    location.replace("{% url 'reports' %}");
+    {% elif position == "doctor" %}
+    location.replace("{% url 'doctor' %}");
+    {% endif %}
         function myFunction() {
             var x = document.getElementById("email");
             var y = document.getElementById("password");

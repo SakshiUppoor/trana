@@ -82,6 +82,7 @@ button:focus {
 }
 .body {
   padding: 10vh 0;
+  min-height: 100vh;
 }
 
 .green-sec {

@@ -57,6 +57,11 @@
                             <label for="pharmacist" class="form-data">Pharmacist</label>
                             <br>
                         </div>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="doctor" name="position" value="doctor" onclick="javascript:accountCheck();"/>
+                            <label for="doctor" class="form-data">Doctor</label>
+                            <br>
+                        </div>
                         <div id="pharmacist-details">
                             <label for="phname" class="form-data">Pharmacist Name</label>
                             <input class="form-control"  type="text" id="phname" name="phname" placeholder="Enter Name of Pharmacist">
@@ -316,7 +321,25 @@
                             </div>
                             <label for="offphone" class="form-data">Phone Number</label>
                             <input class="form-control" type="tel" id="offphone" name="offphone" placeholder="Official Number">
-                           </div>
+                        </div>
+                        <div id="doctor-details">
+                            <label for="drname" class="form-data">Doctor Name</label>
+                            <input class="form-control"  type="text" id="drname" name="drname" placeholder="Enter Name of Doctor">
+                            <label for="drtype" class="form-data">Doctor Type</label>
+                            <input class="form-control"  type="text" id="drtype" name="drtype" placeholder="Enter the type of Doctor you are">
+                            <label for="drworkplace" class="form-data">Workplace(Hospital/ Clinic etc)</label>
+                            <input class="form-control"  type="text" id="drworkplace" name="drworkplace" placeholder="Workplace Name">
+                            <div class="form-group text_box">
+                                <label for="drwpadd" class="form-data">Workplace Address</label>
+                                <textarea class="form-control" rows="4" cols="72" name="drwpadd" form="signup"></textarea>
+                            </div>
+                            <label for="drwpphone" class="form-data">Phone Number</label>
+                            <input class="form-control" type="tel" id="drwpphone" name="drwpphone" placeholder="Official Number">
+                            <div class="form-group">
+                                <input type="hidden" id="lat" name="lat">
+                                  <input type="hidden" id="lon" name="lon">
+                            </div>
+                        </div>
                         <br>
                         </div>
                           <div class="register">
@@ -342,21 +365,52 @@
     {% block script %}
             document.getElementById('pharmacist-details').style.display = 'none';
             document.getElementById('authority-details').style.display = 'none';
+            document.getElementById('doctor-details').style.display = 'none';
 
 
         function accountCheck() {
             if (document.getElementById('pharmacist').checked) {
                 document.getElementById('pharmacist-details').style.display = 'block';
                 document.getElementById('authority-details').style.display = 'none';
+                document.getElementById('doctor-details').style.display = 'none';
             }
             else if (document.getElementById('authority').checked) {
                 document.getElementById('pharmacist-details').style.display = 'none';
+                document.getElementById('doctor-details').style.display = 'none'
                 document.getElementById('authority-details').style.display = 'block';
+            }
+            else if (document.getElementById('doctor').checked) {
+                document.getElementById('doctor-details').style.display = 'block';
+                document.getElementById('pharmacist-details').style.display = 'none';
+                document.getElementById('authority-details').style.display = 'none';
+
+
+                //Getting the location saving it to the hidden field
+                var lat = document.getElementById("lat");
+                var lon = document.getElementById("lon");
+                
+                getLocation()
+                function getLocation() {
+                  if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition);
+                  } else { 
+                    x.innerHTML = "Geolocation is not supported by this browser.";
+                  }
+                }
+              
+                function showPosition(position) {
+                  lat.value = position.coords.latitude;
+                  lon.value = position.coords.longitude;
+                  
+                  console.log(position.coords.latitude, position.coords.longitude);
+                }
+
             }
             else {
                 document.getElementById('pharmacist-details').style.display = 'none';
                 document.getElementById('authority-details').style.display = 'none';
-
+                document.getElementById('doctor-details').style.display = 'none'
             }
         }
+       
     {% endblock script %}
