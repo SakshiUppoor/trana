@@ -1,0 +1,60 @@
+body {
+  width: 100vw;
+}
+.container {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.card {
+  margin: 20px 10px;
+  border: none !important;
+  text-align: center;
+  padding: 40px !important;
+}
+
+.heading {
+  font-weight: 900;
+  font-size: 45px;
+}
+.heading-3 {
+  font-weight: 600;
+  font-size: 25px;
+}
+.row {
+  text-align: center;
+}
+.hero-image {
+  max-width: 70%;
+}
+.hero {
+  padding: 70px;
+  padding-top: 15vh;
+  padding-bottom: 0;
+  text-align: center;
+}
+
+.row > div {
+  padding: 0;
+}
+.cards {
+  justify-content: center;
+  margin: 0 10px;
+}
+.icon {
+  height: 80px;
+  width: 80px;
+  margin: auto;
+}
+.purple {
+  color: #5e2ced;
+}
+
+#about,
+#faq,
+#contact {
+  height: 100vh;
+  background: #f9f9f9;
+}

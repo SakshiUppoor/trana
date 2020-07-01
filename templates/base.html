@@ -4,7 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+
 <link rel='icon' href="{% static 'images/trana logo.png' %}" type='image/x-icon'/ >
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
@@ -56,7 +56,7 @@
         bottom: 50px !important;
       }
     }
-    
+
     @media only screen and (min-width: 768px) {
       #text_1 {
         left: 70px !important;
@@ -78,8 +78,9 @@
     <meta property="og:site_name" content="Trana.live"/>
     <meta property="og:title" content="Trana - Help us help you"/>
     <meta property="og:description" content="Although we are taking immense care of the COVID-19 patients and avoid it's spread, We do not want to neglect your illness, medical issues & problems. Hence we are here for you!"/>
-    <meta property="og:image" content="{% static 'images/trana logo 2.png' %}">
+    <meta property="og:image" content="https://imgur.com/d3i2bo7.jpg">
     <meta property="og:url" content="https://www.trana.live/">
+    <meta property="og:type" content="page"/>
   </head>
   <body>
     <nav class="nav navbar fixed-top navbar-expand-lg navbar-light">
@@ -119,7 +120,7 @@
             {% endif %}
             " href="{% url 'motivation' %}">Motivation</a>
               </li>
-              
+
               <li class="nav-item">
             <a class="page
             {% if title == "services" %}
@@ -127,7 +128,7 @@
             {% endif %}
             " href="{% url 'services' %}">Services</a>
               </li>
-              
+
           <li class="nav-item">
             <a class="page" href="https://blog.trana.live/" target="blank">Blog</a>
           </li>
@@ -138,8 +139,8 @@
             {% endif %}
             " href="{% url 'about' %}">About</a>
               </li>
-              
-              
+
+
 
           <!--<li class="nav-item">
             <a class="page" href="">About</a>
@@ -170,7 +171,7 @@
         </div>
       </div>
     </nav>
-    
+
 
     {% block body%}{% endblock body%}
         </div>
@@ -188,28 +189,28 @@
               <h3 class="title">User Guide</h3>
               <ul class="nav_1">
                 <a href="{% url 'faq' %}"><li id="list_item">FAQ</li></a>
-                
+
               </ul>
-            </div> 
+            </div>
             <div id="col_id_1" class="col-lg-3">
               <h3 class="title">Team Members</h3>
               <ul class="nav_1">
                 <a href="{% url 'team' %}"><li id="list_item">Our Team</li></a>
               </ul>
-            </div> 
+            </div>
             <div id="col_id_1" class="col-lg-3">
               <h3 class="title">Contact Us</h3>
               <ul class="nav_1">
                 <a href="{% url 'contact' %}"><li id="list_item">Form</li></a>
               </ul>
-            </div> 
+            </div>
           </div>
         </div>
-        
-      </div> 
+
+      </div>
     </footer>
   </body>
- 
+
   <script>
   {% block script %}
   {% endblock script %}

@@ -26,12 +26,9 @@ from .views import (
     services,
     faq,
     contact,
-<<<<<<< HEAD
     team,
-=======
     doctor,
     consult,
->>>>>>> 3b08ac32c33d8b3efb849ac3c58e178cf57a48b9
 )
 
 urlpatterns = [
