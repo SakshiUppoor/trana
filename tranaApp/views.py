@@ -13,7 +13,7 @@ import pyrebase
 
 from .utils import *
 
-# from .utils import send_mail
+
 
 import socket
 socket.getaddrinfo('127.0.0.1', 8080)
@@ -58,7 +58,7 @@ authe = firebase.auth()
 def getPosition(request):
     if "current_user" in request.session:
         current_user = request.session["current_user"]
-        # print(current_user)
+        
         user_ref = db.collection(u"Users").document(current_user["localId"])
         user = user_ref.get()
         if user.exists:
@@ -70,7 +70,7 @@ def getName(uId):
     user_ref = db.collection(u"Users").document(uId)
     user = user_ref.get()
     if user.exists:
-        print(user.to_dict().get("name"))
+        
         return user.to_dict().get("name")
     return None
 
@@ -79,8 +79,7 @@ def getPharmacyDetails(uId):
     user_ref = db.collection(u"Users").document(uId)
     user = user_ref.get()
     if user.exists:
-        print(user.id)
-        # print(user.to_dict())
+        
         return user.to_dict().get("pharmacy-name"), user.to_dict().get("address")
     return None
 
@@ -99,7 +98,7 @@ def get_components(collection):
                 entry["name"] = getName(uId)
             for field in report.to_dict():
                 entry[field] = report.to_dict()[field]
-            # print(entry)
+            
             if report.to_dict().get("location"):
                 co_list.append(
                     [report.to_dict()["location"][0], report.to_dict()["location"][1]]
@@ -131,7 +130,7 @@ def signup(request):
                 messages.info(request, "Your account already exists")
                 return redirect("login")
             except Exception as e:
-                print("hiiiiiii",e)
+                
                 user = firebase_admin.auth.create_user(email=email, password=password2)
                 uid = user.uid
                 data = {u"name": name, u"position": position, u"email": email}
@@ -184,24 +183,24 @@ def signup(request):
                 ]
                 data[u"location"] = location
             db.collection(u"Users").document().set(data)
-            # return render(request,'doctor.html')
+            
 
         db.collection(u"Users").document(uid).set(data, merge=True)
-        # print(uid)
+        
 
         current_user = authe.sign_in_with_email_and_password(email, password2)
         request.session["current_user"] = current_user
         session_id = current_user["idToken"]
         request.session["uid"] = str(session_id)
         position = getPosition(request)
-        # print(position)
+        
         if position == "authority":
-            # print("hello")
+            
             data["uId"] = uid
             send_verification_mail(request, data)
             return HttpResponseRedirect(reverse("details"))
         elif position == "doctor":
-            # print("doctor")
+            
             data["uId"] = uid
             dr_send_verification_mail(request, data)
             return HttpResponseRedirect(reverse("details"))
@@ -220,9 +219,7 @@ def login_view(request):
     if getPosition(request) != "user":
         if request.method == "POST":
             if "reset" in request.POST:
-                #messages.error(
-                #    request, "Password reset linked has been sent to your mail."
-                #)
+                
                 return render(request, "login.html", {"title": "login", "position":getPosition(request)})
             else:
                 email = request.POST["email"]
@@ -232,15 +229,15 @@ def login_view(request):
                     current_user = authe.sign_in_with_email_and_password(
                         email, password
                     )
-                    # print("~~~~~~~~~~~",current_user['localId'])
+                    
                     request.session["current_user"] = current_user
                     session_id = current_user["idToken"]
                     request.session["uid"] = str(session_id)
-                    #print(request.__dict__)
+                    
                     position = getPosition(request)
-                    # print(position)
+                    
                     if position == "authority":
-                        print("hello")
+                        
                         auth_ref = db.collection(u"Users").document(current_user["localId"])
                         approved = auth_ref.get().to_dict().get("approved")
                         if approved==True:
@@ -248,7 +245,7 @@ def login_view(request):
                         else:
                             messages.error(request,'Your account is not yet verified')
                     elif position == "doctor":
-                        # print("doctor")
+                        
                         auth_ref = db.collection(u"Users").document(current_user["localId"])
                         approved = auth_ref.get().to_dict().get("approved")
                         if approved==True:
@@ -264,13 +261,13 @@ def login_view(request):
                     else:
                         return HttpResponseRedirect(reverse("users"))
                 except Exception as e:
-                    print("!!!!!!!!!!!!!", e)
+                    
                     if type(e) == firebase_admin.auth.UserNotFoundError:
                         message = "Account doesn't exist."
                     else:
                         message = "Please check your password."
                     messages.error(request, message)
-        print("K")
+        
         return render(request, "login.html", {"title": "login", "position":getPosition(request)})
     return redirect("users")
 
@@ -282,7 +279,7 @@ def verify(request, uId, accepted):
         email = user.to_dict().get("email")
         position = user.to_dict().get("position")
         user_instance = firebase_admin.auth.get_user_by_email(email)
-        # print(user_instance)
+        
         if user.to_dict().get("approved") == True:
             accepted = "done"
             return render(request,'verify.html',{"title":"verify", "accepted":accepted,"position":position})
@@ -313,7 +310,7 @@ def logout_view(request):
 
 
 def reportsDashboard(request):
-    print("Reports~~~~~~~~~", request.session.get("uid"))
+    
     if getPosition(request) != None:
         if getPosition(request) == "authority":
             co_list, reports_list = get_components("Reports")
@@ -344,15 +341,14 @@ def medicinesDashboard(request):
 
 
 def usersDashboard(request):
-    print(getPosition(request))
-    print(getPosition(request))
+    
     if getPosition(request) == "user":
         current_user = request.session.get("current_user")
         uid = current_user["localId"]
         report_ref = db.collection(u"Reports").where(u"uId", u"==", uid).stream()
         reports_list = []
         for report in report_ref:
-            # print(u"Document data: {}".format(report.to_dict()))
+            
             get_report = report.to_dict()
             get_report["id"] = report.id
             del get_report["uId"]
@@ -361,7 +357,7 @@ def usersDashboard(request):
         med_ref = db.collection(u"Medicines").where(u"uId", u"==", uid).stream()
         meds_list = []
         for med in med_ref:
-            # print(u"Document data: {}".format(med.to_dict()))
+            
             get_med = med.to_dict()
             get_med["id"] = med.id
             del get_med["uId"]
@@ -376,19 +372,17 @@ def usersDashboard(request):
 
 
 def notify(request, id):
-    # try:
+    
     current_user = request.session["current_user"]
     med_ref = db.collection(u"Medicines").document(id)
     med_ref.set({u"resolved": True}, merge=True)
     medicine = med_ref.get().to_dict().get("medicine")
     uId = med_ref.get().to_dict().get("uId")
     user = firebase_admin.auth.get_user(uId)
-    # print(user.email)
+   
     send_mail(user.email, getPharmacyDetails(current_user["localId"]), medicine)
     return HttpResponseRedirect(reverse("medicines"))
-    #except Exception as e:
-    #    print(e)
-    #    return redirect("404")
+    
 
 
 def resolve(request, id):
@@ -405,7 +399,7 @@ def getreport(request):
             report_ref = db.collection(u"Reports").where(u"uId", u"==", uid).stream()
             reports_list = []
             for report in report_ref:
-                print(u"Document data: {}".format(report.to_dict()))
+                
                 get_report = report.to_dict()
                 del get_report["uId"]
                 reports_list.append(get_report)
@@ -465,7 +459,7 @@ def reportCondition(request):
             treatment = request.POST.get(u"treatment")
             area = request.POST.get(u"area")
             info = request.POST.get(u"info")
-            print("!!!!", info)
+            
             current_user = request.session.get("current_user")
             uid = current_user["localId"]
 
@@ -489,10 +483,7 @@ def reportCondition(request):
                 u"country": country,
                 u"hospitalAddress": hospitalAddress,
             }
-            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", request.POST.get(u"lat"))
-            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", request.POST.get(u"lon"))
-            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", request.POST.get(u"lat") == "")
-            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", request.POST.get(u"lon") == " ")
+            
 
             if request.POST.get(u"lat") != "" and request.POST.get(u"lon") != "":
                 location = [
@@ -547,8 +538,7 @@ def orderMedicine(request):
                 u"country": country,
                 u"hospitalAddress": hospitalAddress,
             }
-            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", request.POST.get(u"lat"))
-            print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", request.POST.get(u"lon"))
+            
             if request.POST.get(u"lat") != "" and request.POST.get(u"lon") != "":
                 location = [
                     float(request.POST.get(u"lat")),
@@ -590,7 +580,7 @@ def consult(request):
                     lon2 = dr["location"][1]
                     if isInRadius(lat,lon,float(lat2), float(lon2)):
                         mail_to.append(dr.get(u"email"))
-                        print(dr.get(u"email"))
+                        
             if len(mail_to)>0 :
                 send_mail(mail_to, sub, msg)
         else:
@@ -647,18 +637,18 @@ def pending(request):
         authy =[]
         users = db.collection(u"Users").stream()
         for user in users:
-            # print("""!!!!!!!!!!!!!!!!!!!!! {}""".format(user.to_dict()))
+            
             approved = user.to_dict().get("approved")
             if approved != True :
                 id = user.id
                 user = user.to_dict()
                 user['id'] = id
-                # print(user)
+                
                 if user.get("position") == 'doctor' :
                     doc.append(user)
                 elif user.get("position") == 'authority' :
                     authy.append(user)
-        print(doc)
+        
         return render(request, 'p_users.html' , {'doctors':doc , 'authys' :authy})
     else:
         return redirect('login')

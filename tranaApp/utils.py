@@ -52,7 +52,7 @@ def send_verification_mail(request, details):
         "siddhi2000jhun@gmail.com",
         #"",
     ]
-    print("~~~~~~~~~~~~",type(details["uId"]), type('True'))
+    
     subject = "New Authority Sign-Up"
     message = render_to_string("verification_mail.html",
     {
@@ -74,7 +74,7 @@ def dr_send_verification_mail(request, details):
         "siddhi2000jhun@gmail.com",
         #"",
     ]
-    print("~~~~~~~~~~~~",type(details["uId"]), type('True'))
+    
     subject = "New Doctor Sign-Up"
     message = render_to_string("dr_verification_mail.html",
     {
@@ -85,9 +85,8 @@ def dr_send_verification_mail(request, details):
     send_mail(super_admin_email_list, subject, message)
 
 def send_result(email_id, user, accepted, position):
-    print(user)
-    #print(user.to_dict())
-    print(user.__dict__)
+    
+    
     if accepted == 'True':
         subject = position + " Account Application Verified"
         message = """<html><body>You can now log in to your {} account.
@@ -95,7 +94,7 @@ def send_result(email_id, user, accepted, position):
         <b>Email ID:</b> {}
         <br>
         <html><body>""".format(position,email_id)
-        print(message)
+        
         send_mail(email_id, subject, message)
 
     else:
@@ -139,7 +138,7 @@ def isInRadius(lat,lon,lat2,lon2):
     a = math.sin(dlat / 2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2)**2
     c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
     distance = R * c
-    print(distance)
+    
     if distance<10:
         return True
     else:
