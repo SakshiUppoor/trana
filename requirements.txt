@@ -28,7 +28,7 @@ msgpack==1.0.0
 nltk==3.5
 numpy==1.18.3
 Pillow==7.1.2
-protobuf==3.12.1
+protobuf==3.15.0
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pytesseract==0.3.4
