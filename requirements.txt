@@ -26,7 +26,7 @@ importlib-resources==1.5.0
 joblib==0.14.1
 msgpack==1.0.0
 nltk==3.5
-numpy==1.18.3
+numpy==1.22.0
 Pillow==7.1.2
 protobuf==3.12.1
 pyasn1==0.4.8
